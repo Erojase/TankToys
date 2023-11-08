@@ -1,30 +1,21 @@
 import React from 'react'
-import { Typography } from '@mui/material'
-import Header from '../components/Header';
+import { Box, Button, Typography } from '@mui/material'
+import { theme } from '../utils/Theme';
 
-  
+
 
 export default function Main() {
 
-  const [variable, setVariable] = React.useState("ejemplo");
-  const [pulp, setPulp] = React.useState("Chico");
-
-  const text = React.useRef(null);
-
-  React.useEffect(() => {
-
-    return () => {
-
-    }
-  }, []);
-
+  const toGameClick = () =>{
+    window.location.href = "/game";
+  }
 
   return (
-    <>
-      <Header usuario='paco' />
-      <Typography ref={text}>
-        {pulp}
-      </Typography>
-    </>
+    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }} height={window.innerHeight}>
+      <Button sx={{ color: theme.palette.primary.contrastText }}
+        variant="contained"
+        onClick={toGameClick}
+      >Un Jugador</Button>
+    </Box>
   )
 }
