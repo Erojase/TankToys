@@ -1,25 +1,29 @@
 import React from 'react'
-import Header from '../components/Header'
 import { Typography } from '@mui/material'
+import Header from '../components/Header';
 
-
+  
 
 export default function Main() {
 
-  React.useEffect(() => {
+  const [variable, setVariable] = React.useState("ejemplo");
+  const [pulp, setPulp] = React.useState("Chico");
 
+  const text = React.useRef(null);
+
+  React.useEffect(() => {
 
     return () => {
 
     }
-  }, [])
+  }, []);
 
 
   return (
     <>
-      <Header />
-      <Typography>
-        buenas tardes
+      <Header usuario='paco' />
+      <Typography ref={text}>
+        {pulp}
       </Typography>
     </>
   )
