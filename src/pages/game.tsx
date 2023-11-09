@@ -8,7 +8,6 @@ export default function Game(){
 
     return(
         <>
-        this is the game
         <MainCanvas/>
         </>
     )

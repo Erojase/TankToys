@@ -21,11 +21,12 @@ export default function MainCanvas() {
           })
         let canvas = canvasRef?.current;
         TankController.tank = tank;
-        keyboardHandler();
-
         let ctx = canvas?.getContext("2d");
 
-        ctx!.fillStyle = "blue";
+        keyboardHandler();
+
+
+        ctx!.fillStyle = "white";
         ctx?.fillRect(0, 0, canvas!.width, canvas!.height);
 
         paintTank(ctx!);
@@ -34,7 +35,6 @@ export default function MainCanvas() {
 
     const paintTank = (ctx:CanvasRenderingContext2D) =>{
         ctx.fillStyle = "red";
-        console.log(tank);
         ctx.fillRect(tank.position.x, tank.position.y, 10, 10);
     }
 
