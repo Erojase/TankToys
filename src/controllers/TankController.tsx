@@ -10,42 +10,38 @@ enum MovementKeys {
 
 export class TankController {
 
-    private _tank: Tank;
-
-    triggerComponentRender: () => void = () => { };
-
-    constructor(tank: Tank) {
-        this._tank = tank;
+    
+    
+    private static _tank : Tank;
+    public static get tank() : Tank {
+        return this._tank;
     }
-
-
-    /**
-     * setMoveEvents
-     */
-    public setMoveEvents(element: Document) {
-        element.addEventListener('keydown', (e) => this.Move(e))
+    public static set tank(v : Tank) {
+        this._tank = v;
     }
+    
+
+    static triggerComponentRender: () => void = () => { };
 
     /**
      * Move
      */
-    public Move(e: globalThis.KeyboardEvent) {
+    public static Move(e: globalThis.KeyboardEvent) {
         console.log(this._tank.position);
 
         switch (e.key) {
             case MovementKeys.Forward:
-                this._tank.moveX(this._tank.position.x + this._tank.speed)
+                this._tank.moveY(-this._tank.speed);
                 break;
             case MovementKeys.Left:
-
+                this._tank.moveX(-this._tank.speed);
                 break;
             case MovementKeys.Right:
-
+                this._tank.moveX(this._tank.speed);
                 break;
             case MovementKeys.Backward:
-
+                this._tank.moveY(this._tank.speed);
                 break;
-
             default:
                 break;
         }

@@ -1,19 +1,27 @@
 import React from "react";
-import { Tank } from "../models/Tank";
 import { TankController } from "../controllers/TankController";
+import { tank } from "../pages/game";
+import { dimensions } from "../utils/utils";
 
 export default function MainCanvas() {
+    const [thisWindow, setThisWindow] = React.useState<dimensions>({
+        height: 0,
+        width: 0
+      });
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
     const [render, rerender] = React.useState(false);
 
-    const tank:Tank = new Tank();
-    const tankController:TankController = new TankController(tank);
-    tankController.triggerComponentRender = () => { rerender(!render) };
+    TankController.triggerComponentRender = () => { rerender(!render) };
     
     React.useEffect(() => {
+        setThisWindow({
+            height: window.innerHeight,
+            width: window.innerWidth
+          })
         let canvas = canvasRef?.current;
-        tankController.setMoveEvents(window.document);
+        TankController.tank = tank;
+        keyboardHandler();
 
         let ctx = canvas?.getContext("2d");
 
@@ -30,8 +38,12 @@ export default function MainCanvas() {
         ctx.fillRect(tank.position.x, tank.position.y, 10, 10);
     }
 
+    const keyboardHandler = () =>{
+        document.addEventListener('keydown', (e) => TankController.Move(e), { once: true })
+    }
+
     return (
-        <canvas style={{height: 500, width: 500}} 
+        <canvas style={{height: thisWindow.height, width: thisWindow.width}} 
         ref={canvasRef}
         ></canvas>
     )
