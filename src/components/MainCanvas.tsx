@@ -40,6 +40,7 @@ export default function MainCanvas() {
 
     const keyboardHandler = () =>{
         document.addEventListener('keydown', (e) => TankController.Move(e), { once: true })
+        document.addEventListener('keyup', (e) => TankController.stopMove(e), { once: true })
     }
 
     return (

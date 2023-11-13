@@ -1,5 +1,6 @@
 import { KeyboardEvent } from "react";
 import { Tank } from "../models/Tank";
+import { Directions, Filter } from "@mui/icons-material";
 
 
 class MovementKeys {
@@ -9,10 +10,9 @@ class MovementKeys {
     static readonly Backward = ["s", "S", "ArrowDown"]
 }
 
+let directions:string[] = [];
 
 export class TankController {
-
-
 
     private static _tank: Tank;
     public static get tank(): Tank {
@@ -25,19 +25,35 @@ export class TankController {
 
     static triggerComponentRender: () => void = () => { };
 
+    public static stopMove(e: globalThis.KeyboardEvent) {
+        directions.splice(directions.indexOf(e.key),1);
+    }
+
     /**
      * Move
      */
     public static Move(e: globalThis.KeyboardEvent) {
         console.log(this._tank.position);
 
-        if (MovementKeys.Forward.includes(e.key))
+        if (!directions.includes(e.key)) {
+            directions.push(e.key);
+        }
+
+        // console.log("tumadre");
+        
+        // console.log(directions);
+        // // console.log(MovementKeys.Forward.filter(i => directions.includes(i)));
+        // console.log(directions.filter(i => MovementKeys.Forward.includes(i)));
+        
+        
+
+        if (directions.filter(i => MovementKeys.Forward.includes(i)).length != 0) 
             this._tank.moveY(-this._tank.speed);
-        else if (MovementKeys.Left.includes(e.key))
+        if (directions.filter(i => MovementKeys.Left.includes(i)).length != 0)
             this._tank.moveX(-this._tank.speed);
-        else if (MovementKeys.Right.includes(e.key))
+        if (directions.filter(i => MovementKeys.Right.includes(i)).length != 0)
             this._tank.moveX(this._tank.speed);
-        else if (MovementKeys.Backward.includes(e.key))
+        if (directions.filter(i => MovementKeys.Backward.includes(i)).length != 0)
             this._tank.moveY(this._tank.speed);
 
         this.triggerComponentRender();
