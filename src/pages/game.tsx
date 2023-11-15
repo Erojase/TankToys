@@ -1,36 +1,29 @@
 import React from "react";
 import MainCanvas from "../components/MainCanvas";
 import { Tank } from "../models/Tank";
-import { GameController } from "../controllers/GameController";
+import { Button } from "@mui/material";
+import { GameMap } from "../models/Map";
 
 export const tank: Tank = new Tank();
 
 export default function Game() {
 
-    let cont = 0;
-    const updateCounter = () => {
-        setCounter(counter! + 1);
-        cont++;
-    }
-    
-    const [counter, setCounter] = React.useState<number>(0);
-    
-    React.useEffect(() => {
-        GameController.addToGameLoop(updateCounter);
-        console.log("montado");
-        return () => { }
-    }, [])
+    const [map, setMap] = React.useState<GameMap>();
+
+    const mapa = () =>{ setMap(new GameMap(5, 5)) }
 
     React.useEffect(() => {
-        console.log("jamon");
-        
-        return () => { }
-    }, [counter])
-
+        if (map) {
+            map?.initialiseMap().generateMap();
+            console.log(map?.map);
+        }
+      return () => {}
+    }, [map])
+    
 
     return (
         <>
-            <div>{cont}</div>
+        <Button onClick={mapa}>mapa</Button>
             <MainCanvas />
         </>
     )
