@@ -2,6 +2,7 @@ import React from "react";
 import { TankController } from "../controllers/TankController";
 import { tank } from "../pages/game";
 import { dimensions } from "../utils/utils";
+import { BulletController } from "../controllers/BulletController";
 
 export default function MainCanvas() {
     const [thisWindow, setThisWindow] = React.useState<dimensions>({
@@ -41,6 +42,7 @@ export default function MainCanvas() {
     const keyboardHandler = () =>{
         document.addEventListener('keydown', (e) => TankController.Move(e), { once: true })
         document.addEventListener('keyup', (e) => TankController.stopMove(e), { once: true })
+        document.addEventListener("click", (e) => TankController.bulletController.shoot(e), {once: true})
     }
 
     return (

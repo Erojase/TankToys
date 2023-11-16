@@ -1,6 +1,7 @@
 import { KeyboardEvent } from "react";
 import { Tank } from "../models/Tank";
 import { Directions, Filter } from "@mui/icons-material";
+import { BulletController } from "./BulletController";
 
 
 class MovementKeys {
@@ -21,6 +22,15 @@ export class TankController {
     public static set tank(v: Tank) {
         this._tank = v;
     }
+    
+    private static _bulletController = new BulletController();
+    public static get bulletController() : BulletController {
+        return this._bulletController;
+    }
+    public static set bulletController(v : BulletController) {
+        this._bulletController = v;
+    }
+    
 
 
     static triggerComponentRender: () => void = () => { };

@@ -1,0 +1,22 @@
+import { KeyboardEvent } from "react";
+import { Bullet } from "../models/Bullet";
+import { Directions, Filter } from "@mui/icons-material";
+
+export class BulletController {
+    
+    private _bullet : Bullet;
+    public get bullet() : Bullet {
+        return this._bullet;
+    }
+    public set bullet(v : Bullet) {
+        this._bullet = v;
+    }
+    
+    constructor() {
+        this._bullet = new Bullet;
+    }
+
+    public shoot(e: globalThis.MouseEvent) {
+        
+    }
+}
