@@ -24,9 +24,10 @@ class Tile{
     
 }
 
+
 export class GameMap {
 
-    private tiles = ["grass", "water", "mountain", "woods"];
+    private tileTypes = ["Grass", "Water", "Mountain", "Woods"]
     private _width : number;
     private _height : number;
     private _map : Tile[][] = [];
@@ -36,7 +37,7 @@ export class GameMap {
         this._width = width;
         this._height = height;
     }
-
+    
     public get map() : Tile[][] {
         return this._map;
     }
@@ -64,7 +65,7 @@ export class GameMap {
         for (let x = 0; x < this._width; x++) {
             tmpMap = [];
             for (let y = 0; y < this._height; y++) {
-                tmpMap.push(new Tile({x: x, y: y}, this.tiles.length));
+                tmpMap.push(new Tile({x: x, y: y}, this.tileTypes.length));
             }
             this._map.push(tmpMap);
         }
@@ -72,20 +73,24 @@ export class GameMap {
     }
 
     generateMap(){
-        let initialTile = this._map[Math.floor(Math.random()*this._map.length+1)][Math.floor(Math.random()*this._map.length+1)];
-        initialTile.value = this.getRandomTile(this._map);
-        this.nextTile(initialTile);
+        let initialTile = this.getRandomTile(this._map);
+        initialTile.value = this.setRandomTileType();
+        this.nextTile(initialTile);       
+    }
+
+    setRandomTileType(){
+        let res = Math.floor(Math.random()*this.tileTypes.length)
+        return this.tileTypes[res];
     }
 
     nextTile(tile:Tile){
-        this._map[tile.pos.x +1][tile.pos.y +1];
-        this._map[tile.pos.x -1][tile.pos.y -1];
-        this._map[tile.pos.x +1][tile.pos.y -1];
-        this._map[tile.pos.x -1][tile.pos.y +1];
+        
     }
-
-    getRandomTile(array:any[]){
-        return Math.floor(Math.random()*array.length+1);
+    
+    getRandomTile<T>(array:T[][]){
+        let ax1 =  Math.floor(Math.random()*array.length);
+        let ax2 = Math.floor(Math.random()*array[ax1].length)
+        return array[ax1][ax2];
     }
 
     getLowestTile(array:Tile[]){

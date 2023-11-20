@@ -15,7 +15,7 @@ export default function Game() {
     React.useEffect(() => {
         if (map) {
             map?.initialiseMap().generateMap();
-            console.log(map?.map);
+            console.table(map?.map);
         }
       return () => {}
     }, [map])
