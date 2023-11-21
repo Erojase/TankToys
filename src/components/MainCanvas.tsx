@@ -2,6 +2,7 @@ import React from "react";
 import { TankController } from "../controllers/TankController";
 import { tank } from "../pages/game";
 import { dimensions } from "../utils/utils";
+import { ImgCache } from "../models/Cache";
 
 export default function MainCanvas() {
     const [thisWindow, setThisWindow] = React.useState<dimensions>({
@@ -34,8 +35,19 @@ export default function MainCanvas() {
     }, [render])
 
     const paintTank = (ctx:CanvasRenderingContext2D) =>{
-        ctx.fillStyle = "red";
-        ctx.fillRect(tank.position.x, tank.position.y, 10, 10);
+        if (ImgCache.tanky == undefined) {
+            let img = new Image();
+            img.onload = () =>{
+                ctx.drawImage(img, tank.position.x, tank.position.y, 10, 10)
+            }
+            img.src = "/tanky-bot.png"
+            ImgCache.tanky = img;
+        } else {
+            ctx.drawImage(ImgCache.tanky, tank.position.x, tank.position.y, 10, 10)
+        }
+        
+        //ctx.fillStyle = "red";
+        //ctx.fillRect(tank.position.x, tank.position.y, 10, 10);
     }
 
     const keyboardHandler = () =>{
