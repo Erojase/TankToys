@@ -4,6 +4,7 @@ import { tank } from "../pages/game";
 import { dimensions } from "../utils/utils";
 import { BulletController } from "../controllers/BulletController";
 import { ImgCache } from "../models/Cache";
+import { Cannon, Tank } from "../models/Tank";
 
 export default function MainCanvas() {
     const [thisWindow, setThisWindow] = React.useState<dimensions>({
@@ -27,7 +28,7 @@ export default function MainCanvas() {
         ctx!.canvas.height = window.innerHeight; //or your desired height 
         ctx!.canvas.width = window.innerWidth
         
-        keyboardHandler();
+        eventHandler();
         
         
         ctx!.fillStyle = "white";
@@ -50,6 +51,17 @@ export default function MainCanvas() {
             }
             img.src = "/tanky-bot.png"
             ImgCache.tanky = img;
+
+            let cannImg = new Image();
+            cannImg.onload = () => {
+                ctx.imageSmoothingEnabled = false;
+                
+                ctx.save();
+                // ctx.rotate(TankController.tank.rotation);                
+                ctx.drawImage(cannImg, 0, 0, cannImg.width, cannImg.height, tank.position.x, tank.position.y, 100, 100);
+                ctx.restore();
+            }
+
         } else {
             ctx.imageSmoothingEnabled = false;
             
@@ -60,15 +72,18 @@ export default function MainCanvas() {
             ctx.drawImage(ImgCache.tanky, 0, 0, ImgCache.tanky.width,ImgCache.tanky.height, tank.position.x, tank.position.y, 100, 100)
             ctx.restore();
         }
+
+
         
         //ctx.fillStyle = "red";
         //ctx.fillRect(tank.position.x, tank.position.y, 10, 10);
     }
 
-    const keyboardHandler = () =>{
+    const eventHandler = () =>{
         document.addEventListener('keydown', (e) => TankController.Move(e), { once: true })
         document.addEventListener('keyup', (e) => TankController.stopMove(e), { once: true })
-        document.addEventListener("click", (e) => TankController.bulletController.shoot(e), {once: true})
+        // document.addEventListener("click", (e) => TankController.bulletController.shoot(e), {once: true})
+        document.addEventListener("mousemove", (e) => Cannon.mouseTrack(e))
     }
 
     return (
