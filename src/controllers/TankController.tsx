@@ -34,9 +34,9 @@ export class TankController {
         if (MovementKeys.Forward.includes(e.key))
             this._tank.moveY(-this._tank.speed);
         else if (MovementKeys.Left.includes(e.key))
-            this._tank.moveX(-this._tank.speed);
+            this._tank.rotate(-this._tank.speed);
         else if (MovementKeys.Right.includes(e.key))
-            this._tank.moveX(this._tank.speed);
+            this._tank.rotate(this._tank.speed);
         else if (MovementKeys.Backward.includes(e.key))
             this._tank.moveY(this._tank.speed);
 
