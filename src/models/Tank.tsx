@@ -25,20 +25,28 @@ export class Tank {
      * moveX
      */
     public moveX(steps:number) {
-        this.position.x += steps;
+        if (steps > 0) {
+            this.position.x += steps;
+            return;
+        }
+        this.position.x -= steps;
     }
 
     /**
      * moveY
      */
     public moveY(steps:number) {
-        this.position.y += steps;
+        if (steps > 0) {
+            this.position.y += steps;
+            return;
+        }
+        this.position.y -= steps;
     }
 
-    public rotate(degrees:number){
-        while (degrees > 360){
-            degrees -= 360
-        }
-        this.rotation = degrees + this.rotation;
-    }
+    // public rotate(degrees:number){
+    //     while (degrees > 360){
+    //         degrees -= 360
+    //     }
+    //     this.rotation = degrees + this.rotation;
+    // }
 }
