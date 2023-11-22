@@ -12,6 +12,8 @@ export class Tank {
         y: 0
     };
 
+    public rotation: number = 0;
+
     public speed = 1;
 
     constructor() {
@@ -31,5 +33,12 @@ export class Tank {
      */
     public moveY(steps:number) {
         this.position.y += steps;
+    }
+
+    public rotate(degrees:number){
+        while (degrees > 360){
+            degrees -= 360
+        }
+        this.rotation = degrees + this.rotation;
     }
 }
