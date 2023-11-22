@@ -1,3 +1,5 @@
+import { log } from "console";
+
 interface Position{
     x: number,
     y: number
@@ -104,4 +106,30 @@ export class GameMap {
         });
         return low;
     }
+
+    public static createMap() {
+        let map:number[][] = [];
+
+        let terrains:string[] = ["Wall", "Floor", "Hole", "Dirt"];
+
+        for (let i = 0; i < 24; i++) {
+            let row:number[] = [];
+            for (let j = 0; j < 16; j++) {
+                
+                if (i == 0 || j == 0 || i == 23 || j == 23) {
+                    row[j] = 0;
+                } else {
+                    row[j] = Math.floor(Math.random()*4);
+                }
+                
+            }
+            map[i] = row
+            
+        }
+
+        console.log(map);
+        
+
+    }
+
 }
