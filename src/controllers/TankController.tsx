@@ -59,11 +59,11 @@ export class TankController {
 
         if (directions.filter(i => MovementKeys.Forward.includes(i)).length != 0) 
             this._tank.moveY(-this._tank.speed);
-        if (directions.filter(i => MovementKeys.Left.includes(i)).length != 0)
-            this._tank.moveX(-this._tank.speed);
-        if (directions.filter(i => MovementKeys.Right.includes(i)).length != 0)
-            this._tank.moveX(this._tank.speed);
-        if (directions.filter(i => MovementKeys.Backward.includes(i)).length != 0)
+        else if (MovementKeys.Left.includes(e.key))
+            this._tank.rotate(-this._tank.speed);
+        else if (MovementKeys.Right.includes(e.key))
+            this._tank.rotate(this._tank.speed);
+        else if (MovementKeys.Backward.includes(e.key))
             this._tank.moveY(this._tank.speed);
 
         this.triggerComponentRender();
