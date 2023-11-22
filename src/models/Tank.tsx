@@ -14,7 +14,7 @@ export class Tank {
 
     public rotation: number = 0;
 
-    public speed = 1;
+    public speed = 10;
 
     constructor() {
         

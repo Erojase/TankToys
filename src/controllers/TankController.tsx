@@ -14,7 +14,7 @@ export class TankController {
 
 
 
-    private static _tank: Tank;
+    private static _tank: Tank = new Tank();
     public static get tank(): Tank {
         return this._tank;
     }
