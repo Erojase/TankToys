@@ -1,6 +1,7 @@
 import { KeyboardEvent } from "react";
 import { Bullet } from "../models/Bullet";
 import { Directions, Filter } from "@mui/icons-material";
+// import { Tank } from "../controllers/TankController"
 
 export class BulletController {
     
@@ -16,7 +17,9 @@ export class BulletController {
         this._bullet = new Bullet;
     }
 
-    public shoot(e: globalThis.MouseEvent) {
-        
+    public shoot(e: globalThis.MouseEvent, tank: TankController) {
+        this._bullet = new Bullet;
+        this._bullet.speed = 5;
+        this._bullet.position = tank.position;
     }
 }

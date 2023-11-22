@@ -8,6 +8,7 @@ export class Bullet {
     };
 
     public speed = 1;
+    public direction = 0;
 
     constructor() {
         
