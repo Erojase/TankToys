@@ -1,3 +1,4 @@
+import { angleToCoords } from "../utils/utils";
 
 export interface Position{
     x: number;
@@ -25,28 +26,28 @@ export class Tank {
      * moveX
      */
     public moveX(steps:number) {
-        if (steps > 0) {
-            this.position.x += steps;
-            return;
-        }
-        this.position.x -= steps;
+        this.position.x += steps;
     }
 
     /**
      * moveY
      */
     public moveY(steps:number) {
-        if (steps > 0) {
-            this.position.y += steps;
-            return;
-        }
-        this.position.y -= steps;
+        this.position.y += steps;
     }
 
-    // public rotate(degrees:number){
-    //     while (degrees > 360){
-    //         degrees -= 360
-    //     }
-    //     this.rotation = degrees + this.rotation;
-    // }
+    public move(pos:Position){
+        debugger;
+        let coords = angleToCoords(pos.x, pos.y, this.rotation, this.speed);
+        this.position.x += coords.x;
+        this.position.y += coords.y;
+    }
+
+    public rotate(degrees:number){
+        debugger;
+        while (degrees > 360){
+            degrees -= 360
+        }
+        this.rotation = degrees + this.rotation;
+    }
 }

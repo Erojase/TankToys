@@ -9,11 +9,10 @@ class MovementKeys {
     static readonly Backward = ["s", "S", "ArrowDown"]
 }
 
-let directions:string[] = [];
 
 export class TankController {
-
-
+    
+    public static directions:string[] = [];
 
     private static _tank: Tank = new Tank();
     public static get tank(): Tank {
@@ -26,37 +25,41 @@ export class TankController {
 
     static triggerComponentRender: () => void = () => { };
 
-    public static stopMove(e: globalThis.KeyboardEvent) {
-        directions.splice(directions.indexOf(e.key),1);
+
+    public static addKey(key:string){
+        if (!TankController.directions.includes(key)) {
+            TankController.directions.push(key)
+        }
     }
 
-    /**
-     * Move
-     */
-    public static Move(e: globalThis.KeyboardEvent) {
-        console.log(this._tank.position);
+    public static removeKey(key:string){
+        TankController.directions.splice(TankController.directions.indexOf(key)-1, 1)
+        console.log(TankController.directions);
+        
+    }
 
-        if (!directions.includes(e.key)) {
-            directions.push(e.key);
+    
+    public static Move() {
+
+        if (MovementKeys.Forward.filter(x => TankController.directions.includes(x)).length > 0) {
+            console.log("Forward");
+            TankController.tank.moveX(TankController.tank.speed * -1)
+        }
+        if (MovementKeys.Backward.filter(x => TankController.directions.includes(x)).length > 0) {
+            console.log("Backward");
+            TankController.tank.moveX(TankController.tank.speed)
+        }
+        if (MovementKeys.Left.filter(x => TankController.directions.includes(x)).length > 0) {
+            console.log("Left");
+            TankController.tank.moveY(TankController.tank.speed * -1)
+        }
+        if (MovementKeys.Right.filter(x => TankController.directions.includes(x)).length > 0) {
+            console.log("Right");
+            TankController.tank.moveY(TankController.tank.speed)
         }
 
-        // console.log("tumadre");
-        
-        // console.log(directions);
-        // // console.log(MovementKeys.Forward.filter(i => directions.includes(i)));
-        // console.log(directions.filter(i => MovementKeys.Forward.includes(i)));
-        
         
 
-        if (directions.filter(i => MovementKeys.Forward.includes(i)).length != 0) 
-            this._tank.moveY(-this._tank.speed);
-        if (directions.filter(i => MovementKeys.Left.includes(i)).length != 0)
-            this._tank.moveX(-this._tank.speed);
-        if (directions.filter(i => MovementKeys.Right.includes(i)).length != 0)
-            this._tank.moveX(this._tank.speed);
-        if (directions.filter(i => MovementKeys.Backward.includes(i)).length != 0)
-            this._tank.moveY(this._tank.speed);
-
-        this.triggerComponentRender();
+        TankController.triggerComponentRender();
     }
 }

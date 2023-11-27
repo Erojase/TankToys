@@ -4,6 +4,7 @@ import { dimensions } from "../utils/utils";
 import { ImgCache } from "../models/Cache";
 import { Box } from "@mui/material";
 import TankComponent from "./Tank";
+import { GameController } from "../controllers/GameController";
 
 export default function MainCanvas() {
     const [thisWindow, setThisWindow] = React.useState<dimensions>({
@@ -16,20 +17,24 @@ export default function MainCanvas() {
 
     TankController.triggerComponentRender = () => { rerender(!render) };
     
+      React.useEffect(()=>{
+        GameController.addToGameLoop(TankController.Move);
+        GameController.addToGameLoop(keyboardHandler);
+      }, [])
+
     React.useEffect(() => {
         setThisWindow({
             height: window.innerHeight,
             width: window.innerWidth
         })
         
-        keyboardHandler();
-        
         return () => {}
     }, [render])
     
 
     const keyboardHandler = () =>{
-        document.addEventListener('keydown', (e) => TankController.Move(e), { once: true })
+        document.addEventListener('keypress', (e) => TankController.addKey(e.key), { once: true });
+        document.addEventListener('keyup', (e) => TankController.removeKey(e.key), { once: true });
     }
 
     return (
@@ -41,6 +46,7 @@ export default function MainCanvas() {
             heigth={100}
             width={100}
             position={TankController.tank.position}
+            rotation={TankController.tank.rotation}
         />
 
         </Box>
