@@ -4,6 +4,7 @@ import { dimensions } from "../utils/utils";
 import { ImgCache } from "../models/Cache";
 import { Box } from "@mui/material";
 import TankComponent from "./Tank";
+import { GameMap } from "../models/Map";
 
 export default function MainCanvas() {
     const [thisWindow, setThisWindow] = React.useState<dimensions>({
@@ -15,6 +16,7 @@ export default function MainCanvas() {
     const [render, rerender] = React.useState(false);
 
     TankController.triggerComponentRender = () => { rerender(!render) };
+    GameMap.createMap();
     
     React.useEffect(() => {
         setThisWindow({
@@ -23,6 +25,7 @@ export default function MainCanvas() {
         })
         
         keyboardHandler();
+        
         
         return () => {}
     }, [render])
@@ -42,6 +45,8 @@ export default function MainCanvas() {
             width={100}
             position={TankController.tank.position}
         />
+
+        
 
         </Box>
     )

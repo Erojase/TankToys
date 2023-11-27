@@ -110,16 +110,16 @@ export class GameMap {
     public static createMap() {
         let map:number[][] = [];
 
-        let terrains:string[] = ["Wall", "Floor", "Hole", "Dirt"];
+        let terrains:string[] = ["Wall", "Floor", "Dirt"];
 
-        for (let i = 0; i < 24; i++) {
+        for (let i = 0; i < 16; i++) {
             let row:number[] = [];
-            for (let j = 0; j < 16; j++) {
+            for (let j = 0; j < 24; j++) {
                 
-                if (i == 0 || j == 0 || i == 23 || j == 23) {
+                if (i == 0 || j == 0 || i == 15 || j == 23) {
                     row[j] = 0;
                 } else {
-                    row[j] = Math.floor(Math.random()*4);
+                    row[j] = Math.floor(Math.random()*3);
                 }
                 
             }
@@ -127,7 +127,22 @@ export class GameMap {
             
         }
 
-        console.log(map);
+        for (let i = 0; i < map.length; i++) {
+            let txt = "";
+            for (let j = 0; j < map[i].length; j++) {
+                if (map[i][j] != 0) {
+                    txt += " ";
+                } else {
+                    txt += map[i][j];
+                }
+                txt += " ";
+            }
+            console.log(txt);
+            
+            
+        }
+
+        console.log("map");
         
 
     }
