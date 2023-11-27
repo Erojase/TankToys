@@ -5,6 +5,7 @@ import { ImgCache } from "../models/Cache";
 import { Box } from "@mui/material";
 import TankComponent from "./Tank";
 import { GameMap } from "../models/Map";
+import MapComponent from "./Map";
 
 export default function MainCanvas() {
     const [thisWindow, setThisWindow] = React.useState<dimensions>({
@@ -45,6 +46,8 @@ export default function MainCanvas() {
             width={100}
             position={TankController.tank.position}
         />
+
+        <MapComponent width={0} heigth={0}        />
 
         
 

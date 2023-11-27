@@ -32,19 +32,12 @@ export class GameMap {
     private tileTypes = ["Grass", "Water", "Mountain", "Woods"]
     private _width : number;
     private _height : number;
-    private _map : Tile[][] = [];
+    public static _map:number[][] = [];
     
     // TODO: generate map using wave function collapse
     constructor(width: number, height: number) {
         this._width = width;
         this._height = height;
-    }
-    
-    public get map() : Tile[][] {
-        return this._map;
-    }
-    public set map(v : Tile[][]) {
-        this._map = v;
     }
 
     public get height() : number {
@@ -60,57 +53,11 @@ export class GameMap {
     public set width(v : number) {
         this._width = v;
     }
-
-    initialiseMap(){
-        this._map = [];
-        let tmpMap = [];
-        for (let x = 0; x < this._width; x++) {
-            tmpMap = [];
-            for (let y = 0; y < this._height; y++) {
-                tmpMap.push(new Tile({x: x, y: y}, this.tileTypes.length));
-            }
-            this._map.push(tmpMap);
-        }
-        return this;
-    }
-
-    generateMap(){
-        let initialTile = this.getRandomTile(this._map);
-        initialTile.value = this.setRandomTileType();
-        this.nextTile(initialTile);       
-    }
-
-    setRandomTileType(){
-        let res = Math.floor(Math.random()*this.tileTypes.length)
-        return this.tileTypes[res];
-    }
-
-    nextTile(tile:Tile){
-        
-    }
     
-    getRandomTile<T>(array:T[][]){
-        let ax1 =  Math.floor(Math.random()*array.length);
-        let ax2 = Math.floor(Math.random()*array[ax1].length)
-        return array[ax1][ax2];
-    }
-
-    getLowestTile(array:Tile[]){
-        let low:Tile = new Tile({x:0,y:0}, array.length);
-        array.forEach(elem => {
-            if (typeof(elem.value) === "number" && typeof(low.value) === "number") {
-                if (elem.value < low.value) {
-                    low = elem;
-                }
-            }
-        });
-        return low;
-    }
-
     public static createMap() {
-        let map:number[][] = [];
-
-        let terrains:string[] = ["Wall", "Floor", "Dirt"];
+        
+        let map = GameMap._map;
+        
 
         for (let i = 0; i < 16; i++) {
             let row:number[] = [];
@@ -127,22 +74,36 @@ export class GameMap {
             
         }
 
+
+        let imgs = [];
+        let terrains:string[] = ["wall.jpg", "floor.jpg", "dirt.jpg"];
         for (let i = 0; i < map.length; i++) {
-            let txt = "";
+            let row = [];
             for (let j = 0; j < map[i].length; j++) {
-                if (map[i][j] != 0) {
-                    txt += " ";
-                } else {
-                    txt += map[i][j];
-                }
-                txt += " ";
+                row[j] = terrains[map[i][j]]
+                
             }
-            console.log(txt);
-            
-            
+            imgs[i] = row;
         }
 
-        console.log("map");
+        return imgs;
+
+        // for (let i = 0; i < map.length; i++) {
+        //     let txt = "";
+        //     for (let j = 0; j < map[i].length; j++) {
+        //         if (map[i][j] != 0) {
+        //             txt += " ";
+        //         } else {
+        //             txt += map[i][j];
+        //         }
+        //         txt += " ";
+        //     }
+        //     console.log(txt);
+            
+            
+        // }
+
+        // console.log("map");
         
 
     }
