@@ -4,6 +4,7 @@ import { dimensions } from "../utils/utils";
 import { ImgCache } from "../models/Cache";
 import { Box } from "@mui/material";
 import TankComponent from "./Tank";
+import ScopeComponent from "./Scope";
 import { GameController } from "../controllers/GameController";
 
 export default function MainCanvas() {
@@ -35,6 +36,7 @@ export default function MainCanvas() {
     const keyboardHandler = () =>{
         document.addEventListener('keypress', (e) => TankController.addKey(e.key), { once: true });
         document.addEventListener('keyup', (e) => TankController.removeKey(e.key), { once: true });
+        document.addEventListener('mousemove', (e) => TankController.scopePlacement(e), { once: true });
     }
 
     return (
@@ -42,13 +44,22 @@ export default function MainCanvas() {
         ref={ContainerRef}
         >
 
-        <TankComponent
-            heigth={100}
-            width={100}
-            position={TankController.tank.position}
-            rotation={TankController.tank.rotation}
-        />
+            <TankComponent
+                heigth={100}
+                width={100}
+                position={TankController.tank.position}
+                rotation={TankController.tank.rotation}
+            />
+
+            <ScopeComponent
+                heigth={50}
+                width={50}
+                position={TankController.scopePos}
+            
+            />
 
         </Box>
+
+
     )
 }
