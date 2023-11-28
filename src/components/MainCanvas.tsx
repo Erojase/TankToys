@@ -5,6 +5,8 @@ import { ImgCache } from "../models/Cache";
 import { Box } from "@mui/material";
 import TankComponent from "./Tank";
 import ScopeComponent from "./Scope";
+import { GameMap } from "../models/Map";
+import MapComponent from "./Map";
 import { GameController } from "../controllers/GameController";
 
 export default function MainCanvas() {
@@ -13,6 +15,16 @@ export default function MainCanvas() {
         width: 0
       });
     const ContainerRef = React.useRef(null);
+
+    const [render, rerender] = React.useState(false);
+
+    TankController.triggerComponentRender = () => {  };
+    GameMap.createMap();
+    
+      React.useEffect(()=>{
+        GameController.addToGameLoop(TankController.Move);
+        GameController.addToGameLoop(keyboardHandler);
+      }, [])
 
     React.useEffect(() => {
         setThisWindow({
@@ -49,6 +61,10 @@ export default function MainCanvas() {
                 position={TankController.scopePos}
             
             />
+
+        <MapComponent width={0} heigth={0}        />
+
+        
 
         </Box>
 

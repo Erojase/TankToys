@@ -38,7 +38,9 @@ export default function TankComponent(props:TankComponentProps){
     }, [props])
 
     return(
-        <Box sx={{
+        <img
+        src="/tanky-bot.png" 
+        style={{
             position: 'relative',
             width: props.width,
             height: props.heigth, 
@@ -46,8 +48,8 @@ export default function TankComponent(props:TankComponentProps){
             left: props.position.y,
             rotate: `${props.rotation}deg`,
             
-            border: '1px solid green'}}>
+            border: '1px solid green'}}/>
 
-        </Box>
+
     )
 }
