@@ -33,7 +33,7 @@ export default function MainCanvas() {
     
 
     const keyboardHandler = () =>{
-        document.addEventListener('keypress', (e) => TankController.addKey(e.key), { once: true });
+        document.addEventListener('keydown', (e) => TankController.addKey(e.key), { once: true });
         document.addEventListener('keyup', (e) => TankController.removeKey(e.key), { once: true });
     }
 

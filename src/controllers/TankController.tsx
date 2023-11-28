@@ -29,32 +29,37 @@ export class TankController {
     public static addKey(key:string){
         if (!TankController.directions.includes(key)) {
             TankController.directions.push(key)
+            console.log(TankController.directions);
         }
+        
     }
 
     public static removeKey(key:string){
-        TankController.directions.splice(TankController.directions.indexOf(key)-1, 1)
-        console.log(TankController.directions);
+        if (TankController.directions.includes(key)) {
+            TankController.directions.splice(TankController.directions.indexOf(key), 1)
+            console.log(TankController.directions);
+        }
         
     }
+
 
     
     public static Move() {
 
         if (MovementKeys.Forward.filter(x => TankController.directions.includes(x)).length > 0) {
-            console.log("Forward");
+            // console.log("Forward");
             TankController.tank.moveX(TankController.tank.speed * -1)
         }
         if (MovementKeys.Backward.filter(x => TankController.directions.includes(x)).length > 0) {
-            console.log("Backward");
+            // console.log("Backward");
             TankController.tank.moveX(TankController.tank.speed)
         }
         if (MovementKeys.Left.filter(x => TankController.directions.includes(x)).length > 0) {
-            console.log("Left");
+            // console.log("Left");
             TankController.tank.moveY(TankController.tank.speed * -1)
         }
         if (MovementKeys.Right.filter(x => TankController.directions.includes(x)).length > 0) {
-            console.log("Right");
+            // console.log("Right");
             TankController.tank.moveY(TankController.tank.speed)
         }
 
