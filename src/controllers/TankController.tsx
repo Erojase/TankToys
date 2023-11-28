@@ -1,5 +1,5 @@
 import { KeyboardEvent } from "react";
-import { Tank } from "../models/Tank";
+import { Position, Tank } from "../models/Tank";
 
 
 class MovementKeys {
@@ -21,6 +21,10 @@ export class TankController {
     public static set tank(v: Tank) {
         this._tank = v;
     }
+    public static scopePos:Position = {
+        x: 0,
+        y: 0
+    };
 
 
     static triggerComponentRender: () => void = () => { };
@@ -61,4 +65,11 @@ export class TankController {
             TankController.triggerComponentRender();
         }
     }
+
+
+    public static scopePlacement(e:MouseEvent){
+        this.scopePos = {x: e.pageX, y: e.pageY}
+    }
+
+
 }
