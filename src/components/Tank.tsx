@@ -7,6 +7,7 @@ interface TankComponentProps{
     width: number;
     heigth: number;
     position: Position;
+    rotation: number;
 }
 
 export default function TankComponent(props:TankComponentProps){
@@ -15,7 +16,6 @@ export default function TankComponent(props:TankComponentProps){
     React.useEffect(() => {
       
     }, [props])
-    
 
     return(
         <Box sx={{
@@ -24,7 +24,7 @@ export default function TankComponent(props:TankComponentProps){
             height: props.heigth, 
             top: props.position.x,
             left: props.position.y,
-            
+            rotate: `${props.rotation}deg`,
             
             border: '1px solid green'}}>
 

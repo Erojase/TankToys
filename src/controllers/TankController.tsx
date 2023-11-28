@@ -11,8 +11,8 @@ class MovementKeys {
 
 
 export class TankController {
-
-
+    
+    public static directions:string[] = [];
 
     private static _tank: Tank = new Tank();
     public static get tank(): Tank {
@@ -25,21 +25,41 @@ export class TankController {
 
     static triggerComponentRender: () => void = () => { };
 
-    /**
-     * Move
-     */
-    public static Move(e: globalThis.KeyboardEvent) {
-        console.log(this._tank.position);
 
-        if (MovementKeys.Forward.includes(e.key))
-            this._tank.moveY(-this._tank.speed);
-        else if (MovementKeys.Left.includes(e.key))
-            this._tank.rotate(-this._tank.speed);
-        else if (MovementKeys.Right.includes(e.key))
-            this._tank.rotate(this._tank.speed);
-        else if (MovementKeys.Backward.includes(e.key))
-            this._tank.moveY(this._tank.speed);
+    public static addKey(key:string){
+        if (!TankController.directions.includes(key)) {
+            TankController.directions.push(key)
+        }
+    }
 
-        this.triggerComponentRender();
+    public static removeKey(key:string){
+        TankController.directions.splice(TankController.directions.indexOf(key)-1, 1)
+        console.log(TankController.directions);
+        
+    }
+
+    
+    public static Move() {
+
+        if (MovementKeys.Forward.filter(x => TankController.directions.includes(x)).length > 0) {
+            console.log("Forward");
+            TankController.tank.moveX(TankController.tank.speed * -1)
+        }
+        if (MovementKeys.Backward.filter(x => TankController.directions.includes(x)).length > 0) {
+            console.log("Backward");
+            TankController.tank.moveX(TankController.tank.speed)
+        }
+        if (MovementKeys.Left.filter(x => TankController.directions.includes(x)).length > 0) {
+            console.log("Left");
+            TankController.tank.moveY(TankController.tank.speed * -1)
+        }
+        if (MovementKeys.Right.filter(x => TankController.directions.includes(x)).length > 0) {
+            console.log("Right");
+            TankController.tank.moveY(TankController.tank.speed)
+        }
+
+        
+
+        TankController.triggerComponentRender();
     }
 }

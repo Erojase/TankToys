@@ -1,3 +1,4 @@
+import { angleToCoords } from "../utils/utils";
 
 export interface Position{
     x: number;
@@ -35,7 +36,15 @@ export class Tank {
         this.position.y += steps;
     }
 
+    public move(pos:Position){
+        debugger;
+        let coords = angleToCoords(pos.x, pos.y, this.rotation, this.speed);
+        this.position.x += coords.x;
+        this.position.y += coords.y;
+    }
+
     public rotate(degrees:number){
+        debugger;
         while (degrees > 360){
             degrees -= 360
         }
