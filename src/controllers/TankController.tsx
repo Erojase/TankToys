@@ -35,47 +35,50 @@ export class TankController {
     public static addKey(key:string){
         if (!TankController.directions.includes(key)) {
             TankController.directions.push(key)
+            console.log(TankController.directions);
         }
     }
 
     public static removeKey(key:string){
-        TankController.directions.splice(TankController.directions.indexOf(key)-1, 1)
-        console.log(TankController.directions);
-        
+        if (TankController.directions.includes(key)) {
+            TankController.directions.splice(TankController.directions.indexOf(key), 1)
+            console.log(TankController.directions);
+        }
     }
+
 
     
     public static Move() {
 
         if (MovementKeys.Forward.filter(x => TankController.directions.includes(x)).length > 0) {
-            console.log("Forward");
             TankController.tank.moveX(TankController.tank.speed * -1)
+            TankController.triggerComponentRender();
         }
         if (MovementKeys.Backward.filter(x => TankController.directions.includes(x)).length > 0) {
-            console.log("Backward");
             TankController.tank.moveX(TankController.tank.speed)
+            TankController.triggerComponentRender();
         }
         if (MovementKeys.Left.filter(x => TankController.directions.includes(x)).length > 0) {
-            console.log("Left");
             TankController.tank.moveY(TankController.tank.speed * -1)
+            TankController.triggerComponentRender();
         }
         if (MovementKeys.Right.filter(x => TankController.directions.includes(x)).length > 0) {
-            console.log("Right");
             TankController.tank.moveY(TankController.tank.speed)
+            TankController.triggerComponentRender();
         }
-
-        
-
-        TankController.triggerComponentRender();
     }
 
 
     public static scopePlacement(e:MouseEvent){
+
+        let centerX = this._tank.position.x + 100 / 2;
+        let centerY = this._tank.position.y + 100 / 2;
+        
         this.scopePos = {x: e.pageX, y: e.pageY}
-        let dx = e.pageX - this._tank.position.x;
-        let dy = e.pageY - this._tank.position.y;
+        let dx = e.pageY - centerX;
+        let dy = e.pageX - centerY;
         let theta = Math.atan2(dy, dx);
-        this.cannonRotation = (theta*180/Math.PI) + 90;
+        this.cannonRotation = theta*-1;
     }
 
 

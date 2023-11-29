@@ -5,6 +5,8 @@ import { ImgCache } from "../models/Cache";
 import { Box } from "@mui/material";
 import TankComponent from "./Tank";
 import ScopeComponent from "./Scope";
+import { GameMap } from "../models/Map";
+import MapComponent from "./Map";
 import { GameController } from "../controllers/GameController";
 import CannonComponent from "./Cannon";
 
@@ -44,7 +46,7 @@ export default function MainCanvas() {
         <Box style={{ border: "1px solid black", height: thisWindow.height, width: thisWindow.width }}
             ref={ContainerRef}
         >
-
+            
             <TankComponent
                 heigth={100}
                 width={100}
@@ -54,7 +56,6 @@ export default function MainCanvas() {
                 <CannonComponent
                     heigth={100}
                     width={100}
-                    position={TankController.tank.position}
                     rotation={TankController.cannonRotation}
                 />
             </TankComponent>
@@ -63,9 +64,12 @@ export default function MainCanvas() {
             <ScopeComponent
                 heigth={50}
                 width={50}
-                position={TankController.scopePos}
 
             />
+
+            {/* <MapComponent width={0} heigth={0} /> */}
+
+
 
         </Box>
 
