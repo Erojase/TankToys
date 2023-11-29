@@ -23,7 +23,7 @@ export default function CannonComponent(props:TankComponentProps){
 
 
     return(
-        <img src="/tanky-top.png"  
+        <img src="/tanky-top-1.png"  
         style={{
             position: 'absolute',
             zIndex: 55,
