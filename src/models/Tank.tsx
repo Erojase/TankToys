@@ -1,4 +1,4 @@
-import { Mouse } from "@mui/icons-material";
+import { angleToCoords } from "../utils/utils";
 
 export interface Position{
     x: number;
@@ -36,9 +36,7 @@ export class Tank {
 
     public rotation: number = 0;
 
-    public cannon: Cannon | undefined = new Cannon();
-
-    public speed = 1;
+    public speed = 10;
 
     constructor() {
         
@@ -59,7 +57,15 @@ export class Tank {
         this.position.y += steps;
     }
 
+    public move(pos:Position){
+        debugger;
+        let coords = angleToCoords(pos.x, pos.y, this.rotation, this.speed);
+        this.position.x += coords.x;
+        this.position.y += coords.y;
+    }
+
     public rotate(degrees:number){
+        debugger;
         while (degrees > 360){
             degrees -= 360
         }

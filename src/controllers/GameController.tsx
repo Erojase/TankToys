@@ -1,8 +1,6 @@
 export class GameController {
 
-    private static fps: number = 24;
-
-    private static gameLoop: any = null; 
+    private static running:boolean = false;
     
     private static _updatable : (()=>any)[] = [];
 
@@ -13,23 +11,33 @@ export class GameController {
     
 
     public static addToGameLoop(func:()=>any){
-        console.log(`${func.name} añadido al loop`);
-        
-        this._updatable.push(func);
-        this.stopUpdate();
-        this.InitialiseUpdate();
+        if (!this._updatable.includes(func)) {
+            this._updatable.push(func);
+            console.log(`${func.name} añadido al loop`);
+        }
     }
     
 
     public static InitialiseUpdate() {
-        this.gameLoop = setInterval(() => {
-            this._updatable.forEach(func=>{
-                func();
-            })
-        }, (1000 / this.fps))
+        if (this.running) {
+            return;
+        }
+        this.running = true;
+        this.Update();
+    }
+
+    public static Update(){
+        this._updatable.forEach(func=>{
+            func();
+        })
+        if (this.running) {
+            setTimeout(() => {
+                this.Update();
+            }, 24);
+        }
     }
 
     public static stopUpdate(){
-        clearInterval(this.gameLoop);
+        this.running = false;
     }
 }
