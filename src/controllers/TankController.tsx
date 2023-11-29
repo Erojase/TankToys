@@ -26,6 +26,8 @@ export class TankController {
         y: 0
     };
 
+    public static cannonRotation:number = 50;
+
 
     static triggerComponentRender: () => void = () => { };
 
@@ -68,7 +70,15 @@ export class TankController {
 
 
     public static scopePlacement(e:MouseEvent){
+
+        let centerX = this._tank.position.x + 100 / 2;
+        let centerY = this._tank.position.y + 100 / 2;
+        
         this.scopePos = {x: e.pageX, y: e.pageY}
+        let dx = e.pageY - centerX;
+        let dy = e.pageX - centerY;
+        let theta = Math.atan2(dy, dx);
+        this.cannonRotation = theta*-1;
     }
 
 
