@@ -9,7 +9,7 @@ interface ScopeComponentProps{
     position: Position;
 }
 
-export default function TankComponent(props:ScopeComponentProps){
+export default function ScopeComponent(props:ScopeComponentProps){
 
 
     React.useEffect(() => {

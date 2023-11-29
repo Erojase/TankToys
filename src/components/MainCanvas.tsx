@@ -6,42 +6,43 @@ import { Box } from "@mui/material";
 import TankComponent from "./Tank";
 import ScopeComponent from "./Scope";
 import { GameController } from "../controllers/GameController";
+import CannonComponent from "./Cannon";
 
 export default function MainCanvas() {
     const [thisWindow, setThisWindow] = React.useState<dimensions>({
         height: 0,
         width: 0
-      });
+    });
     const ContainerRef = React.useRef(null);
 
     const [render, rerender] = React.useState(false);
 
     TankController.triggerComponentRender = () => { rerender(!render) };
-    
-      React.useEffect(()=>{
+
+    React.useEffect(() => {
         GameController.addToGameLoop(TankController.Move);
         GameController.addToGameLoop(keyboardHandler);
-      }, [])
+    }, [])
 
     React.useEffect(() => {
         setThisWindow({
             height: window.innerHeight,
             width: window.innerWidth
         })
-        
-        return () => {}
-    }, [render])
-    
 
-    const keyboardHandler = () =>{
+        return () => { }
+    }, [render])
+
+
+    const keyboardHandler = () => {
         document.addEventListener('keypress', (e) => TankController.addKey(e.key), { once: true });
         document.addEventListener('keyup', (e) => TankController.removeKey(e.key), { once: true });
         document.addEventListener('mousemove', (e) => TankController.scopePlacement(e), { once: true });
     }
 
     return (
-        <Box style={{border: "1px solid black", height: thisWindow.height, width: thisWindow.width}} 
-        ref={ContainerRef}
+        <Box style={{ border: "1px solid black", height: thisWindow.height, width: thisWindow.width }}
+            ref={ContainerRef}
         >
 
             <TankComponent
@@ -49,13 +50,21 @@ export default function MainCanvas() {
                 width={100}
                 position={TankController.tank.position}
                 rotation={TankController.tank.rotation}
-            />
+            >
+                <CannonComponent
+                    heigth={100}
+                    width={100}
+                    position={TankController.tank.position}
+                    rotation={TankController.cannonRotation}
+                />
+            </TankComponent>
+
 
             <ScopeComponent
                 heigth={50}
                 width={50}
                 position={TankController.scopePos}
-            
+
             />
 
         </Box>

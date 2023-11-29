@@ -8,10 +8,9 @@ interface TankComponentProps{
     heigth: number;
     position: Position;
     rotation: number;
-    children:JSX.Element;
 }
 
-export default function TankComponent(props:TankComponentProps){
+export default function CannonComponent(props:TankComponentProps){
 
 
     React.useEffect(() => {
@@ -19,17 +18,15 @@ export default function TankComponent(props:TankComponentProps){
     }, [props])
 
     return(
-        <Box sx={{
+        <img src="/tanky-top.png"  
+        style={{
             position: 'relative',
             width: props.width,
             height: props.heigth, 
             top: props.position.x,
             left: props.position.y,
-            rotate: `${props.rotation}deg`,
-            
-            border: '1px solid green'}}>
-                {props.children}
-        </Box>
+            rotate: `${props.rotation}deg`}}
+        />
 
     )
 }
