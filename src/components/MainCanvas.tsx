@@ -54,8 +54,8 @@ export default function MainCanvas() {
                 rotation={TankController.tank.rotation}
             >
                 <CannonComponent
-                    heigth={100}
-                    width={100}
+                    heigth={50}
+                    width={150}
                     rotation={TankController.cannonRotation}
                 />
             </TankComponent>

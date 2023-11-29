@@ -75,10 +75,10 @@ export class TankController {
         let centerY = this._tank.position.y + 100 / 2;
         
         this.scopePos = {x: e.pageX, y: e.pageY}
-        let dx = e.pageY - centerX;
-        let dy = e.pageX - centerY;
+        let dx = e.pageX - centerY;
+        let dy = e.pageY - centerX;
         let theta = Math.atan2(dy, dx);
-        this.cannonRotation = theta*-1;
+        this.cannonRotation = theta;
     }
 
 

@@ -47,7 +47,9 @@ export default function TankComponent(props: TankComponentProps) {
             top: props.position.x,
             left: props.position.y,
             rotate: `${props.rotation}deg`,
-
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
             border: '1px solid green'
         }}>
             <img
