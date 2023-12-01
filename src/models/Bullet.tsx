@@ -1,16 +1,28 @@
-import { Position } from "./Tank";
-
+import BulletComponent from '../components/Bullet';
+import { TankController } from '../controllers/TankController';
+import { Position } from './Tank';
 
 export class Bullet {
     public position: Position = {
-        x: 0,
-        y: 0
+        x: 100,
+        y: 100
     };
 
     public speed = 1;
-    public direction = 0;
+    public rotation = 0;
 
     constructor() {
-        
+        // BulletComponent;
     }
+
+
+    public moveBullet(x:number,y:number) {
+        this.position.x += x;
+        this.position.y += y;
+    }
+
+
+    
+
 }
+

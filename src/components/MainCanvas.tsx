@@ -10,6 +10,7 @@ import { GameMap } from "../models/Map";
 import MapComponent from "./Map";
 import { GameController } from "../controllers/GameController";
 import CannonComponent from "./Cannon";
+import BulletComponent from "./Bullet";
 
 export default function MainCanvas() {
     const [thisWindow, setThisWindow] = React.useState<dimensions>({
@@ -41,6 +42,7 @@ export default function MainCanvas() {
         document.addEventListener('keypress', (e) => TankController.addKey(e.key), { once: true });
         document.addEventListener('keyup', (e) => TankController.removeKey(e.key), { once: true });
         document.addEventListener('mousemove', (e) => TankController.scopePlacement(e), { once: true });
+        document.addEventListener("click", (e) => BulletController.shoot(), { once: true })
     }
 
     return (
@@ -58,7 +60,17 @@ export default function MainCanvas() {
                     heigth={50}
                     width={150}
                     rotation={TankController.cannonRotation}
-                />
+                >
+                    <BulletComponent
+                    heigth={20}
+                    width={30}
+                    position={BulletController.bullet.position}
+                    rotation={BulletController.bullet.rotation}
+                    />
+                </CannonComponent>
+
+                
+
             </TankComponent>
 
 

@@ -8,7 +8,8 @@ interface TankComponentProps{
     width: number;
     heigth: number;
     rotation: number;
-    render?: boolean
+    render?: boolean;
+    children: JSX.Element
 }
 
 export default function CannonComponent(props:TankComponentProps){
@@ -23,13 +24,17 @@ export default function CannonComponent(props:TankComponentProps){
 
 
     return(
-        <img src="/tanky-top-1.png"  
-        style={{
-            position: 'absolute',
-            zIndex: 55,
-            width: props.width,
-            height: props.heigth, 
-            rotate: `${TankController.cannonRotation}rad`}}
-            />
+        <Box>
+
+            <img src="/tanky-top-1.png"  
+            style={{
+                position: 'relative',
+                zIndex: 55,
+                width: props.width,
+                height: props.heigth, 
+                rotate: `${TankController.cannonRotation}rad`}}
+                />
+                {React.cloneElement(props.children)}
+        </Box>
     )
 }

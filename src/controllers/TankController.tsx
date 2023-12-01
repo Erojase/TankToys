@@ -1,5 +1,6 @@
 import { KeyboardEvent } from "react";
 import { Position, Tank } from "../models/Tank";
+import { Bullet } from '../models/Bullet';
 
 
 class MovementKeys {
@@ -81,6 +82,15 @@ export class TankController {
         let theta = Math.atan2(dy, dx);
         this.cannonRotation = theta;
     }
+
+    // public static shoot(e:MouseEvent) {
+    //     let bullet = new Bullet()
+    //     bullet.position = this.scopePos;
+    //     bullet.rotation = this.cannonRotation;
+
+    //     console.log("FUEGOOOOOO");
+        
+    // }
 
 
 }

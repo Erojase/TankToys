@@ -12,7 +12,7 @@ export default function Game() {
     React.useEffect(() => {
        GameController.InitialiseUpdate();
       
-    
+        
       return () => {
       }
     }, [])
