@@ -12,17 +12,22 @@ interface BulletProps {
     heigth: number;
     position: Position;
     rotation: number;
+    render?: boolean;
+
 }
 
 export default function BulletComponent(props:BulletProps){
+    
+    const [position, setPosition] = React.useState(TankController.scopePos);
 
-    // const [rotation, setRotation] = React.useState(TankController.scopePos);
 
-    // React.useEffect(() => {
-    //     setInterval(() => {
-    //         setRotation(TankController.scopePos);
-    //     }, 24);
-    // }, [])
+    React.useEffect(() => {
+        setInterval(() => {
+            setPosition(TankController.scopePos);
+            // console.log(BulletController.bullet.position);
+            
+        }, 24);
+    }, [])
 
 
     return(

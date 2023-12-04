@@ -9,7 +9,7 @@ interface TankComponentProps{
     heigth: number;
     rotation: number;
     render?: boolean;
-    children: JSX.Element
+    // children: JSX.Element
 }
 
 export default function CannonComponent(props:TankComponentProps){
@@ -34,7 +34,7 @@ export default function CannonComponent(props:TankComponentProps){
                 height: props.heigth, 
                 rotate: `${TankController.cannonRotation}rad`}}
                 />
-                {React.cloneElement(props.children)}
+                
         </Box>
     )
 }

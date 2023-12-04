@@ -17,8 +17,13 @@ export class Bullet {
 
 
     public moveBullet(x:number,y:number) {
-        this.position.x += x;
-        this.position.y += y;
+        setTimeout(() => {
+            this.position.x += x;
+            this.position.y += y;
+            // console.log(this.position);
+            this.moveBullet(x,y);
+            
+        }, 24);
     }
 
 
