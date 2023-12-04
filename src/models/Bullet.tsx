@@ -1,8 +1,11 @@
-import BulletComponent from '../components/Bullet';
-import { TankController } from '../controllers/TankController';
+import { BulletController } from '../controllers/BulletController';
 import { Position } from './Tank';
 
 export class Bullet {
+
+    private maxJumps = 400;
+    public currentJumps = 0;
+
     public position: Position = {
         x: 100,
         y: 100
@@ -16,14 +19,19 @@ export class Bullet {
     }
 
 
-    public moveBullet(x:number,y:number) {
-        setTimeout(() => {
+    public moveBullet(x:number,y:number) { 
+        setTimeout(()=>{
             this.position.x += x;
             this.position.y += y;
-            // console.log(this.position);
-            this.moveBullet(x,y);
-            
-        }, 24);
+            // this.moveBullet(x, y);
+            BulletController.triggerComponentRender();
+        }, 24)
+        this.currentJumps++;
+        if (this.currentJumps != this.maxJumps) {
+            this.moveBullet(x, y);     
+        }
+        
+
     }
 
 

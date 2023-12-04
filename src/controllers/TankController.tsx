@@ -37,14 +37,12 @@ export class TankController {
     public static addKey(key:string){
         if (!TankController.directions.includes(key)) {
             TankController.directions.push(key)
-            console.log(TankController.directions);
         }
     }
 
     public static removeKey(key:string){
         if (TankController.directions.includes(key)) {
             TankController.directions.splice(TankController.directions.indexOf(key), 1)
-            console.log(TankController.directions);
         }
     }
 

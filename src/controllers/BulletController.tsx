@@ -1,16 +1,11 @@
-import { KeyboardEvent } from "react";
 import { Bullet } from "../models/Bullet";
-import { Directions, Filter } from "@mui/icons-material";
 import { TankController } from "./TankController";
-import { tank } from '../pages/game';
-import { Position } from "../models/Tank";
-import { log } from "console";
 
 
-let cont:number = 0
 export class BulletController {
     
-    
+    private static enabled = true;
+
     private static _bullet : Bullet = new Bullet();
     public static get bullet() : Bullet {
         return this._bullet;
@@ -19,13 +14,26 @@ export class BulletController {
         this._bullet = v;
     }
     
+    static triggerComponentRender: () => void = () => { };
 
+    public static async disableShooting(){
+        BulletController.enabled = false;
+        return new Promise<void>(() => {
+            setTimeout(() => {
+                BulletController.enabled = true;
+            }, 1000);
+        })
+    }
+
+    
     public static shoot() {
-        console.log(cont);
-        
-        if (cont == 0) {
-            this._bullet.rotation = TankController.cannonRotation;
-            console.log(this._bullet.rotation);
+
+        if (BulletController.enabled) {
+            BulletController.disableShooting();
+            BulletController._bullet.currentJumps = 0;
+            BulletController._bullet.position = {...TankController.tank.position};
+            console.log("disparo");
+            BulletController._bullet.rotation = TankController.cannonRotation;
             let xDiff = TankController.scopePos.x - TankController.tank.position.y;
             let yDiff = TankController.scopePos.y - TankController.tank.position.x;
             
@@ -39,15 +47,16 @@ export class BulletController {
                 // console.log(xDiff);
                 // console.log(yDiff);
             }
+
+            BulletController._bullet.moveBullet(xDiff*-1,yDiff*-1);
+
             // console.log(xDiff);
             // console.log(yDiff);
             
-            this._bullet.moveBullet(xDiff*-1,yDiff*-1);
-            cont = 0;
             
+           
         }
-        cont++;
-        // console.log(cont);
+
         
     }
 }

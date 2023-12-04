@@ -1,7 +1,6 @@
-import { Box } from "@mui/material";
-import { Position } from "../models/Tank";
 import React, { useState } from "react";
 import { TankController } from "../controllers/TankController";
+import { GameController } from "../controllers/GameController";
 
 
 interface ScopeComponentProps{
@@ -11,23 +10,16 @@ interface ScopeComponentProps{
 
 export default function ScopeComponent(props:ScopeComponentProps){
 
-    // TODO: El scope no se mueve por el trggercomonentrerender que ya no esta en mainCanvas
-
     const [position, setPosition] = React.useState(TankController.scopePos);
 
-
+    const scopePosition = () => setPosition(TankController.scopePos);
 
     React.useEffect(() => {
-        setInterval(() => {
-            setPosition(TankController.scopePos);
-        }, 24);
+        GameController.addToGameLoop(scopePosition)
+        console.log("renderizado");
     }, [])
 
-    // React.useEffect(() => {
-    //     console.log("hamaica");
-        
-    //     return (()=>{})
-    // }, [position])
+
 
     return(
             <>

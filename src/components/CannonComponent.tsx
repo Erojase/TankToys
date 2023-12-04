@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import { Position } from "../models/Tank";
 import React from "react";
+import { GameController } from "../controllers/GameController";
 import { TankController } from "../controllers/TankController";
 
 
@@ -16,10 +16,13 @@ export default function CannonComponent(props:TankComponentProps){
 
     const [rotation, setRotation] = React.useState(TankController.scopePos);
 
+    const cannonRotation = () => setRotation(TankController.scopePos);
+
     React.useEffect(() => {
-        setInterval(() => {
-            setRotation(TankController.scopePos);
-        }, 24);
+        GameController.addToGameLoop(cannonRotation)
+        // setInterval(() => {
+        //     setRotation(TankController.scopePos);
+        // }, 24);
     }, [])
 
 

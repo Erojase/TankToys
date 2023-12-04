@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
-import { Position } from "../models/Tank";
 import React from "react";
 import { GameController } from "../controllers/GameController";
 import { TankController } from "../controllers/TankController";
+import { Position } from "../models/Tank";
 
 
 interface TankComponentProps {

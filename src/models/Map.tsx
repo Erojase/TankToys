@@ -76,7 +76,7 @@ export class GameMap {
 
 
         let imgs = [];
-        let terrains:string[] = ["wall.jpg", "floor.jpg", "dirt.jpg"];
+        let terrains:string[] = ["wall.png", "floor.jpg", "dirt.jpg"];
         for (let i = 0; i < map.length; i++) {
             let row = [];
             for (let j = 0; j < map[i].length; j++) {
