@@ -18,7 +18,7 @@ export default function MapComponent(props: MapComponentProps) {
         return (
             <div>
                 {
-                    project.map(another => <img src={"imgs/" + another}></img>)
+                    project.map(another => <img height={50} width={50} src={"imgs/" + another}></img>)
                 }
             </div>
         )
@@ -38,8 +38,8 @@ export default function MapComponent(props: MapComponentProps) {
         // </Box>
 
         <Box sx={{
-            width: 100,
-            height: 100,
+            width: 50,
+            height: 50,
             display: "flex"
         }}>
             {projectItems}

@@ -1,8 +1,6 @@
 export class GameController {
 
     private static running:boolean = false;
-
-    private static fps: number = 24; 
     
     private static _updatable : (()=>any)[] = [];
 
@@ -35,7 +33,7 @@ export class GameController {
         if (this.running) {
             setTimeout(() => {
                 this.Update();
-            }, this.fps);
+            }, 24);
         }
     }
 

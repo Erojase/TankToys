@@ -59,11 +59,11 @@ export class GameMap {
         let map = GameMap._map;
         
 
-        for (let i = 0; i < 16; i++) {
+        for (let i = 0; i < 24; i++) {
             let row:number[] = [];
-            for (let j = 0; j < 24; j++) {
+            for (let j = 0; j < 16; j++) {
                 
-                if (i == 0 || j == 0 || i == 15 || j == 23) {
+                if (i == 0 || j == 0 || j == 15 || i == 23) {
                     row[j] = 0;
                 } else {
                     row[j] = Math.floor(Math.random()*3);
@@ -76,7 +76,7 @@ export class GameMap {
 
 
         let imgs = [];
-        let terrains:string[] = ["wall.jpg", "floor.jpg", "dirt.jpg"];
+        let terrains:string[] = ["wall.png", "floor.jpg", "dirt.jpg"];
         for (let i = 0; i < map.length; i++) {
             let row = [];
             for (let j = 0; j < map[i].length; j++) {
