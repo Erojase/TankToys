@@ -74,6 +74,56 @@ export class GameMap {
             
         }
 
+        let colli:number[][][] = [];
+        for (let i = 0; i < map.length; i++) {
+            let row:number[][] = [];
+            for (let j = 0; j < map[i].length; j++) {
+                let lrud:number[] = [];
+
+                if (i == 0 && j > 0 && j < map[i].length-1) {
+                    lrud = [0,0,0,1];
+                } else if (i == 0 && (j == 0 || j == map[i].length-1)) {
+                    lrud = [0,0,0,0];
+                } else if (j == 0 && i > 0 && i < map.length-1) {
+                    lrud = [0,1,0,0];
+                } else if (j == 0 && (i == 0 || i == map.length-1)) {
+                    lrud = [0,0,0,0];
+                } else if (i == map.length-1 && j > 0 && j < map[i].length-1) {
+                    lrud = [0,0,1,0];
+                } else if (i == map.length-1 && (j == 0 || j == map[i].length-1)) {
+                    lrud = [0,0,0,0];
+                } else if (j == map[i].length-1 && i > 0 && i < map.length-1) {
+                    lrud = [1,0,0,0];
+                } else if (j == map[i].length-1 && (i == 0 || i == map.length-1)) {
+                    lrud = [0,0,0,0];
+                } else {
+                    if (map[i][j-1] != 0) {
+                        lrud.push(1);
+                    } else {
+                        lrud.push(0);
+                    }
+                    if (map[i][j+1] != 0) {
+                        lrud.push(1);
+                    } else {
+                        lrud.push(0);
+                    }
+                    if (map[i-1][j] != 0) {
+                        lrud.push(1);
+                    } else {
+                        lrud.push(0);
+                    }
+                    if (map[i+1][j-1] != 0) {
+                        lrud.push(1);
+                    } else {
+                        lrud.push(0);
+                    }
+                }
+
+                row.push(lrud);
+            }
+            colli.push(row);
+        }
+        console.log(colli);
 
         let imgs = [];
         let terrains:string[] = ["wall.png", "floor.jpg", "dirt.jpg"];
@@ -86,26 +136,42 @@ export class GameMap {
             imgs[i] = row;
         }
 
-        return imgs;
-
-        // for (let i = 0; i < map.length; i++) {
-        //     let txt = "";
-        //     for (let j = 0; j < map[i].length; j++) {
-        //         if (map[i][j] != 0) {
-        //             txt += " ";
-        //         } else {
-        //             txt += map[i][j];
-        //         }
-        //         txt += " ";
-        //     }
-        //     console.log(txt);
-            
-            
-        // }
-
-        // console.log("map");
-        
+        return imgs;        
 
     }
+
+    // public createColliders(map:number[][]) {
+    //     let colli:number[][][] = [];
+    //     for (let i = 0; i < map.length; i++) {
+    //         let row:number[][] = [];
+    //         for (let j = 0; j < map[i].length; j++) {
+    //             let lrud:number[] = []
+    //             if (map[i][j-1] != 0) {
+    //                 lrud.push(1);
+    //             } else {
+    //                 lrud.push(0);
+    //             }
+    //             if (map[i][j+1] != 0) {
+    //                 lrud.push(1);
+    //             } else {
+    //                 lrud.push(0);
+    //             }
+    //             if (map[i-1][j] != 0) {
+    //                 lrud.push(1);
+    //             } else {
+    //                 lrud.push(0);
+    //             }
+    //             if (map[i+1][j-1] != 0) {
+    //                 lrud.push(1);
+    //             } else {
+    //                 lrud.push(0);
+    //             }
+    //             row.push(lrud);
+    //         }
+    //         colli.push(row);
+    //     }
+    //     console.log(colli);
+        
+    // }
 
 }

@@ -47,8 +47,10 @@ export class BulletController {
                 // console.log(xDiff);
                 // console.log(yDiff);
             }
+            BulletController._bullet.xDiff = xDiff;
+            BulletController._bullet.yDiff = yDiff;
 
-            BulletController._bullet.moveBullet(xDiff*-1,yDiff*-1);
+            BulletController._bullet.moveBullet(BulletController._bullet.xDiff*-1,BulletController._bullet.yDiff*-1);
 
             // console.log(xDiff);
             // console.log(yDiff);
@@ -59,4 +61,6 @@ export class BulletController {
 
         
     }
+
+    
 }

@@ -70,9 +70,8 @@ export class TankController {
 
 
     public static scopePlacement(e:MouseEvent){
-
-        let centerX = this._tank.position.x + 100 / 2;
-        let centerY = this._tank.position.y + 100 / 2;
+        let centerX = this._tank.position.x + 45 / 2;
+        let centerY = this._tank.position.y + 45 / 2;
         
         this.scopePos = {x: e.pageX, y: e.pageY}
         let dx = e.pageX - centerY;

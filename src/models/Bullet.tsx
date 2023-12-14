@@ -13,6 +13,8 @@ export class Bullet {
 
     public speed = 1;
     public rotation = 0;
+    public xDiff:number = 0;
+    public yDiff:number = 0;
 
     constructor() {
         // BulletComponent;
