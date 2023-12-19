@@ -26,9 +26,13 @@ export class Bullet {
             this.position.x += x;
             this.position.y += y;
             // this.moveBullet(x, y);
+            // console.log("x: " + this.position.x + ",y: " + this.position.y);
+            
             BulletController.triggerComponentRender();
-        }, 24)
+        }, 200)
         this.currentJumps++;
+        // console.log("tumadre");
+        
         if (this.currentJumps != this.maxJumps) {
             this.moveBullet(x, y);     
         }

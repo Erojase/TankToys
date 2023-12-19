@@ -10,7 +10,7 @@ export class GameController {
     }
     
 
-    public static addToGameLoop(func:()=>any){
+    public static addToGameLoop(func:()=>any) {
         if (!this._updatable.includes(func)) {
             this._updatable.push(func);
             console.log(`${func.name} añadido al loop`);
