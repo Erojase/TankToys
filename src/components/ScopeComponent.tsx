@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { TankController } from "../controllers/TankController";
 import { GameController } from "../controllers/GameController";
+import { NONAME } from "dns";
 
 
 interface ScopeComponentProps{
@@ -23,9 +24,10 @@ export default function ScopeComponent(props:ScopeComponentProps){
 
     return(
             <>
-            <img src="/mira.png"  
+            <img src="/mira.png" id="scope"  
             style={{
                 position: 'absolute',
+                pointerEvents: "none",
                 zIndex: 100,
                 width: props.width,
                 height: props.heigth, 
