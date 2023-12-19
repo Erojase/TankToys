@@ -20,10 +20,10 @@ export default function BulletComponent(props:BulletProps){
     const bulletPosition = () => setPosition(BulletController.bullet.position)
 
     React.useEffect(() => {
-        //GameController.addToGameLoop(bulletPosition);
-        setInterval(()=>{
-            bulletPosition
-        }, 24)
+        GameController.addToGameLoop(bulletPosition);
+        // setInterval(()=>{
+        //     bulletPosition
+        // }, 24)
         console.log("renderizado");
     }, [])
 

@@ -29,9 +29,11 @@ export class BulletController {
     public static shoot() {
 
         if (BulletController.enabled) {
+            BulletController._bullet.stopMoves();
             BulletController.disableShooting();
             BulletController._bullet.currentJumps = 0;
-            BulletController._bullet.position = {...TankController.tank.position};
+            BulletController._bullet.position.x = TankController.tank.position.y;
+            BulletController._bullet.position.y = TankController.tank.position.x;
             console.log("disparo");
             BulletController._bullet.rotation = TankController.cannonRotation;
             let xDiff = TankController.scopePos.x - TankController.tank.position.y;
