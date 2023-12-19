@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import React from "react";
 import { BulletController } from "../controllers/BulletController";
 import { GameController } from "../controllers/GameController";
@@ -32,7 +32,7 @@ export default function MainCanvas() {
             width: window.innerWidth
         })
 
-        return () => { }
+        return () => {}
     }, [render])
 
 
@@ -45,6 +45,7 @@ export default function MainCanvas() {
         <Box style={{ border: "1px solid black", height: thisWindow.height, width: thisWindow.width }}
             ref={ContainerRef}
         >
+           
             <MapComponent width={10} heigth={10} position={GameMap.position} />
 
             <TankComponent
