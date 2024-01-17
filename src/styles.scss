@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+    --principal: #292929;
+    --secondary: #3ece8d;
+    --contrast: #29ad74;
+    --background: #0e0e0e;
+    --container-bg: rgb(68, 68, 68);
+    --text: #fefefe;
+    --contrast-text: black;
+}
+
+*{
+    font-family: sans-serif, 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS';
+    box-sizing: border-box;
+    margin: 0;
+}
+
+img{
+    user-select: none;
+}
+
+h1, h2, h3, h4, h5{
+    color: var(--text);
+    text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
