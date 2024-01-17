@@ -1,4 +1,6 @@
+import { log } from "console";
 import { angleToCoords } from "../utils/utils";
+import { GameMap } from "./Map";
 
 export interface Position{
     x: number;
@@ -30,7 +32,7 @@ export class Cannon{
 export class Tank {
 
     public position: Position = {
-        x: 100,
+        x: 250,
         y: 100
     };
 
@@ -47,14 +49,24 @@ export class Tank {
      * moveX
      */
     public moveX(steps:number) {
-        this.position.x += steps;
+        let chiv = GameMap.checkIfBlock(0,steps, this.position);
+        // console.log(chiv);
+        // console.log(this.position);
+        
+        
+        if (chiv) {
+            this.position.x += steps;
+        }
+
     }
 
     /**
      * moveY
      */
     public moveY(steps:number) {
-        this.position.y += steps;
+        if (GameMap.checkIfBlock(steps,0,this.position)) {
+            this.position.y += steps;
+        }
     }
 
     public move(pos:Position){
