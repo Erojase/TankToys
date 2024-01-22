@@ -2,8 +2,8 @@
     border: 1px solid red;
 } */
 
-body{
-    background-image: url(/assets/images/signIn-back_.png);
+.loginMain{
+    background-image: url(/assets/images/signIn-back.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
