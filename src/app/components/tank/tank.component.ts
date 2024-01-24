@@ -1,50 +1,45 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Input, HostListener, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CannonComponent } from "../cannon/cannon.component";
 import { GameController } from "../../controllers/GameController";
 import { TankController } from "../../controllers/TankController";
 import { Position } from "../../models/Tank";
-
-interface TankComponentProps {
-    width: number;
-    heigth: number;
-    position: Position;
-    rotation: number;
-}
 
 @Component({
     selector: 'app-tank',
     standalone: true,
     templateUrl: './tank.component.html',
     styleUrls: ['./tank.component.css'],
-    imports: [ CommonModule ]
+    imports: [ CommonModule, CannonComponent ]
 })
 export class TankComponent implements OnInit {
-    @Input() props: TankComponentProps;
-
     IGameController = GameController;
     ITankController = TankController;
 
-
     constructor() { }
+
+    ngOnInit() {
+        GameController.addToGameLoop(TankController.Move);
+    }
 
     @HostListener('keypress', ['$event'])
     onKeyPress(e: KeyboardEvent){
-        TankController.addKey(e.key), { once: true }
+        TankController.addKey(e.key)
     }
 
     @HostListener('keyup', ['$event'])
     onKeyUp(e: KeyboardEvent){
-        TankController.removeKey(e.key), { once: true }
+        TankController.removeKey(e.key)
     }
 
     setDivStyles(){
         return {
             "position": 'absolute',
-            "width": this.props.width,
-            "height": this.props.heigth,
-            "top": this.props.position.x,
-            "left": this.props.position.y,
-            "rotate": `${this.props.rotation}deg`,
+            "width": 45,
+            "height": 45,
+            "top": TankController.tank.position.x,
+            "left": TankController.tank.position.y,
+            "rotate": `${TankController.tank.rotation}deg`,
             "display": 'flex',
             "justifyContent": 'center',
             "alignItems": 'center',
@@ -55,16 +50,12 @@ export class TankComponent implements OnInit {
     setImgStyles(){
         return {
             "position": 'absolute',
-            "width": this.props.width,
-            "height": this.props.heigth,
+            "width": 45,
+            "height": 45,
             "zIndex": 50,
-            "rotate": `${this.props.rotation}deg`,
+            "rotate": `${TankController.tank.rotation}deg`,
             "border": '1px solid red'
         }
-    }
-
-    ngOnInit() {
-        GameController.addToGameLoop(TankController.Move);
     }
 
 }

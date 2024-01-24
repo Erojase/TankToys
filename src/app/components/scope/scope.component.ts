@@ -3,11 +3,6 @@ import { CommonModule } from '@angular/common';
 import { TankController } from "../../controllers/TankController";
 import { GameController } from "../../controllers/GameController";
 
-interface ScopeComponentProps {
-    width: number;
-    heigth: number;
-}
-
 @Component({
     selector: 'app-scope',
     standalone: true,
@@ -16,12 +11,9 @@ interface ScopeComponentProps {
     imports: [CommonModule]
 })
 export class ScopeComponent implements OnInit {
-    @Input() props: ScopeComponentProps;
 
     ITankController = TankController;
     IGameController = GameController;
-
-    position = TankController.scopePos;
 
     constructor() {
 
@@ -32,21 +24,15 @@ export class ScopeComponent implements OnInit {
             "position": 'absolute',
             "pointerEvents": "none",
             "zIndex": 100,
-            "width": this.props.width,
-            "height": this.props.heigth,
-            "top": this.position.y - (this.props.width / 2),
-            "left": this.position.x - (this.props.heigth / 2)
+            "width": 50,
+            "height": 50,
+            "top": TankController.scopePos.y - (50 / 2),
+            "left": TankController.scopePos.x - (50 / 2)
         }
-    }
-
-    scopePosition() {
-        this.position = TankController.scopePos;
     }
 
 
     ngOnInit() {
-        GameController.addToGameLoop(this.scopePosition);
-        console.log("ScopeComponent rendered");
     }
 
 }

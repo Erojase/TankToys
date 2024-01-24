@@ -3,12 +3,6 @@ import { CommonModule } from '@angular/common';
 import { GameController } from "../../controllers/GameController";
 import { TankController } from "../../controllers/TankController";
 
-interface CannonComponentProps {
-    width: number;
-    heigth: number;
-    rotation: number;
-}
-
 @Component({
     selector: 'app-cannon',
     templateUrl: './cannon.component.html',
@@ -17,31 +11,24 @@ interface CannonComponentProps {
     imports: [CommonModule]
 })
 export class CannonComponent implements OnInit {
-    @Input() props: CannonComponentProps;
+    @Input() width: number;
+    @Input() heigth: number;
 
-    ITankController = TankController;
-    IGameController = GameController;
-
-    rotation = TankController.scopePos;
-
-    constructor() { }
+    constructor() {}
 
     setStyles() {
         return {
             'position': 'relative',
             'zIndex': 55,
-            'width': this.props.width,
-            'height': this.props.heigth,
+            'width': this.width,
+            'height': this.heigth,
             'rotate': `${TankController.cannonRotation}rad`
         };
     }
 
-    cannonRotation() {
-        this.rotation = TankController.scopePos;
-    }
 
     ngOnInit() {
-        GameController.addToGameLoop(this.cannonRotation)
+        
     }
 
 }

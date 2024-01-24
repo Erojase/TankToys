@@ -2,12 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameMap, MapPosition } from '../../models/Map';
 
-interface MapComponentProps {
-    width: number;
-    heigth: number;
-    position: MapPosition;
-}
-
 @Component({
     selector: 'app-map',
     standalone: true,
@@ -18,7 +12,9 @@ interface MapComponentProps {
     ]
 })
 export class MapComponent implements OnInit {
-    @Input() props: MapComponentProps;
+    @Input() width: number;
+    @Input() heigth: number;
+    @Input() position: MapPosition;
 
     posx: number = -25;
     posy: number = 50;
@@ -36,14 +32,14 @@ export class MapComponent implements OnInit {
             return `
         <div style={{
             position: 'absolute',
-            top: ${this.props.position.y = this.posy = 50},
-            left: ${this.props.position.x = this.posx += 25}
+            top: ${this.position.y = this.posy = 50},
+            left: ${this.position.x = this.posx += 25}
         }}>
             {
                 project.map(another => <img height={50} width={50} src={"imgs/" + another} style={{
                     position: 'absolute',
-                    top: ${this.props.position.y = this.posy += 50},
-                    left: ${this.props.position.x = this.posx}
+                    top: ${this.position.y = this.posy += 50},
+                    left: ${this.position.x = this.posx}
                 }}></img>)
             }
         </div>
