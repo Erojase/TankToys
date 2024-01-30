@@ -25,10 +25,10 @@ export class BulletComponent implements OnInit {
         return {
             "position": 'absolute',
             "zIndex": 60,
-            "width": 30,
-            "height": 20,
-            "top": BulletController.bullet.position.y,
-            "left": BulletController.bullet.position.x,
+            "width": "30px",
+            "height": "20px",
+            "top": `${BulletController.bullet.position.y}px`,
+            "left": `${BulletController.bullet.position.x}px`,
             "rotate": `${BulletController.bullet.rotation}rad`
         }
     }

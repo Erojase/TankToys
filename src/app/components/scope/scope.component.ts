@@ -24,10 +24,10 @@ export class ScopeComponent implements OnInit {
             "position": 'absolute',
             "pointerEvents": "none",
             "zIndex": 100,
-            "width": 50,
-            "height": 50,
-            "top": TankController.scopePos.y - (50 / 2),
-            "left": TankController.scopePos.x - (50 / 2)
+            "width": "50px",
+            "height": "50px",
+            "top": `${TankController.scopePos.y - (50 / 2)}px`,
+            "left": `${TankController.scopePos.x - (50 / 2)}px`
         }
     }
 

@@ -20,8 +20,8 @@ export class CannonComponent implements OnInit {
         return {
             'position': 'relative',
             'zIndex': 55,
-            'width': this.width,
-            'height': this.heigth,
+            'width': `${this.width}px`,
+            'height': `${this.heigth}px`,
             'rotate': `${TankController.cannonRotation}rad`
         };
     }

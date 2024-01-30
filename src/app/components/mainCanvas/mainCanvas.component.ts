@@ -46,8 +46,8 @@ export class MainCanvasComponent implements OnInit {
     setDivStyles(){
         return {
             "border": "1px solid black", 
-            "height": this.currentWindow.height, 
-            "width": this.currentWindow.width
+            "height": `${this.currentWindow.height}px`, 
+            "width": `${this.currentWindow.width}px`
         }
     }
 

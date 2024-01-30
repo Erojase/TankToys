@@ -22,12 +22,12 @@ export class TankComponent implements OnInit {
         GameController.addToGameLoop(TankController.Move);
     }
 
-    @HostListener('keypress', ['$event'])
+    @HostListener('window:keypress', ['$event'])
     onKeyPress(e: KeyboardEvent){
         TankController.addKey(e.key)
     }
 
-    @HostListener('keyup', ['$event'])
+    @HostListener('window:keyup', ['$event'])
     onKeyUp(e: KeyboardEvent){
         TankController.removeKey(e.key)
     }
@@ -35,10 +35,10 @@ export class TankComponent implements OnInit {
     setDivStyles(){
         return {
             "position": 'absolute',
-            "width": 45,
-            "height": 45,
-            "top": TankController.tank.position.x,
-            "left": TankController.tank.position.y,
+            "width": "45px",
+            "height": "45px",
+            "top": `${TankController.tank.position.x}px`,
+            "left": `${TankController.tank.position.y}px`,
             "rotate": `${TankController.tank.rotation}deg`,
             "display": 'flex',
             "justifyContent": 'center',
@@ -50,11 +50,11 @@ export class TankComponent implements OnInit {
     setImgStyles(){
         return {
             "position": 'absolute',
-            "width": 45,
-            "height": 45,
-            "zIndex": 50,
+            "width": "45px",
+            "height": "45px",
+            "zIndex": "50px",
             "rotate": `${TankController.tank.rotation}deg`,
-            "border": '1px solid red'
+            "border": '1px solid green'
         }
     }
 

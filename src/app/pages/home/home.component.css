@@ -1,26 +1,21 @@
-.main {
+div{
+    color: var(--text);
+}
+
+.main{
     background: rgb(4,65,84);
     background: linear-gradient(180deg, rgba(4,65,84,1) 0%, rgba(135,196,177,1) 100%);
     background-image: url(/assets/images/background1.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-}
-
-div{
-    color: var(--text);
-}
-
-.main{
-    height: 90vh;
+    height: 100vh;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(5, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
 }
-    
-/* .div1 { grid-area: 1 / 1 / 2 / 6; } */
 
 .title{
     grid-area: 2 / 1 / 3 / 6;
