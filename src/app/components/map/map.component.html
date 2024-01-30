@@ -1,11 +1,12 @@
 <div>
-  <input type="button" value="paco" onclick="generateMap(false)" />
+  <input type="button" value="paco"/>
   <div
     [innerHTML]="map"
+    [ngStyle]="setMapStyle()"
     [ngStyle]="{
-      width: 50,
-      height: 50,
-      display: 'flex'
-    }"
+      position: 'absolute',
+      top: 5,
+      left: 5
+  }"
   ></div>
 </div>

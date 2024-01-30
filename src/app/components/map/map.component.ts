@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameMap, MapPosition } from '../../models/Map';
 
@@ -14,37 +14,37 @@ import { GameMap, MapPosition } from '../../models/Map';
 export class MapComponent implements OnInit {
     @Input() width: number;
     @Input() heigth: number;
-    @Input() position: MapPosition;
+    position: MapPosition;
 
     posx: number = -25;
     posy: number = 50;
 
     map: any[];
 
-    constructor() { }
+    constructor() {
+        this.position = GameMap.position;
+    }
+
+    @HostListener('click', ['$event'])
+    onClick(e: Event) {
+        this.generateMap(false);
+    }
 
     ngOnInit() {
         this.generateMap(true);
     }
 
+    setMapStyle() {
+        return {
+            "width": "50px",
+            "height": "50px",
+            "display": 'flex'
+        }
+    }
+
     generateMap(random: boolean) {
-        let projectItems = GameMap.createMap(random).map(project => {
-            return `
-        <div style={{
-            position: 'absolute',
-            top: ${this.position.y = this.posy = 50},
-            left: ${this.position.x = this.posx += 25}
-        }}>
-            {
-                project.map(another => <img height={50} width={50} src={"imgs/" + another} style={{
-                    position: 'absolute',
-                    top: ${this.position.y = this.posy += 50},
-                    left: ${this.position.x = this.posx}
-                }}></img>)
-            }
-        </div>
-     `
-        });
+        let projectItems = GameMap.createMap(random).map(project => 
+            "pepe");
         this.map = projectItems;
     }
 
