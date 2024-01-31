@@ -1,6 +1,7 @@
 <div>
-  <input type="button" value="paco"/>
+  <input type="button" value="paco" (clicked)="generateMap(false)"/>
   <div
+    #mapContainer
     [innerHTML]="map"
     [ngStyle]="setMapStyle()"
     [ngStyle]="{

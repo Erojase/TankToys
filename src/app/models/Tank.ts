@@ -48,14 +48,11 @@ export class Tank {
      * moveX
      */
     public moveX(steps:number) {
-        let chiv = GameMap.checkIfBlock(0,steps, this.position);
+        // let chiv = GameMap.checkIfBlock(0,steps, this.position);
         // console.log(chiv);
         // console.log(this.position);
         
-        
-        if (chiv) {
-            this.position.x += steps;
-        }
+        this.position.x += steps;
 
     }
 
@@ -63,9 +60,7 @@ export class Tank {
      * moveY
      */
     public moveY(steps:number) {
-        if (GameMap.checkIfBlock(steps,0,this.position)) {
-            this.position.y += steps;
-        }
+        this.position.y += steps;
     }
 
     public move(pos:Position){

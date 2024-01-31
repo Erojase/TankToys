@@ -9,12 +9,21 @@ export interface Position{
     y: number;
 }
 
+export class Collider{
+    type: "wall" | null
+    left: number
+    right: number
+    top: number
+    bottom: number
+}
+
 export class GameMap {
 
     private tileTypes = ["Grass", "Water", "Mountain", "Woods"]
     private _width : number;
     private _height : number;
     public static _map:number[][] = [];
+    public static colliders : Collider[] = [];
 
     public static blocksPos:MapPosition[][] = [];
     
@@ -42,6 +51,7 @@ export class GameMap {
     public set width(v : number) {
         this._width = v;
     }
+    
     
     public static createMap(random:boolean) {
         
@@ -114,7 +124,7 @@ export class GameMap {
     }
 
     public createColliders(map:number[][]) {
-        let colli:number[][][] = [];
+        let collider:number[][][] = [];
         for (let i = 0; i < map.length; i++) {
             let row:number[][] = [];
             for (let j = 0; j < map[i].length; j++) {
@@ -141,10 +151,21 @@ export class GameMap {
                 }
                 row.push(lrud);
             }
-            colli.push(row);
+            collider.push(row);
         }
-        console.log(colli);
+        console.log(collider);
         
+    }
+
+    public static registerCollider(element:DOMRect){
+        let collider: Collider = {
+            type : "wall",
+            bottom: element.bottom,
+            left: element.left,
+            right: element.right,
+            top: element.top
+        }
+        this.colliders.push(collider);
     }
 
     public static aleatMapGenerator(map:number[][]) {
@@ -169,54 +190,18 @@ export class GameMap {
         console.log(GameMap.blocksPos);
     }
 
-    public static checkIfBlock(x:number, y:number, position:Position) {
-        // console.log(GameMap.blocksPos);
-        
-        for (let i = 0; i < GameMap.blocksPos.length; i++) {
-            for (let j = 0; j < GameMap.blocksPos[i].length; j++) {
-                if (x > 0) {
-                    if ((position.x + 50 + x > GameMap.blocksPos[i][j].x && position.x + 50 + x < GameMap.blocksPos[i][j].x+50) && (position.y+50 >= GameMap.blocksPos[i][j].y && position.y <= GameMap.blocksPos[i][j].y + 50)) {
-                        // console.log(position.x);
-                        // console.log(GameMap.blocksPos[i][j].x);
-                        // console.log(i + "," + j);
-                        
-                        return false;
-                    }
-                } else if (x < 0) {
-                    if ((position.x + x >= GameMap.blocksPos[i][j].x && position.x + x < GameMap.blocksPos[i][j].x+55) && (position.y >= GameMap.blocksPos[i][j].y && position.y <= GameMap.blocksPos[i][j].y + 60)) {
-                        console.log(position.x);
-                        console.log(GameMap.blocksPos[i][j].x);
-                        console.log(i + "," + j);
-                        
-                        return false;
-                    }
-                }
-
-                if (y > 0) {
-                    if ((position.y + 50 + y > GameMap.blocksPos[i][j].y && position.y + 50 + y < GameMap.blocksPos[i][j].y+50) && (position.x+50 >= GameMap.blocksPos[i][j].x && position.x <= GameMap.blocksPos[i][j].x + 50)) {
-                        // console.log(position.x);
-                        // console.log(GameMap.blocksPos[i][j].x);
-                        // console.log(i + "," + j);
-                        
-                        return false;
-                    }
-                } else if (y < 0) {
-                    if ((position.y + y >= GameMap.blocksPos[i][j].y && position.y + y < GameMap.blocksPos[i][j].y+55) && (position.x >= GameMap.blocksPos[i][j].x && position.x <= GameMap.blocksPos[i][j].x + 60)) {
-                        console.log(position.x);
-                        console.log(GameMap.blocksPos[i][j].x);
-                        console.log(i + "," + j);
-                        
-                        return false;
-                    }
-                }
-
-                
-                
-                
+    public static checkIfBlock(tank: DOMRect) {
+        for (const collider of this.colliders) {
+            var overlap = !(tank.right < collider.left ||
+                tank.left > collider.right ||
+                tank.bottom < collider.top ||
+                tank.top > collider.bottom)
+            if (overlap) {
+                console.log("overlap");
+                return true;
             }
-            
         }
-        return true;
+        return false;
     }
 
 }

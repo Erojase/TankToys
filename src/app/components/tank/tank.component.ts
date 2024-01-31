@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostListener, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, HostListener, OnChanges, SimpleChanges, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CannonComponent } from "../cannon/cannon.component";
 import { GameController } from "../../controllers/GameController";
@@ -12,14 +12,18 @@ import { Position } from "../../models/Tank";
     styleUrls: ['./tank.component.css'],
     imports: [ CommonModule, CannonComponent ]
 })
-export class TankComponent implements OnInit {
-    IGameController = GameController;
-    ITankController = TankController;
+export class TankComponent implements OnInit, AfterViewInit {
+    @ViewChild('self') self: ElementRef<HTMLElement>; 
 
-    constructor() { }
+    constructor() { 
+        
+    }
 
     ngOnInit() {
-        GameController.addToGameLoop(TankController.Move);
+        GameController.addToGameLoop(()=>TankController.Move(this.self.nativeElement.getBoundingClientRect()));
+    }
+    
+    ngAfterViewInit(){
     }
 
     @HostListener('window:keypress', ['$event'])
