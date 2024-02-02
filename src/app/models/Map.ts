@@ -197,7 +197,10 @@ export class GameMap {
                 tank.bottom < collider.top ||
                 tank.top > collider.bottom)
             if (overlap) {
-                console.log("overlap");
+                console.group("overlap");
+                console.log(collider);
+                console.groupEnd();
+                
                 return true;
             }
         }

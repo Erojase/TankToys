@@ -4,10 +4,10 @@ import { GameMap } from "../models/Map";
 
 
 class MovementKeys {
-    static readonly Forward = ["w", "W", "ArrowUp"];
+    static readonly Up = ["w", "W", "ArrowUp"];
     static readonly Right = ["d", "D", "ArrowRight"]
     static readonly Left = ["a", "A", "ArrowLeft"]
-    static readonly Backward = ["s", "S", "ArrowDown"]
+    static readonly Down = ["s", "S", "ArrowDown"]
 }
 
 let directions: string[] = [];
@@ -45,23 +45,50 @@ export class TankController {
         }
     }
 
+    public static removeKeys(keys: string[]) {
+        keys.forEach(key => {
+            this.removeKey(key);
+        });
+    }
+
 
 
     public static Move(tank:DOMRect) {
-
-        if (MovementKeys.Forward.filter(x => TankController.directions.includes(x)).length > 0) {
+        
+        if (MovementKeys.Up.filter(x => TankController.directions.includes(x)).length > 0) {
             if (GameMap.checkIfBlock(tank)) {
+                this.removeKeys(MovementKeys.Up)
+                TankController.tank.moveX(TankController.tank.speed)
+                console.log("Up");
                 return;
             }
             TankController.tank.moveX(TankController.tank.speed * -1)
         }
-        if (MovementKeys.Backward.filter(x => TankController.directions.includes(x)).length > 0) {
+        if (MovementKeys.Down.filter(x => TankController.directions.includes(x)).length > 0) {
+            if (GameMap.checkIfBlock(tank)) {
+                this.removeKeys(MovementKeys.Down)
+                TankController.tank.moveX(TankController.tank.speed * -1)
+                console.log("Down");
+                return;
+            }
             TankController.tank.moveX(TankController.tank.speed)
         }
         if (MovementKeys.Left.filter(x => TankController.directions.includes(x)).length > 0) {
+            if (GameMap.checkIfBlock(tank)) {
+                this.removeKeys(MovementKeys.Left)
+                TankController.tank.moveY(TankController.tank.speed)
+                console.log("Left");
+                return;
+            }
             TankController.tank.moveY(TankController.tank.speed * -1)
         }
         if (MovementKeys.Right.filter(x => TankController.directions.includes(x)).length > 0) {
+            if (GameMap.checkIfBlock(tank)) {
+                this.removeKeys(MovementKeys.Right)
+                TankController.tank.moveY(TankController.tank.speed * -1)
+                console.log("Right");
+                return;
+            }
             TankController.tank.moveY(TankController.tank.speed)
         }
     }
