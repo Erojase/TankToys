@@ -55,11 +55,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     generateMap(random: boolean) {
         let projectItems = GameMap.createMap(random).map(project => {
             return (
-                `<div [ngStyle]="{
-                    'position': 'absolute',
-                    'top': ${this.position.y = this.posy = 50},
-                    'left': ${this.position.x = this.posx += 25}}"
-                >
+                `<div class="column">
                     ${project.map(another => `<img height="50px" width="50px" src="/assets/images/map/${another}" [ngStyle]="{
                             'position': 'absolute',
                             'padding': '0', 

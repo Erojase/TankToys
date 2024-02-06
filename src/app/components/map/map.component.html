@@ -1,13 +1,9 @@
-<div>
+<div class="pepe">
   <input type="button" value="paco" (clicked)="generateMap(false)"/>
   <div
     #mapContainer
     [innerHTML]="map"
     [ngStyle]="setMapStyle()"
-    [ngStyle]="{
-      position: 'absolute',
-      top: 5,
-      left: 5
-  }"
+   
   ></div>
 </div>
