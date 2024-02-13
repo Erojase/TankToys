@@ -206,5 +206,25 @@ export class GameMap {
         }
         return false;
     }
+    public static checkIfBlockV2(tank: DOMRect, up:number, down:number, left:number, right:number) {
+        for (const collider of this.colliders) {
+            var overlap = !(tank.right+right < collider.left ||
+                tank.left+left > collider.right ||
+                tank.bottom+down < collider.top ||
+                tank.top+up > collider.bottom)
+                
+            if (overlap) {
+                console.group("overlap");
+                console.log(collider);
+                console.groupEnd();
+                
+                return true;
+            }
+        }
+        return false;
+    }
+    
+
+
 
 }

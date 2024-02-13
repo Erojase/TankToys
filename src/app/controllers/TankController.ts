@@ -56,40 +56,72 @@ export class TankController {
     public static Move(tank:DOMRect) {
         
         if (MovementKeys.Up.filter(x => TankController.directions.includes(x)).length > 0) {
-            if (GameMap.checkIfBlock(tank)) {
+            if (GameMap.checkIfBlockV2(tank,TankController.tank.speed * -1,0,0,0)) {
                 this.removeKeys(MovementKeys.Up)
-                TankController.tank.moveX(TankController.tank.speed)
+                // TankController.tank.moveX(TankController.tank.speed)
                 console.log("Up");
                 return;
+            } else {
+                TankController.tank.moveX(TankController.tank.speed * -1)
             }
-            TankController.tank.moveX(TankController.tank.speed * -1)
         }
         if (MovementKeys.Down.filter(x => TankController.directions.includes(x)).length > 0) {
-            if (GameMap.checkIfBlock(tank)) {
+            if (GameMap.checkIfBlockV2(tank,0,TankController.tank.speed,0,0)) {
                 this.removeKeys(MovementKeys.Down)
-                TankController.tank.moveX(TankController.tank.speed * -1)
+                // TankController.tank.moveX(TankController.tank.speed * -1)
                 console.log("Down");
                 return;
+            } else {
+                TankController.tank.moveX(TankController.tank.speed)
             }
-            TankController.tank.moveX(TankController.tank.speed)
         }
         if (MovementKeys.Left.filter(x => TankController.directions.includes(x)).length > 0) {
-            if (GameMap.checkIfBlock(tank)) {
+            if (GameMap.checkIfBlockV2(tank,0,0,TankController.tank.speed * -1,0)) {
                 this.removeKeys(MovementKeys.Left)
-                TankController.tank.moveY(TankController.tank.speed)
+                // TankController.tank.moveY(TankController.tank.speed)
                 console.log("Left");
                 return;
+            } else {                
+                TankController.tank.moveY(TankController.tank.speed * -1)
             }
-            TankController.tank.moveY(TankController.tank.speed * -1)
         }
         if (MovementKeys.Right.filter(x => TankController.directions.includes(x)).length > 0) {
-            if (GameMap.checkIfBlock(tank)) {
+            if (GameMap.checkIfBlockV2(tank,0,0,0,TankController.tank.speed)) {
                 this.removeKeys(MovementKeys.Right)
-                TankController.tank.moveY(TankController.tank.speed * -1)
+                // TankController.tank.moveY(TankController.tank.speed * -1)
                 console.log("Right");
                 return;
+            } else {
+                
+                TankController.tank.moveY(TankController.tank.speed)
             }
-            TankController.tank.moveY(TankController.tank.speed)
+        }
+    }
+    public static MoveV2(tank:DOMRect) {
+        
+        if (MovementKeys.Up.filter(x => TankController.directions.includes(x)).length > 0) {
+            if (!GameMap.checkIfBlockV2(tank,TankController.tank.speed * -1,0,0,0)) {
+                console.log("Moving Up");
+                TankController.tank.moveX(TankController.tank.speed * -1)
+            }
+        }
+        if (MovementKeys.Down.filter(x => TankController.directions.includes(x)).length > 0) {
+            if (!GameMap.checkIfBlockV2(tank,0,TankController.tank.speed,0,0)) {
+                console.log("Moving Down");
+                TankController.tank.moveX(TankController.tank.speed)
+            }
+        }
+        if (MovementKeys.Left.filter(x => TankController.directions.includes(x)).length > 0) {
+            if (!GameMap.checkIfBlockV2(tank,0,0,TankController.tank.speed * -1,0)) {
+                console.log("Moving Left");
+                TankController.tank.moveY(TankController.tank.speed * -1)
+            }
+        }
+        if (MovementKeys.Right.filter(x => TankController.directions.includes(x)).length > 0) {
+            if (!GameMap.checkIfBlockV2(tank,0,0,0,TankController.tank.speed)) {
+                console.log("Moving Right");
+                TankController.tank.moveY(TankController.tank.speed)
+            }
         }
     }
 

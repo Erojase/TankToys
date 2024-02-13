@@ -20,7 +20,7 @@ export class TankComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        GameController.addToGameLoop(()=>TankController.Move(this.self.nativeElement.getBoundingClientRect()));
+        GameController.addToGameLoop(()=>TankController.MoveV2(this.self.nativeElement.getBoundingClientRect()));
     }
     
     ngAfterViewInit(){
