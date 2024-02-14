@@ -31,12 +31,25 @@ export class Bullet {
             
             BulletController.triggerComponentRender();
             
+            let block: boolean[] = GameMap.checkIfBlockNullet(this.position, x, y);
             
-            if (!GameMap.checkIfBlockNullet(this.position, x, y) && this.currentBounce <= this.maxBounce) {
+            if (!block[0] && this.currentBounce <= this.maxBounce) {
                 this.moveBullet(x, y);  
                 return;   
             } else {
                 this.currentBounce++;
+                
+                if (this.currentBounce <= this.maxBounce) {
+                    if (block[1]) {
+                        this.rotation = this.rotation*2;
+                        x = x*-1;
+                    } else {
+                        this.rotation = this.rotation*-1;
+                        y = y*-1;
+                    }
+                    this.moveBullet(x, y); 
+                }
+                
             }
         }, this.speed)
         

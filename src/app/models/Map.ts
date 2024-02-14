@@ -206,14 +206,26 @@ export class GameMap {
             if (overlap) {
                 console.group("overlap");
                 console.log(collider);
-                console.groupEnd();
-                
+                console.groupEnd(); 
                 
 
-                return true;
+                let colliCenter: Position =  {
+                    x: collider.right-25,
+                    y: collider.top-25
+                };
+                
+                console.log(Math.abs(position.x - colliCenter.x));
+                console.log(Math.abs(position.y - colliCenter.y));
+
+                if (Math.abs(position.x - colliCenter.x) > Math.abs(position.y - colliCenter.y)) {
+                    return [true,true];
+                } else {
+                    return [true, false]
+                }
+              
             }
         }
-        return false;
+        return [false,false];
     }
     
 
