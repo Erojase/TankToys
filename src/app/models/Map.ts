@@ -190,12 +190,12 @@ export class GameMap {
         console.log(GameMap.blocksPos);
     }
 
-    public static checkIfBlock(tank: DOMRect) {
+    public static checkIfBlockNullet(position: Position, x: number, y: number) {
         for (const collider of this.colliders) {
-            var overlap = !(tank.right < collider.left ||
-                tank.left > collider.right ||
-                tank.bottom < collider.top ||
-                tank.top > collider.bottom)
+            var overlap = !(position.x+x < collider.left ||
+                position.x+x > collider.right ||
+                position.y+y < collider.top ||
+                position.y+y > collider.bottom)
             if (overlap) {
                 console.group("overlap");
                 console.log(collider);
@@ -206,6 +206,8 @@ export class GameMap {
         }
         return false;
     }
+    
+
     public static checkIfBlockV2(tank: DOMRect, up:number, down:number, left:number, right:number) {
         for (const collider of this.colliders) {
             var overlap = !(tank.right+right < collider.left ||
@@ -224,6 +226,7 @@ export class GameMap {
         return false;
     }
     
+
 
 
 

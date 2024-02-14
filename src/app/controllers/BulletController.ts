@@ -32,26 +32,28 @@ export class BulletController {
             BulletController._bullet.stopMoves();
             BulletController.disableShooting();
             BulletController._bullet.currentJumps = 0;
-            BulletController._bullet.position.x = TankController.tank.position.y;
-            BulletController._bullet.position.y = TankController.tank.position.x;
+            BulletController._bullet.position.x = TankController.tank.position.y+12.5;
+            BulletController._bullet.position.y = TankController.tank.position.x+10;
             console.log("disparo");
             BulletController._bullet.rotation = TankController.cannonRotation;
-            let xDiff = TankController.scopePos.x - TankController.tank.position.y;
-            let yDiff = TankController.scopePos.y - TankController.tank.position.x;
+            let xDiff = TankController.scopePos.x - TankController.tank.position.y+22.5;
+            let yDiff = TankController.scopePos.y - TankController.tank.position.x+22.5;
             
             let xSeg = TankController.scopePos.x;
             let ySeg = TankController.scopePos.y;
             while (Math.abs(xDiff) > 1 && Math.abs(yDiff) > 1) {
-                xSeg = (TankController.tank.position.y + xSeg)/2;
-                ySeg = (TankController.tank.position.x + ySeg)/2;
-                xDiff = TankController.tank.position.y - xSeg;
-                yDiff = TankController.tank.position.x - ySeg;
+                xSeg = (TankController.tank.position.y+22.5 + xSeg)/2;
+                ySeg = (TankController.tank.position.x+22.5 + ySeg)/2;
+                xDiff = TankController.tank.position.y+22.5 - xSeg;
+                yDiff = TankController.tank.position.x+22.5 - ySeg;
                 // console.log(xDiff);
                 // console.log(yDiff);
             }
             BulletController._bullet.xDiff = xDiff;
             BulletController._bullet.yDiff = yDiff;
 
+            
+            
             BulletController._bullet.moveBullet(BulletController._bullet.xDiff*-1,BulletController._bullet.yDiff*-1);
 
             // console.log(xDiff);

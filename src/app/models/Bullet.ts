@@ -1,9 +1,10 @@
 import { BulletController } from '../controllers/BulletController';
+import { GameMap } from './Map';
 import { Position } from './Tank';
 
 export class Bullet {
 
-    private maxJumps = 50;
+    private maxJumps = 100010;
     public currentJumps = 0;
 
     public position: Position = {
@@ -31,7 +32,7 @@ export class Bullet {
             BulletController.triggerComponentRender();
             this.currentJumps++;
             
-            if (this.currentJumps != this.maxJumps) {
+            if (this.currentJumps != this.maxJumps && !GameMap.checkIfBlockNullet(this.position, x, y)) {
                 this.moveBullet(x, y);  
                 return;   
             }
