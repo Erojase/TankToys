@@ -4,8 +4,8 @@ import { Position } from './Tank';
 
 export class Bullet {
 
-    private maxJumps = 100010;
-    public currentJumps = 0;
+    private maxBounce = 1;
+    public currentBounce = 0;
 
     public position: Position = {
         x: 100,
@@ -30,11 +30,13 @@ export class Bullet {
             // console.log("x: " + this.position.x + ",y: " + this.position.y);
             
             BulletController.triggerComponentRender();
-            this.currentJumps++;
             
-            if (this.currentJumps != this.maxJumps && !GameMap.checkIfBlockNullet(this.position, x, y)) {
+            
+            if (!GameMap.checkIfBlockNullet(this.position, x, y) && this.currentBounce <= this.maxBounce) {
                 this.moveBullet(x, y);  
                 return;   
+            } else {
+                this.currentBounce++;
             }
         }, this.speed)
         
@@ -42,7 +44,7 @@ export class Bullet {
     }
 
     public stopMoves(){
-        this.currentJumps = this.maxJumps;
+        this.currentBounce = this.maxBounce;
     }
 
 

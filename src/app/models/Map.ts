@@ -192,15 +192,24 @@ export class GameMap {
 
     public static checkIfBlockNullet(position: Position, x: number, y: number) {
         for (const collider of this.colliders) {
-            var overlap = !(position.x+x < collider.left ||
+            var overlap = !(position.x+x+20 < collider.left ||
                 position.x+x > collider.right ||
-                position.y+y < collider.top ||
+                position.y+y+20 < collider.top ||
                 position.y+y > collider.bottom)
+
+                // console.log("");
+                // console.log(position.x+x < collider.left);
+                // console.log(position.x+x > collider.right);
+                // console.log(position.y+y < collider.top);
+                // console.log(position.y+y > collider.bottom);
+
             if (overlap) {
                 console.group("overlap");
                 console.log(collider);
                 console.groupEnd();
                 
+                
+
                 return true;
             }
         }

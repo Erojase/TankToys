@@ -31,7 +31,7 @@ export class BulletController {
         if (BulletController.enabled) {
             BulletController._bullet.stopMoves();
             BulletController.disableShooting();
-            BulletController._bullet.currentJumps = 0;
+            BulletController._bullet.currentBounce = 0;
             BulletController._bullet.position.x = TankController.tank.position.y+12.5;
             BulletController._bullet.position.y = TankController.tank.position.x+10;
             console.log("disparo");
@@ -41,7 +41,7 @@ export class BulletController {
             
             let xSeg = TankController.scopePos.x;
             let ySeg = TankController.scopePos.y;
-            while (Math.abs(xDiff) > 1 && Math.abs(yDiff) > 1) {
+            while (Math.abs(xDiff) > 20 || Math.abs(yDiff) > 20) {
                 xSeg = (TankController.tank.position.y+22.5 + xSeg)/2;
                 ySeg = (TankController.tank.position.x+22.5 + ySeg)/2;
                 xDiff = TankController.tank.position.y+22.5 - xSeg;
@@ -49,6 +49,9 @@ export class BulletController {
                 // console.log(xDiff);
                 // console.log(yDiff);
             }
+            console.log(xDiff);
+            console.log(yDiff);
+            
             BulletController._bullet.xDiff = xDiff;
             BulletController._bullet.yDiff = yDiff;
 
