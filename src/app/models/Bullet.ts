@@ -41,11 +41,18 @@ export class Bullet {
                 
                 if (this.currentBounce <= this.maxBounce) {
                     if (block[1]) {
-                        this.rotation = this.rotation*2;
+                        this.rotation = ((((((this.rotation*180)/Math.PI)+180)*Math.PI)/180));
+                        console.log((this.rotation*180)/Math.PI);
                         x = x*-1;
+                        console.log("-´x");
+                        
                     } else {
-                        this.rotation = this.rotation*-1;
+                        console.log((this.rotation*180)/Math.PI);
+                        this.rotation *= -1;
+                        console.log((this.rotation*180)/Math.PI);
                         y = y*-1;
+                        console.log("-y");
+                        
                     }
                     this.moveBullet(x, y); 
                 }

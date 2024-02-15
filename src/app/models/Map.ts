@@ -211,13 +211,37 @@ export class GameMap {
 
                 let colliCenter: Position =  {
                     x: collider.right-25,
-                    y: collider.top-25
+                    y: collider.top+25
                 };
                 
-                console.log(Math.abs(position.x - colliCenter.x));
-                console.log(Math.abs(position.y - colliCenter.y));
+                let diff: Position = {
+                    x: 0,
+                    y: 0
+                };
 
-                if (Math.abs(position.x - colliCenter.x) > Math.abs(position.y - colliCenter.y)) {
+                console.log(position);
+                console.log(colliCenter);
+                
+
+                if (position.x >= colliCenter.x) {
+                    console.log("x mayor");                    
+                    diff.x = Math.abs(position.x - colliCenter.x)
+                } else {
+                    console.log("x menor");
+                    diff.x = Math.abs(colliCenter.x - position.x)
+                }
+
+                if (position.y > colliCenter.y) {
+                    console.log("y mayor");
+                    diff.y = Math.abs(position.y - colliCenter.y)
+                } else {
+                    console.log("y menor");
+                    diff.y = Math.abs(colliCenter.y - position.y)
+                }
+
+                console.log(diff);
+
+                if (diff.x > diff.y) {
                     return [true,true];
                 } else {
                     return [true, false]
