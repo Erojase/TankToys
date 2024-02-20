@@ -25,7 +25,7 @@ export class BulletComponent implements OnInit {
         return {
             "position": 'absolute',
             "zIndex": 60,
-            "width": "30px",
+            "width": "20px",
             "height": "20px",
             "top": `${BulletController.bullet.position.y}px`,
             "left": `${BulletController.bullet.position.x}px`,

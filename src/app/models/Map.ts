@@ -204,7 +204,9 @@ export class GameMap {
                 // console.log(position.y+y > collider.bottom);
 
             if (overlap) {
-                console.group("overlap");
+                console.log("++x: " + x);
+                console.log("++y: " + y);
+                console.group("collider");
                 console.log(collider);
                 console.groupEnd(); 
                 
@@ -219,26 +221,29 @@ export class GameMap {
                     y: 0
                 };
 
+                console.log("bullet position: " );
                 console.log(position);
+                console.log("collidercenter: ");
                 console.log(colliCenter);
                 
 
                 if (position.x >= colliCenter.x) {
                     console.log("x mayor");                    
-                    diff.x = Math.abs(position.x - colliCenter.x)
+                    diff.x = Math.abs((position.x-x) - colliCenter.x)
                 } else {
                     console.log("x menor");
-                    diff.x = Math.abs(colliCenter.x - position.x)
+                    diff.x = Math.abs(colliCenter.x - (position.x+x))
                 }
 
-                if (position.y > colliCenter.y) {
+                if (position.y+y >= colliCenter.y) {
                     console.log("y mayor");
-                    diff.y = Math.abs(position.y - colliCenter.y)
+                    diff.y = Math.abs((position.y-y) - colliCenter.y)
                 } else {
                     console.log("y menor");
-                    diff.y = Math.abs(colliCenter.y - position.y)
+                    diff.y = Math.abs(colliCenter.y - (position.y+y))
                 }
 
+                console.log("diff");
                 console.log(diff);
 
                 if (diff.x > diff.y) {
