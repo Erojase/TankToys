@@ -13,6 +13,7 @@ import { TankController } from "../../controllers/TankController";
 export class CannonComponent implements OnInit {
     @Input() width: number;
     @Input() heigth: number;
+    @Input() rotation: number;
 
     constructor() {}
 
@@ -22,7 +23,7 @@ export class CannonComponent implements OnInit {
             'zIndex': 55,
             'width': `${this.width}px`,
             'height': `${this.heigth}px`,
-            'rotate': `${TankController.cannonRotation}rad`
+            'rotate': `${this.rotation}rad`
         };
     }
 

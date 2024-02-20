@@ -8,6 +8,7 @@ import { TankComponent } from "../tank/tank.component";
 import { BulletComponent } from "../bullet/bullet.component";
 import { MapComponent } from "../map/map.component";
 import { GameMap } from "../../models/Map";
+import { CpuComponent } from '../cpu/cpu.component';
 
 @Component({
     selector: 'app-mainCanvas',
@@ -19,7 +20,8 @@ import { GameMap } from "../../models/Map";
         ScopeComponent,
         TankComponent,
         BulletComponent,
-        MapComponent
+        MapComponent,
+        CpuComponent
     ]
 })
 export class MainCanvasComponent implements OnInit {

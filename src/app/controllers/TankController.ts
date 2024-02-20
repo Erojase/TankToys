@@ -1,6 +1,7 @@
 import { Position, Tank } from "../models/Tank";
 import { Bullet } from '../models/Bullet';
 import { GameMap } from "../models/Map";
+import { CPUController } from "./CPUController";
 
 
 class MovementKeys {
@@ -123,6 +124,8 @@ export class TankController {
                 TankController.tank.moveY(TankController.tank.speed)
             }
         }
+
+        CPUController.trackTank();
     }
 
 
