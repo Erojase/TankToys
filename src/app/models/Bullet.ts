@@ -4,7 +4,7 @@ import { Position } from './Tank';
 
 export class Bullet {
 
-    private maxBounce = 0;
+    private maxBounce = 1;
     public currentBounce = 0;
 
     public position: Position = {
@@ -39,7 +39,7 @@ export class Bullet {
             } else {
                 this.currentBounce++;
                 
-                // if (this.currentBounce <= this.maxBounce) {
+                if (this.currentBounce <= this.maxBounce) {
                     if (block[1]) {
                         let rotatInDeg = ((this.rotation*180)/Math.PI);
                         this.rotation = ((((180-rotatInDeg)*Math.PI)/180));
@@ -55,8 +55,8 @@ export class Bullet {
                         console.log("-y");
                         
                     }
-                    // this.moveBullet(x, y); 
-                // }
+                    this.moveBullet(x, y); 
+                }
                 
             }
         }, this.speed)
