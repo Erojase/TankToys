@@ -4,7 +4,7 @@ import { Position } from './Tank';
 
 export class Bullet {
 
-    private maxBounce = 1;
+    private maxBounce = 2;
     public currentBounce = 0;
 
     public position: Position = {
@@ -28,8 +28,6 @@ export class Bullet {
             this.position.y += y;
             // this.moveBullet(x, y);
             // console.log("x: " + this.position.x + ",y: " + this.position.y);
-            
-            BulletController.triggerComponentRender();
             
             let block: boolean[] = GameMap.checkIfBlockNullet(this.position, x, y);
             

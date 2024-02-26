@@ -13,8 +13,7 @@ export class BulletController {
     public static set bullet(v : Bullet) {
         this._bullet = v;
     }
-    
-    static triggerComponentRender: () => void = () => { };
+
 
     public static async disableShooting(){
         BulletController.enabled = false;

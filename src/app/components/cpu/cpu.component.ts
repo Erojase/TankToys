@@ -1,10 +1,11 @@
 
 import { TankController } from '../../controllers/TankController';
-import { Component, OnInit} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CannonComponent } from "../cannon/cannon.component";
 import { GameController } from '../../controllers/GameController';
 import { CPUController } from '../../controllers/CPUController';
+import { GameMap } from '../../models/Map';
 
 @Component({
   selector: 'app-cpu',
@@ -13,9 +14,14 @@ import { CPUController } from '../../controllers/CPUController';
   styleUrls: ['./cpu.component.css'],
   imports: [ CommonModule, CannonComponent ]
 })
-export class CpuComponent implements OnInit {
-  
+export class CpuComponent implements OnInit, AfterViewInit {
+  @ViewChild('self') self: ElementRef<HTMLDivElement>;
+
   constructor() { }
+
+  ngAfterViewInit(): void {
+    GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), "tank");
+  }
   
   ngOnInit() {
     

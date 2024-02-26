@@ -5,7 +5,9 @@ import { GarageComponent } from './pages/garage/garage.component';
 import { SignInComponent } from './pages/signIn/signIn.component';
 
 import { PlayComponent } from './pages/play/play.component';
-import { SingleplayerComponent } from './pages/play/singleplayer/singleplayer.component';
+import { SingleplayerComponent } from './pages/singleplayer/singleplayer.component';
+import { LocalMultiplayerComponent } from './pages/localMultiplayer/localMultiplayer.component';
+import { OnlineMultiplayerComponent } from './pages/onlineMultiplayer/onlineMultiplayer.component';
 
 
 export const routes: Routes = [
@@ -13,6 +15,8 @@ export const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'garage', component: GarageComponent },
     { path: 'play', component: PlayComponent },
-    { path: 'play/singleplayer', component: SingleplayerComponent },
+    { path: 'singleplayer', component: SingleplayerComponent },
+    { path: 'online', component: LocalMultiplayerComponent},
+    { path: 'multiplayer', component: OnlineMultiplayerComponent},
     { path: 'signIn', component: SignInComponent }
 ];
