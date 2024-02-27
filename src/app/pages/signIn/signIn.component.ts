@@ -1,4 +1,9 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { createWeb3Modal, defaultConfig } from '@web3modal/ethers';
+import { Eip1193Provider, JsonRpcSigner, ethers } from 'ethers';
+
+
+
 
 @Component({
   selector: 'app-signIn',
@@ -6,13 +11,15 @@ import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild }
   styleUrls: ['./signIn.component.css'],
 })
 export class SignInComponent implements OnInit, AfterViewInit {
-  @ViewChild('googleSign') googleSignBtn: ElementRef<HTMLButtonElement>;
-  @ViewChild('metaSign') metaSignBtn: ElementRef<HTMLButtonElement>;
-  @ViewChild('googleLog') googleLogBtn: ElementRef<HTMLButtonElement>;
-  @ViewChild('metaLog') metaLogBtn: ElementRef<HTMLButtonElement>;
+  @ViewChild('google') googleBtn: ElementRef<HTMLButtonElement>;
+  @ViewChild('metamask') metamaskBtn: ElementRef<HTMLButtonElement>;
 
   login: HTMLElement | null;
   signin: HTMLElement | null;
+
+  signer: JsonRpcSigner;
+  provider: unknown;
+  contract: any;
 
   constructor() { }
   
@@ -23,22 +30,26 @@ export class SignInComponent implements OnInit, AfterViewInit {
   }
   
   ngAfterViewInit(): void {
-    this.googleSignBtn.nativeElement.addEventListener('click', () => this.googleSign());
-    this.metaSignBtn.nativeElement.addEventListener('click', () => this.metaSign());
-    this.googleLogBtn.nativeElement.addEventListener('click', () => this.googleLog());
-    this.metaLogBtn.nativeElement.addEventListener('click', () => this.metaLog());
+    this.googleBtn.nativeElement.addEventListener('click', () => this.googleSignLog());
+    this.metamaskBtn.nativeElement.addEventListener('click', () => this.metaSignLog());
   }
-  googleSign(): any {
+  googleSignLog(): any {
     throw new Error('Method not implemented.');
   }
-  metaSign(): any {
-    throw new Error('Method not implemented.');
-  }
-  googleLog(): any {
-    throw new Error('Method not implemented.');
-  }
-  metaLog(): any {
-    throw new Error('Method not implemented.');
+  async metaSignLog(): Promise<any> {
+    if (window.ethereum == null) {
+      console.log("MetaMask not installed; using read-only defaults");
+      this.provider = ethers.getDefaultProvider();
+    } else {
+      this.provider = new ethers.BrowserProvider(<any>window.ethereum);
+      this.signer = await ((<ethers.BrowserProvider>this.provider).getSigner());
+      console.log(this.signer);
+
+      
+      let j = await this.signer.signMessage("Connect with TankToys");
+      console.log(j);
+      
+    }
   }
 
   @HostListener('click', ['$event'])
