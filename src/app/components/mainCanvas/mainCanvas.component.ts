@@ -42,7 +42,8 @@ export class MainCanvasComponent implements OnInit {
 
     @HostListener('click', ['$event'])
     onClick(e: Event){
-        BulletController.shoot();
+        // BulletController.shoot();
+        TankController.shootBullet();
     }
 
     setDivStyles(){

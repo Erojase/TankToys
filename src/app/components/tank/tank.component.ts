@@ -1,28 +1,34 @@
-import { Component, OnInit, Input, HostListener, OnChanges, SimpleChanges, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, HostListener, OnChanges, SimpleChanges, ViewChild, AfterViewInit, ElementRef, ViewContainerRef, ComponentRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CannonComponent } from "../cannon/cannon.component";
 import { GameController } from "../../controllers/GameController";
 import { TankController } from "../../controllers/TankController";
 import { Position, Tank } from "../../models/Tank";
 import { CPUController } from '../../controllers/CPUController';
+import { BulletComponent } from "../bullet/bullet.component";
 
 @Component({
     selector: 'app-tank',
     standalone: true,
     templateUrl: './tank.component.html',
     styleUrls: ['./tank.component.css'],
-    imports: [ CommonModule, CannonComponent ]
+    imports: [CommonModule, CannonComponent, BulletComponent]
 })
 export class TankComponent implements OnInit, AfterViewInit {
     @ViewChild('self') self: ElementRef<HTMLElement>; 
+    @ViewChild('b1') bullet1: ElementRef<BulletComponent>;
     
-    constructor() { 
-        
+    constructor(private viewRef: ViewContainerRef) { 
     }
     
     ngOnInit() {
         GameController.addToGameLoop(()=>TankController.MoveV2(this.self.nativeElement.getBoundingClientRect()));
         CPUController.addPlayerToTrack(TankController.tank);
+        
+        this.viewRef.clear();
+        const compref = this.viewRef.createComponent(BulletComponent);//kkj
+        console.log('jamon => ', compref);
+        
     }
     
     ngAfterViewInit(){

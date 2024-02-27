@@ -26,7 +26,7 @@ export class BulletController {
     }
 
     
-    public static shoot() {
+    public static shoot(bullet:Bullet) {
 
         if (BulletController.enabled) {
             BulletController._bullet.stopMoves();

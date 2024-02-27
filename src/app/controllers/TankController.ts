@@ -2,6 +2,7 @@ import { Position, Tank } from "../models/Tank";
 import { Bullet } from '../models/Bullet';
 import { GameMap } from "../models/Map";
 import { CPUController } from "./CPUController";
+import { BulletController } from "./BulletController";
 
 
 class MovementKeys {
@@ -31,7 +32,7 @@ export class TankController {
 
     public static cannonRotation: number = 50;
 
-
+    public static bullets:Bullet[] = [];
 
 
     public static addKey(key: string) {
@@ -138,6 +139,15 @@ export class TankController {
         let dy = e.pageY - centerX;
         let theta = Math.atan2(dy, dx);
         this.cannonRotation = theta;
+    }
+
+    public static shootBullet() {
+        let cont = 0;
+        BulletController.shoot(this.bullets[cont]);
+        cont++;
+        if (cont > 2) {
+            cont = 0;
+        }
     }
 
 }

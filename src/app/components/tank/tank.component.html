@@ -1,8 +1,12 @@
 <div #self [ngStyle]="setDivStyles()">
   <app-cannon [heigth]="22.5" [width]="67.5" [rotation]="setCannonRotation()"></app-cannon>
   <img
-    src="/assets/images/tanks/tanky-bot.png"
-    [ngStyle]="setImgStyles()"
-    alt=""
+  src="/assets/images/tanks/tanky-bot.png"
+  [ngStyle]="setImgStyles()"
+  alt=""
   />
 </div>
+<ng-content #pepe></ng-content>
+
+
+<!--  -->

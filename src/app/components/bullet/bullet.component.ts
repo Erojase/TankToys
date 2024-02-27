@@ -11,8 +11,6 @@ import { BulletController } from "../../controllers/BulletController";
     imports: [CommonModule]
 })
 export class BulletComponent implements OnInit {
-    IGameController = GameController;
-    IBulletController = BulletController;
 
     position = BulletController.bullet.position;
 
