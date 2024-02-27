@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GameController } from '../../../controllers/GameController';
-import { MainCanvasComponent } from '../../../components/mainCanvas/mainCanvas.component';
+import { GameController } from '../../controllers/GameController';
+import { MainCanvasComponent } from '../../components/mainCanvas/mainCanvas.component';
 
 @Component({
   selector: 'app-singleplayer',

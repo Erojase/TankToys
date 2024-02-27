@@ -10,7 +10,7 @@ export interface Position{
 }
 
 export class Collider{
-    type: "wall" | null
+    type: "wall" | "tank"
     left: number
     right: number
     top: number
@@ -157,9 +157,9 @@ export class GameMap {
         
     }
 
-    public static registerCollider(element:DOMRect){
+    public static registerCollider(element:DOMRect, type: "wall"|"tank"){
         let collider: Collider = {
-            type : "wall",
+            type : type,
             bottom: element.bottom,
             left: element.left,
             right: element.right,
@@ -269,7 +269,6 @@ export class GameMap {
                 console.group("overlap");
                 console.log(collider);
                 console.groupEnd();
-                
                 return true;
             }
         }

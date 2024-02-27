@@ -1,20 +1,44 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-signIn',
   templateUrl: './signIn.component.html',
-  styleUrls: ['./signIn.component.css']
+  styleUrls: ['./signIn.component.css'],
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent implements OnInit, AfterViewInit {
+  @ViewChild('googleSign') googleSignBtn: ElementRef<HTMLButtonElement>;
+  @ViewChild('metaSign') metaSignBtn: ElementRef<HTMLButtonElement>;
+  @ViewChild('googleLog') googleLogBtn: ElementRef<HTMLButtonElement>;
+  @ViewChild('metaLog') metaLogBtn: ElementRef<HTMLButtonElement>;
 
   login: HTMLElement | null;
   signin: HTMLElement | null;
 
   constructor() { }
-
+  
   ngOnInit() {
+  
     this.login = document.getElementById("log");
     this.signin = document.getElementById("sign");
+  }
+  
+  ngAfterViewInit(): void {
+    this.googleSignBtn.nativeElement.addEventListener('click', () => this.googleSign());
+    this.metaSignBtn.nativeElement.addEventListener('click', () => this.metaSign());
+    this.googleLogBtn.nativeElement.addEventListener('click', () => this.googleLog());
+    this.metaLogBtn.nativeElement.addEventListener('click', () => this.metaLog());
+  }
+  googleSign(): any {
+    throw new Error('Method not implemented.');
+  }
+  metaSign(): any {
+    throw new Error('Method not implemented.');
+  }
+  googleLog(): any {
+    throw new Error('Method not implemented.');
+  }
+  metaLog(): any {
+    throw new Error('Method not implemented.');
   }
 
   @HostListener('click', ['$event'])

@@ -1,25 +1,23 @@
 <div class="loginMain">
   <div id="sign" class="signLogIn container">
       <h1>Sign In</h1>
-      <input type="text" placeholder="Username:">
-      <input type="text" placeholder="Address:">
-      <input type="text" placeholder="Passowrd:">
-      <input type="text" placeholder="Repeat password:">
+      <div #googleSign class="signButton">Sign in with google<img src="/assets/images/icons/google.svg"></div>
+      <div #metaSign class="signButton">Sign in with Metamask<img src="/assets/images/icons/metamask.svg"></div>
 
       <div>
-          Ya tienes cuenta entonces: 
-          <div class="clickable">Inicia sesion</div>
+          Already have an account?: 
+          <div class="clickable">Log in</div>
       </div>
   </div>
 
   <div id="log" class="signLogIn hide container">
       <h1>Log In</h1>
-      <input type="text" placeholder="Address:">
-      <input type="text" placeholder="Passowrd:">
+      <div #googleLog class="signButton">Log in with google<img src="/assets/images/icons/google.svg"></div>
+      <div #metaLog class="signButton">Log in with Metamask<img src="/assets/images/icons/metamask.svg"></div>
 
       <div>
-          No tienes cuenta entonces: 
-          <div class="clickable">Registrate</div>
+          Don't have an account?: 
+          <div class="clickable">Register</div>
       </div>
   </div>
 </div>

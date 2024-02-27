@@ -29,8 +29,6 @@ export class Bullet {
             // this.moveBullet(x, y);
             // console.log("x: " + this.position.x + ",y: " + this.position.y);
             
-            BulletController.triggerComponentRender();
-            
             let block: boolean[] = GameMap.checkIfBlockNullet(this.position, x, y);
             
             if (!block[0] && this.currentBounce <= this.maxBounce) {
