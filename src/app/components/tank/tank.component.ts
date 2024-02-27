@@ -26,8 +26,10 @@ export class TankComponent implements OnInit, AfterViewInit {
         CPUController.addPlayerToTrack(TankController.tank);
         
         this.viewRef.clear();
-        const compref = this.viewRef.createComponent(BulletComponent);//kkj
-        console.log('jamon => ', compref);
+        for (let i = 0; i < 5; i++) {
+            const compref = this.viewRef.createComponent(BulletComponent);
+            console.log('jamon => ', compref);            
+        }
         
     }
     

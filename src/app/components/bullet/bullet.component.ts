@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameController } from "../../controllers/GameController";
 import { BulletController } from "../../controllers/BulletController";
+import { Bullet } from '../../models/Bullet';
+import { TankController } from '../../controllers/TankController';
 
 @Component({
     selector: 'app-bullet',
@@ -12,9 +14,12 @@ import { BulletController } from "../../controllers/BulletController";
 })
 export class BulletComponent implements OnInit {
 
-    position = BulletController.bullet.position;
+    bullet : Bullet;
 
-    constructor() { }
+    constructor() {
+        this.bullet = new Bullet();
+        TankController.bullets.push(this.bullet);
+     }
 
     ngOnInit() {
     }
@@ -25,9 +30,9 @@ export class BulletComponent implements OnInit {
             "zIndex": 60,
             "width": "30px",
             "height": "20px",
-            "top": `${BulletController.bullet.position.y}px`,
-            "left": `${BulletController.bullet.position.x}px`,
-            "rotate": `${BulletController.bullet.rotation}rad`
+            "top": `${this.bullet.position.y}px`,
+            "left": `${this.bullet.position.x}px`,
+            "rotate": `${this.bullet.rotation}rad`
         }
     }
 

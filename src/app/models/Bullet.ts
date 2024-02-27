@@ -4,7 +4,7 @@ import { Position } from './Tank';
 
 export class Bullet {
 
-    private maxBounce = 100;
+    private maxBounce = 2;
     public currentBounce = 0;
 
     public position: Position = {

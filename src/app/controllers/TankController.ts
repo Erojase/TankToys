@@ -140,13 +140,13 @@ export class TankController {
         let theta = Math.atan2(dy, dx);
         this.cannonRotation = theta;
     }
+    private static cont = 0;
 
     public static shootBullet() {
-        let cont = 0;
-        BulletController.shoot(this.bullets[cont]);
-        cont++;
-        if (cont > 2) {
-            cont = 0;
+        BulletController.shoot(this.bullets[this.cont]);
+        this.cont++;
+        if (this.cont > this.bullets.length -1) {
+            this.cont = 0;
         }
     }
 
