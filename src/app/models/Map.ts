@@ -212,9 +212,7 @@ export class GameMap {
 
             if (overlap && this.colliders[collider].type != owner) {
                 if (this.colliders[collider].type == "player" || this.colliders[collider].type == "cpu") {
-                    if (this.colliders[collider].type == "player") {
-                        ReferenceRepository.Component["TankComponent"].destroy();
-                    }
+                    ReferenceRepository.Component[this.colliders[collider].type].destroy();
                 }
                 // console.log("++x: " + x);
                 // console.log("++y: " + y);

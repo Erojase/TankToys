@@ -1,15 +1,12 @@
 import { Component, HostListener, OnInit, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { dimensions } from '../../utils/utils';
-import { BulletController } from "../../controllers/BulletController";
 import { TankController } from "../../controllers/TankController";
 import { ScopeComponent } from "../scope/scope.component";
 import { TankComponent } from "../tank/tank.component";
 import { BulletComponent } from "../bullet/bullet.component";
 import { MapComponent } from "../map/map.component";
-import { GameMap } from "../../models/Map";
 import { CpuComponent } from '../cpu/cpu.component';
-import { CPUController } from '../../controllers/CPUController';
 import { ReferenceRepository } from '../../controllers/ReferenceRepository';
 
 @Component({
@@ -63,8 +60,8 @@ export class MainCanvasComponent implements OnInit {
         const TankComponentRef = this.viewRef.createComponent(TankComponent);
         const CpuComponentRef = this.viewRef.createComponent(CpuComponent);  
         
-        ReferenceRepository.Component["TankComponent"] = TankComponentRef;
-        ReferenceRepository.Component["CPU1"] = CpuComponentRef;
+        ReferenceRepository.Component["player"] = TankComponentRef;
+        ReferenceRepository.Component["cpu"] = CpuComponentRef;
     }
 
 }

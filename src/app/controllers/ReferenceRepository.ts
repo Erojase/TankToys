@@ -5,5 +5,5 @@ export interface ComponentReference{
 }
 
 export class ReferenceRepository{
-    static Component: ComponentReference;
+    static Component: ComponentReference = {};
 }
