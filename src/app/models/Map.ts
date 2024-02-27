@@ -1,3 +1,4 @@
+import { ReferenceRepository } from "../controllers/ReferenceRepository";
 
 export interface MapPosition{
     x: number,
@@ -10,11 +11,15 @@ export interface Position{
 }
 
 export class Collider{
-    type: "wall" | "tank"
+    type: string
     left: number
     right: number
     top: number
     bottom: number
+}
+
+export interface Colliders{
+    [x: string]: Collider;
 }
 
 export class GameMap {
@@ -23,7 +28,7 @@ export class GameMap {
     private _width : number;
     private _height : number;
     public static _map:number[][] = [];
-    public static colliders : Collider[] = [];
+    public static colliders : Colliders = {};
 
     public static blocksPos:MapPosition[][] = [];
     
@@ -157,7 +162,7 @@ export class GameMap {
         
     }
 
-    public static registerCollider(element:DOMRect, type: "wall"|"tank"){
+    public static registerCollider(element:DOMRect, type: string){
         let collider: Collider = {
             type : type,
             bottom: element.bottom,
@@ -165,8 +170,10 @@ export class GameMap {
             right: element.right,
             top: element.top
         }
-        this.colliders.push(collider);
+        this.colliders[type] = collider;
     }
+
+
 
     public static aleatMapGenerator(map:number[][]) {
         for (let i = 0; i < 24; i++) {
@@ -190,12 +197,12 @@ export class GameMap {
         console.log(GameMap.blocksPos);
     }
 
-    public static checkIfBlockNullet(position: Position, x: number, y: number) {
-        for (const collider of this.colliders) {
-            var overlap = !(position.x+x+20 < collider.left ||
-                position.x+x > collider.right ||
-                position.y+y+20 < collider.top ||
-                position.y+y > collider.bottom)
+    public static checkIfBlockNullet(position: Position, x: number, y: number, owner: string) {
+        for (const collider in this.colliders) {
+            var overlap = !(position.x+x+20 < this.colliders[collider].left ||
+                position.x+x > this.colliders[collider].right ||
+                position.y+y+20 < this.colliders[collider].top ||
+                position.y+y > this.colliders[collider].bottom)
 
                 // console.log("");
                 // console.log(position.x+x < collider.left);
@@ -203,17 +210,22 @@ export class GameMap {
                 // console.log(position.y+y < collider.top);
                 // console.log(position.y+y > collider.bottom);
 
-            if (overlap) {
-                console.log("++x: " + x);
-                console.log("++y: " + y);
-                console.group("collider");
-                console.log(collider);
-                console.groupEnd(); 
+            if (overlap && this.colliders[collider].type != owner) {
+                if (this.colliders[collider].type == "player" || this.colliders[collider].type == "cpu") {
+                    if (this.colliders[collider].type == "player") {
+                        ReferenceRepository.Component["TankComponent"].destroy();
+                    }
+                }
+                // console.log("++x: " + x);
+                // console.log("++y: " + y);
+                // console.group("collider");
+                console.log(this.colliders[collider]);
+                // console.groupEnd(); 
                 
 
                 let colliCenter: Position =  {
-                    x: collider.right-25,
-                    y: collider.top+25
+                    x: this.colliders[collider].right-25,
+                    y: this.colliders[collider].top+25
                 };
                 
                 let diff: Position = {
@@ -221,30 +233,30 @@ export class GameMap {
                     y: 0
                 };
 
-                console.log("bullet position: " );
-                console.log(position);
-                console.log("collidercenter: ");
-                console.log(colliCenter);
+                // console.log("bullet position: " );
+                // console.log(position);
+                // console.log("collidercenter: ");
+                // console.log(colliCenter);
                 
 
                 if (position.x >= colliCenter.x) {
-                    console.log("x mayor");                    
+                    // console.log("x mayor");                    
                     diff.x = Math.abs((position.x-x) - colliCenter.x)
                 } else {
-                    console.log("x menor");
+                    // console.log("x menor");
                     diff.x = Math.abs(colliCenter.x - (position.x+x))
                 }
 
                 if (position.y+y >= colliCenter.y) {
-                    console.log("y mayor");
+                    // console.log("y mayor");
                     diff.y = Math.abs((position.y-y) - colliCenter.y)
                 } else {
-                    console.log("y menor");
+                    // console.log("y menor");
                     diff.y = Math.abs(colliCenter.y - (position.y+y))
                 }
 
-                console.log("diff");
-                console.log(diff);
+                // console.log("diff");
+                // console.log(diff);
 
                 if (diff.x > diff.y) {
                     return [true,true];
@@ -258,16 +270,16 @@ export class GameMap {
     }
     
 
-    public static checkIfBlockV2(tank: DOMRect, up:number, down:number, left:number, right:number) {
-        for (const collider of this.colliders) {
-            var overlap = !(tank.right+right < collider.left ||
-                tank.left+left > collider.right ||
-                tank.bottom+down < collider.top ||
-                tank.top+up > collider.bottom)
+    public static checkIfBlockV2(tank: DOMRect, up:number, down:number, left:number, right:number, owner:string) {
+        for (const collider in this.colliders) {
+            var overlap = !(tank.right+right < this.colliders[collider].left ||
+                tank.left+left > this.colliders[collider].right ||
+                tank.bottom+down < this.colliders[collider].top ||
+                tank.top+up > this.colliders[collider].bottom)
                 
-            if (overlap) {
+            if (overlap && this.colliders[collider].type != owner) {
                 console.group("overlap");
-                console.log(collider);
+                console.log(this.colliders[collider]);
                 console.groupEnd();
                 return true;
             }

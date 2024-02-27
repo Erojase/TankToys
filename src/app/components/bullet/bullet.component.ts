@@ -4,6 +4,7 @@ import { GameController } from "../../controllers/GameController";
 import { BulletController } from "../../controllers/BulletController";
 import { Bullet } from '../../models/Bullet';
 import { TankController } from '../../controllers/TankController';
+import { CPUController } from '../../controllers/CPUController';
 
 @Component({
     selector: 'app-bullet',
@@ -13,15 +14,24 @@ import { TankController } from '../../controllers/TankController';
     imports: [CommonModule]
 })
 export class BulletComponent implements OnInit {
+    @Input("type") type: "player" | "CPU";
 
     bullet : Bullet;
 
     constructor() {
         this.bullet = new Bullet();
-        TankController.bullets.push(this.bullet);
+
+        
      }
 
     ngOnInit() {
+        console.log(this.type);
+        
+        if (this.type == "player") {
+            TankController.bullets.push(this.bullet);
+        } else {
+            CPUController.bullet = this.bullet;
+        }
     }
 
     setStyles() {

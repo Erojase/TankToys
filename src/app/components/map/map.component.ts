@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, HostListener, ViewChild, ElementRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
+import { v4 as uuid } from 'uuid';
 import { CommonModule } from '@angular/common';
 import { GameMap, MapPosition } from '../../models/Map';
 
@@ -32,7 +33,7 @@ export class MapComponent implements OnInit, AfterViewInit {
             for (const image of element.children) {
                 if ((<HTMLImageElement>image).src.includes("wall")) {
                     (<HTMLElement>image).style.border = "1px green solid"
-                    GameMap.registerCollider(image.getBoundingClientRect(), "wall");
+                    GameMap.registerCollider(image.getBoundingClientRect(), "wall"+uuid());
                 }
             }
         }

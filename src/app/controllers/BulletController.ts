@@ -1,4 +1,5 @@
 import { Bullet } from "../models/Bullet";
+import { Position } from "../models/Tank";
 import { TankController } from "./TankController";
 
 
@@ -21,31 +22,31 @@ export class BulletController {
         return new Promise<void>(() => {
             setTimeout(() => {
                 BulletController.enabled = true;
-            }, 1000);
+            }, 200);
         })
     }
 
     
-    public static shoot(bullet:Bullet) {
+    public static shoot(bullet:Bullet, tankPos: Position, target: Position, cannonRotation:number, owner: string) {
 
         if (BulletController.enabled) {
             bullet.stopMoves();
             BulletController.disableShooting();
             bullet.currentBounce = 0;
-            bullet.position.x = TankController.tank.position.y+12.5;
-            bullet.position.y = TankController.tank.position.x+10;
+            bullet.position.x = tankPos.y+12.5;
+            bullet.position.y = tankPos.x+10;
             console.log("disparo");
-            bullet.rotation = TankController.cannonRotation;
-            let xDiff = TankController.scopePos.x - TankController.tank.position.y+22.5;
-            let yDiff = TankController.scopePos.y - TankController.tank.position.x+22.5;
+            bullet.rotation = cannonRotation;
+            let xDiff = target.x - tankPos.y+22.5;
+            let yDiff = target.y - tankPos.x+22.5;
             
-            let xSeg = TankController.scopePos.x;
-            let ySeg = TankController.scopePos.y;
+            let xSeg = target.x;
+            let ySeg = target.y;
             while (Math.abs(xDiff) > 20 || Math.abs(yDiff) > 20) {
-                xSeg = (TankController.tank.position.y+22.5 + xSeg)/2;
-                ySeg = (TankController.tank.position.x+22.5 + ySeg)/2;
-                xDiff = TankController.tank.position.y+22.5 - xSeg;
-                yDiff = TankController.tank.position.x+22.5 - ySeg;
+                xSeg = (tankPos.y+22.5 + xSeg)/2;
+                ySeg = (tankPos.x+22.5 + ySeg)/2;
+                xDiff = tankPos.y+22.5 - xSeg;
+                yDiff = tankPos.x+22.5 - ySeg;
                 // console.log(xDiff);
                 // console.log(yDiff);
             }
@@ -57,7 +58,7 @@ export class BulletController {
 
             
             
-            bullet.moveBullet(bullet.xDiff*-1,bullet.yDiff*-1);
+            bullet.moveBullet(bullet.xDiff*-1,bullet.yDiff*-1, owner);
 
             // console.log(xDiff);
             // console.log(yDiff);
