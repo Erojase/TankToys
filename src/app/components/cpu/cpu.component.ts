@@ -20,6 +20,8 @@ export class CpuComponent implements OnInit, AfterViewInit {
 
   constructor(private viewRef: ViewContainerRef) { }
 
+  public static cpuShoot: any;
+
   ngAfterViewInit(): void {
     GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), "cpu");
   }
@@ -31,7 +33,8 @@ export class CpuComponent implements OnInit, AfterViewInit {
             compref.setInput("type", "CPU");
             console.log('jamon => ', compref);            
         }
-    setInterval(() => {
+    CpuComponent.cpuShoot = setInterval(() => {
+      console.log(this);
       CPUController.shootBullet();
     }, 4000);
   }

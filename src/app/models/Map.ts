@@ -1,3 +1,4 @@
+import { CpuComponent } from "../components/cpu/cpu.component";
 import { ReferenceRepository } from "../controllers/ReferenceRepository";
 
 export interface MapPosition{
@@ -213,53 +214,59 @@ export class GameMap {
             if (overlap && this.colliders[collider].type != owner) {
                 if (this.colliders[collider].type == "player" || this.colliders[collider].type == "cpu") {
                     ReferenceRepository.Component[this.colliders[collider].type].destroy();
-                }
-                // console.log("++x: " + x);
-                // console.log("++y: " + y);
-                // console.group("collider");
-                console.log(this.colliders[collider]);
-                // console.groupEnd(); 
-                
-
-                let colliCenter: Position =  {
-                    x: this.colliders[collider].right-25,
-                    y: this.colliders[collider].top+25
-                };
-                
-                let diff: Position = {
-                    x: 0,
-                    y: 0
-                };
-
-                // console.log("bullet position: " );
-                // console.log(position);
-                // console.log("collidercenter: ");
-                // console.log(colliCenter);
-                
-
-                if (position.x >= colliCenter.x) {
-                    // console.log("x mayor");                    
-                    diff.x = Math.abs((position.x-x) - colliCenter.x)
+                    const { [collider]: g, ...otro} = this.colliders;
+                    this.colliders = otro;
+                    clearInterval(CpuComponent.cpuShoot);
+                    // supertecnica disparo cascadaaaaaaaa
                 } else {
-                    // console.log("x menor");
-                    diff.x = Math.abs(colliCenter.x - (position.x+x))
-                }
 
-                if (position.y+y >= colliCenter.y) {
-                    // console.log("y mayor");
-                    diff.y = Math.abs((position.y-y) - colliCenter.y)
-                } else {
-                    // console.log("y menor");
-                    diff.y = Math.abs(colliCenter.y - (position.y+y))
-                }
-
-                // console.log("diff");
-                // console.log(diff);
-
-                if (diff.x > diff.y) {
-                    return [true,true];
-                } else {
-                    return [true, false]
+                    // console.log("++x: " + x);
+                    // console.log("++y: " + y);
+                    // console.group("collider");
+                    console.log(this.colliders[collider]);
+                    // console.groupEnd(); 
+                    
+    
+                    let colliCenter: Position =  {
+                        x: this.colliders[collider].right-25,
+                        y: this.colliders[collider].top+25
+                    };
+                    
+                    let diff: Position = {
+                        x: 0,
+                        y: 0
+                    };
+    
+                    // console.log("bullet position: " );
+                    // console.log(position);
+                    // console.log("collidercenter: ");
+                    // console.log(colliCenter);
+                    
+    
+                    if (position.x >= colliCenter.x) {
+                        // console.log("x mayor");                    
+                        diff.x = Math.abs((position.x-x) - colliCenter.x)
+                    } else {
+                        // console.log("x menor");
+                        diff.x = Math.abs(colliCenter.x - (position.x+x))
+                    }
+    
+                    if (position.y+y >= colliCenter.y) {
+                        // console.log("y mayor");
+                        diff.y = Math.abs((position.y-y) - colliCenter.y)
+                    } else {
+                        // console.log("y menor");
+                        diff.y = Math.abs(colliCenter.y - (position.y+y))
+                    }
+    
+                    // console.log("diff");
+                    // console.log(diff);
+    
+                    if (diff.x > diff.y) {
+                        return [true,true];
+                    } else {
+                        return [true, false]
+                    }
                 }
               
             }
