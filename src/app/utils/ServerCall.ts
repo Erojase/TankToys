@@ -1,17 +1,27 @@
 import HTTP from './HTTP';
 
 const apiPath = "/api/v1/";
-const multiplayerPath = `${apiPath}multi/`;
-const userPath = `${apiPath}/user`;
-const rankingPath = `${apiPath}/ranking`;
-const tankPath = `${apiPath}/tank`;
-const mapPath = `${apiPath}/map`;
+const multiplayerPath = `${apiPath}multi`;
+const userPath = `${apiPath}user`;
+const rankingPath = `${apiPath}ranking`;
+const tankPath = `${apiPath}tank`;
+const mapPath = `${apiPath}map`;
 
-export default class ServerCall {
+export enum LoginResponse{
+    LOGGED = "LOGGED",
+    ERRORED = "ERRORED",
+    NEW_USER = "NEW_USER"
+}
+export enum RegisterResponse{
+    CREATED = "CREATED",
+    ERRORED = "ERRORED"
+}
+
+export class ServerCall {
     private static serverUrl: string = "http://localhost:8090";
 
     static createRoom = async (playerAddress: string, gamemode: number) => {
-        let res = await HTTP.PostRequest(`${this.serverUrl}${multiplayerPath}createRoom`, JSON.stringify({
+        let res = await HTTP.PostRequest(`${this.serverUrl}${multiplayerPath}/createRoom`, JSON.stringify({
             playerId: playerAddress,
             gamemode: gamemode
         }))
@@ -20,5 +30,30 @@ export default class ServerCall {
             return await res.text();
         }
         return null;
+    }
+
+    static login = async (playerAddress: string):Promise<LoginResponse> =>{
+        let res = await HTTP.GetRequest(`${this.serverUrl}${userPath}/${playerAddress}`);
+        if (res.ok) {
+            console.log(await res.json());
+            return LoginResponse.LOGGED;
+        } else if (res.status == 404) {
+            return LoginResponse.NEW_USER;
+        } 
+        return LoginResponse.ERRORED;
+    }
+
+    static register = async (playerAddress: string, username: string) =>{
+        let res = await HTTP.PostRequest(`${this.serverUrl}${userPath}`, JSON.stringify({
+            address: {
+                address: playerAddress
+            },
+            user: username,
+            level: 0
+        }))
+        if (res.ok) {
+            return RegisterResponse.CREATED
+        } 
+        return RegisterResponse.ERRORED;
     }
 }
