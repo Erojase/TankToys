@@ -3,6 +3,8 @@ import { createWeb3Modal, defaultConfig } from '@web3modal/ethers';
 import { MatCardModule } from '@angular/material/card';
 import { JsonRpcSigner, ethers } from 'ethers';
 import { ServerCall } from '../../utils/ServerCall';
+import { Router } from '@angular/router';
+import UserController from '../../controllers/user/UserController';
 
 
 
@@ -27,7 +29,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
   contract: any;
   address: string;
 
-  constructor() { }
+  constructor(private router: Router) { }
   
   ngOnInit() {
   
@@ -53,6 +55,12 @@ export class SignInComponent implements OnInit, AfterViewInit {
       this.signer = await ((<ethers.BrowserProvider>this.provider).getSigner());
       await this.signer.signMessage("Connect with TankToys");
       let le = await ServerCall.login(this.signer.address);
+      UserController.SetSigner(this.signer);
+      this.router.navigate(['/']).then(()=>{
+        if (UserController.Signer != null) {
+          ServerCall.getUser(UserController.Signer.address);
+        }}
+      );
       console.log(le);
     }
   }

@@ -1,3 +1,4 @@
+import { User } from '../models/User';
 import HTTP from './HTTP';
 
 const apiPath = "/api/v1/";
@@ -41,6 +42,14 @@ export class ServerCall {
             return LoginResponse.NEW_USER;
         } 
         return LoginResponse.ERRORED;
+    }
+
+    static getUser = async (playerAddress: string):Promise<any> => {
+        let res = await HTTP.GetRequest(`${this.serverUrl}${userPath}/${playerAddress}`);
+        if (res.ok) {
+            console.log(await res.json())
+        }
+        return ;
     }
 
     static register = async (playerAddress: string, username: string) =>{

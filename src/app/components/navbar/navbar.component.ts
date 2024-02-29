@@ -1,4 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import UserController from '../../controllers/user/UserController';
+import { ServerCall } from '../../utils/ServerCall';
 
 @Component({
   selector: 'navbar',
