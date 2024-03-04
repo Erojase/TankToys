@@ -6,10 +6,15 @@ export default class HTTP {
         });
     }
 
-    static PostRequest = async (url:string, body:string) =>{
+    static PostRequest = async (url:string, body:any) =>{
+        debugger;
         return await fetch(url, {
             method: 'post',
-            body: body
+            body: body,
+            headers: {
+                Accept: '*/*',
+                'Content-Type': 'application/json'
+              }
         });
     }
 }

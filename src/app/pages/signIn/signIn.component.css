@@ -67,14 +67,19 @@ input{
     align-items: center;
 }
 
-div{
-    color: var(--text);
+.register{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    flex-direction: column;
+    width: 20%;
+    margin: auto;
+    align-content: center;
+    align-items: center;
 }
 
-.clickable{
-    color: rgb(0, 89, 255);
-    text-decoration: underline;
-    cursor: pointer;
+div{
+    color: var(--text);
 }
 
 .signButton{
