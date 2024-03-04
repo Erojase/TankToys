@@ -22,7 +22,6 @@ export class ScopeComponent implements OnInit {
     setStyles() {
         return {
             "position": 'absolute',
-            "pointerEvents": "none",
             "zIndex": 100,
             "width": "50px",
             "height": "50px",

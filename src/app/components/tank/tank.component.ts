@@ -17,19 +17,25 @@ import { GameMap } from '../../models/Map';
 })
 export class TankComponent implements OnInit, AfterViewInit {
     @ViewChild('self') self: ElementRef<HTMLElement>; 
+    @Input('mainViewRef') mainViewRef: ViewContainerRef;
     // @ViewChild('b1') bullet1: ElementRef<BulletComponent>;
     
-    constructor(private viewRef: ViewContainerRef) { 
+    constructor() { 
     }
     
+    @HostListener('window:click', ['$event'])
+    onClick(e: Event){
+        TankController.shootBullet();
+    }
+
     ngOnInit() {
         GameController.addToGameLoop(()=>TankController.MoveV2(this.self.nativeElement.getBoundingClientRect()));
        
         CPUController.addPlayerToTrack(TankController.tank);
         
-        this.viewRef.clear();
+        // this.viewRef.clear();
         for (let i = 0; i < 3; i++) {
-            const compref = this.viewRef.createComponent(BulletComponent);
+            const compref = this.mainViewRef.createComponent(BulletComponent);
             compref.setInput("type", "player");
             console.log('jamon => ', compref);            
         }

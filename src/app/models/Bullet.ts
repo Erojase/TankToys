@@ -8,8 +8,8 @@ export class Bullet {
     public currentBounce = 0;
 
     public position: Position = {
-        x: 100,
-        y: 100
+        x: -0,
+        y: -30
     };
 
     public speed = 24;
@@ -54,6 +54,11 @@ export class Bullet {
                         
                     }
                     this.moveBullet(x, y, owner); 
+                } else {
+                    this.position = {
+                        x: -0,
+                        y: -30
+                    }
                 }
                 
             }
@@ -63,6 +68,7 @@ export class Bullet {
     }
 
     public stopMoves(){
+        
         this.currentBounce = this.maxBounce;
     }
 

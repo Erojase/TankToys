@@ -37,11 +37,7 @@ export class MainCanvasComponent implements OnInit {
         TankController.scopePlacement(e);
     }
 
-    @HostListener('click', ['$event'])
-    onClick(e: Event){
-        // BulletController.shoot();
-        TankController.shootBullet();
-    }
+
 
     setDivStyles(){
         return {
@@ -58,7 +54,10 @@ export class MainCanvasComponent implements OnInit {
         }
         this.viewRef.clear();
         const TankComponentRef = this.viewRef.createComponent(TankComponent);
+        TankComponentRef.setInput("mainViewRef", this.viewRef);
+        
         const CpuComponentRef = this.viewRef.createComponent(CpuComponent);  
+        CpuComponentRef.setInput("mainViewRef", this.viewRef);
         
         ReferenceRepository.Component["player"] = TankComponentRef;
         ReferenceRepository.Component["cpu"] = CpuComponentRef;

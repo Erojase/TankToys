@@ -1,6 +1,6 @@
 
 import { TankController } from '../../controllers/TankController';
-import { AfterViewInit, Component, ElementRef, EnvironmentInjector, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EnvironmentInjector, Input, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CannonComponent } from "../cannon/cannon.component";
 import { GameController } from '../../controllers/GameController';
@@ -17,8 +17,9 @@ import { BulletComponent } from '../bullet/bullet.component';
 })
 export class CpuComponent implements OnInit, AfterViewInit {
   @ViewChild('self') self: ElementRef<HTMLDivElement>;
+  @Input('mainViewRef') mainViewRef: ViewContainerRef;
 
-  constructor(private viewRef: ViewContainerRef) { }
+  constructor() { }
 
   public static cpuShoot: any;
 
@@ -27,14 +28,12 @@ export class CpuComponent implements OnInit, AfterViewInit {
   }
   
   ngOnInit() {
-    this.viewRef.clear();
         for (let i = 0; i < 1; i++) {
-            const compref = this.viewRef.createComponent(BulletComponent);
+            const compref = this.mainViewRef.createComponent(BulletComponent);
             compref.setInput("type", "CPU");
             console.log('jamon => ', compref);            
         }
     CpuComponent.cpuShoot = setInterval(() => {
-      console.log(this);
       CPUController.shootBullet();
     }, 4000);
   }
