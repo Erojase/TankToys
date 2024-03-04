@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import UserController from '../../controllers/user/UserController';
 import { ServerCall } from '../../utils/ServerCall';
+import { UserProfileComponent } from '../userProfile/userProfile.component';
 
 @Component({
   selector: 'navbar',
@@ -15,16 +16,29 @@ export class NavbarComponent implements AfterViewInit, OnInit {
   currentPage: string;
   ignoredPages = ['singleplayer', 'multiplayer', 'online'];
 
-  constructor(){    
+  constructor(private viewRef: ViewContainerRef){    
   }
 
   ngOnInit(): void {
-    console.log("jamon");
+    this.viewRef.clear();
     
   }
 
   ngAfterViewInit(): void {
     this.currentPage = window.location.href.split("/").slice(-1)[0];
+    this.whiteBarLogic()
+  }
+
+  isLogged(currentAnchor: HTMLAnchorElement) {
+    let user = UserController.user
+    if (user) {
+      // const UserProfileRef = this.viewRef.createComponent(UserProfileComponent);
+      // UserProfileRef.setInput("username", user.user);
+      currentAnchor.innerHTML = `<img width="45" src="${user.profileImage}"><div>${user.user}</div>`;
+    }   
+  }
+
+  whiteBarLogic(){
     let linksChildren = (<HTMLDivElement>this.linksParent.nativeElement).children;
 
     if (this.ignoredPages.includes(this.currentPage)) {
@@ -32,6 +46,7 @@ export class NavbarComponent implements AfterViewInit, OnInit {
     } else {
       this.nav.nativeElement.style.visibility = "visible";
     }
+    
 
     for (const child of linksChildren) {
       let currentAnchor = <HTMLAnchorElement>child.children[0];    
@@ -43,6 +58,10 @@ export class NavbarComponent implements AfterViewInit, OnInit {
 
       if (currentAnchor.href.split('/').slice(-1)[0] == 'home' && this.currentPage.length <= 1) {
         currentAnchor.classList.add("nav-active");
+      }      
+
+      if (currentAnchor.href.split('/').slice(-1)[0] == 'signIn') {
+        this.isLogged(currentAnchor);
       }
       
     }

@@ -1,26 +1,33 @@
 import { JsonRpcSigner } from "ethers";
 import { User } from "../../models/User";
+import { jwtDecode } from "jwt-decode";
+
 
 export default class UserController {
-    
-    
-    private _user : User;
-    public get user() : User {
-        return this._user;
+
+
+
+    public static set jwt(v: string) {
+        window.localStorage.setItem("auth", v);
     }
-    public set user(v : User) {
-        this._user = v;
+
+    public static get user(): User | undefined {
+        try {
+            return JSON.parse(jwtDecode<any>(window.localStorage.getItem("auth")!)['user']);
+        } catch (error) {
+            return undefined;
+        }
     }
-    
-    
-    private static _Signer : JsonRpcSigner | null = null;
-    public static get Signer() : JsonRpcSigner | null {
+
+
+    private static _Signer: JsonRpcSigner | null = null;
+    public static get Signer(): JsonRpcSigner | null {
         return this._Signer;
     }
 
-    static SetSigner(signer: JsonRpcSigner){
+    static SetSigner(signer: JsonRpcSigner) {
         this._Signer = signer;
     }
-    
+
 
 }

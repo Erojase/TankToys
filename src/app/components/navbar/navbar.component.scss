@@ -41,12 +41,18 @@
     align-items: center;
     width: 100%;
     height: 100%;
+    justify-content: space-around;
     text-decoration: none;
     color: var(--text);
     font-weight: bolder;
 }
 
-.links>div>a:hover {
+.link > div > a > img {
+    width: 50px;
+    border-radius: 12px;
+}
+
+.links > div > a:hover {
     border-top: 5px aliceblue solid;
     transition: border-top 200ms linear;
     border-radius: 2px;
@@ -56,3 +62,4 @@
     border-top: 5px aliceblue solid;
     border-radius: 2px;
 }
+

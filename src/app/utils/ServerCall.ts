@@ -1,4 +1,5 @@
-import { User } from '../models/User';
+import { jwtDecode } from "jwt-decode";
+import UserController from '../controllers/user/UserController';
 import HTTP from './HTTP';
 
 const apiPath = "/api/v1/";
@@ -36,7 +37,7 @@ export class ServerCall {
     static login = async (playerAddress: string):Promise<LoginResponse> =>{
         let res = await HTTP.GetRequest(`${this.serverUrl}${userPath}/${playerAddress}`);
         if (res.ok) {
-            console.log(await res.json());
+            UserController.jwt = await res.text();
             return LoginResponse.LOGGED;
         } else if (res.status == 404) {
             return LoginResponse.NEW_USER;
