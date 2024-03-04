@@ -1,11 +1,12 @@
 
 import { TankController } from '../../controllers/TankController';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EnvironmentInjector, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CannonComponent } from "../cannon/cannon.component";
 import { GameController } from '../../controllers/GameController';
 import { CPUController } from '../../controllers/CPUController';
 import { GameMap } from '../../models/Map';
+import { BulletComponent } from '../bullet/bullet.component';
 
 @Component({
   selector: 'app-cpu',
@@ -17,14 +18,25 @@ import { GameMap } from '../../models/Map';
 export class CpuComponent implements OnInit, AfterViewInit {
   @ViewChild('self') self: ElementRef<HTMLDivElement>;
 
-  constructor() { }
+  constructor(private viewRef: ViewContainerRef) { }
+
+  public static cpuShoot: any;
 
   ngAfterViewInit(): void {
-    GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), "tank");
+    GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), "cpu");
   }
   
   ngOnInit() {
-    
+    this.viewRef.clear();
+        for (let i = 0; i < 1; i++) {
+            const compref = this.viewRef.createComponent(BulletComponent);
+            compref.setInput("type", "CPU");
+            console.log('jamon => ', compref);            
+        }
+    CpuComponent.cpuShoot = setInterval(() => {
+      console.log(this);
+      CPUController.shootBullet();
+    }, 4000);
   }
   
   setCPURotation = (): number => CPUController.cannonRotation;

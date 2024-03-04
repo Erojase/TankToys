@@ -6,6 +6,7 @@ import { TankController } from "../../controllers/TankController";
 import { Position, Tank } from "../../models/Tank";
 import { CPUController } from '../../controllers/CPUController';
 import { BulletComponent } from "../bullet/bullet.component";
+import { GameMap } from '../../models/Map';
 
 @Component({
     selector: 'app-tank',
@@ -16,24 +17,27 @@ import { BulletComponent } from "../bullet/bullet.component";
 })
 export class TankComponent implements OnInit, AfterViewInit {
     @ViewChild('self') self: ElementRef<HTMLElement>; 
-    @ViewChild('b1') bullet1: ElementRef<BulletComponent>;
+    // @ViewChild('b1') bullet1: ElementRef<BulletComponent>;
     
     constructor(private viewRef: ViewContainerRef) { 
     }
     
     ngOnInit() {
         GameController.addToGameLoop(()=>TankController.MoveV2(this.self.nativeElement.getBoundingClientRect()));
+       
         CPUController.addPlayerToTrack(TankController.tank);
         
         this.viewRef.clear();
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 3; i++) {
             const compref = this.viewRef.createComponent(BulletComponent);
+            compref.setInput("type", "player");
             console.log('jamon => ', compref);            
         }
         
     }
     
     ngAfterViewInit(){
+        GameController.addToGameLoop(()=> GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), "player"));
     }
     
     @HostListener('window:keypress', ['$event'])

@@ -1,14 +1,13 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { dimensions } from '../../utils/utils';
-import { BulletController } from "../../controllers/BulletController";
 import { TankController } from "../../controllers/TankController";
 import { ScopeComponent } from "../scope/scope.component";
 import { TankComponent } from "../tank/tank.component";
 import { BulletComponent } from "../bullet/bullet.component";
 import { MapComponent } from "../map/map.component";
-import { GameMap } from "../../models/Map";
 import { CpuComponent } from '../cpu/cpu.component';
+import { ReferenceRepository } from '../../controllers/ReferenceRepository';
 
 @Component({
     selector: 'app-mainCanvas',
@@ -25,15 +24,13 @@ import { CpuComponent } from '../cpu/cpu.component';
     ]
 })
 export class MainCanvasComponent implements OnInit {
-    IGameMap = GameMap;
-    ITankController = TankController;
 
     currentWindow: dimensions = {
         height: 0,
         width: 0
     }
 
-    constructor() { }
+    constructor(private viewRef: ViewContainerRef) { }
 
     @HostListener('mousemove', ['$event'])
     onMouseMove(e: MouseEvent){
@@ -59,6 +56,12 @@ export class MainCanvasComponent implements OnInit {
             height: window.innerHeight,
             width: window.innerWidth
         }
+        this.viewRef.clear();
+        const TankComponentRef = this.viewRef.createComponent(TankComponent);
+        const CpuComponentRef = this.viewRef.createComponent(CpuComponent);  
+        
+        ReferenceRepository.Component["player"] = TankComponentRef;
+        ReferenceRepository.Component["cpu"] = CpuComponentRef;
     }
 
 }
