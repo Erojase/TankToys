@@ -1,65 +1,85 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { createWeb3Modal, defaultConfig } from '@web3modal/ethers';
+import { MatCardModule } from '@angular/material/card';
+import { JsonRpcSigner, ethers } from 'ethers';
+import { ServerCall } from '../../utils/ServerCall';
+import { Router } from '@angular/router';
+import UserController from '../../controllers/user/UserController';
+
+
+
 
 @Component({
   selector: 'app-signIn',
+  standalone: true,
   templateUrl: './signIn.component.html',
   styleUrls: ['./signIn.component.css'],
+  imports: [MatCardModule]
 })
 export class SignInComponent implements OnInit, AfterViewInit {
-  @ViewChild('googleSign') googleSignBtn: ElementRef<HTMLButtonElement>;
-  @ViewChild('metaSign') metaSignBtn: ElementRef<HTMLButtonElement>;
-  @ViewChild('googleLog') googleLogBtn: ElementRef<HTMLButtonElement>;
-  @ViewChild('metaLog') metaLogBtn: ElementRef<HTMLButtonElement>;
+  @ViewChild('google') googleBtn: ElementRef<HTMLButtonElement>;
+  @ViewChild('metamask') metamaskBtn: ElementRef<HTMLButtonElement>;
+  @ViewChild('txtUsername') txtUsername: ElementRef<HTMLInputElement>;
 
   login: HTMLElement | null;
   signin: HTMLElement | null;
 
-  constructor() { }
+  signer: JsonRpcSigner;
+  provider: unknown;
+  contract: any;
+  address: string;
+
+  constructor(private router: Router) { }
   
   ngOnInit() {
   
     this.login = document.getElementById("log");
     this.signin = document.getElementById("sign");
   }
-  
+
   ngAfterViewInit(): void {
-    this.googleSignBtn.nativeElement.addEventListener('click', () => this.googleSign());
-    this.metaSignBtn.nativeElement.addEventListener('click', () => this.metaSign());
-    this.googleLogBtn.nativeElement.addEventListener('click', () => this.googleLog());
-    this.metaLogBtn.nativeElement.addEventListener('click', () => this.metaLog());
+    this.googleBtn.nativeElement.addEventListener('click', () => this.googleSignLog());
+    this.metamaskBtn.nativeElement.addEventListener('click', () => this.metaSignLog());
   }
-  googleSign(): any {
+  googleSignLog(): any {
     throw new Error('Method not implemented.');
   }
-  metaSign(): any {
-    throw new Error('Method not implemented.');
-  }
-  googleLog(): any {
-    throw new Error('Method not implemented.');
-  }
-  metaLog(): any {
-    throw new Error('Method not implemented.');
+  async metaSignLog(): Promise<any> {
+    if (window.ethereum == null) {
+      console.log("MetaMask not installed; using read-only defaults");
+      this.provider = ethers.getDefaultProvider();
+      console.log(this.provider);
+      
+    } else {
+      this.provider = new ethers.BrowserProvider(<any>window.ethereum);
+      this.signer = await ((<ethers.BrowserProvider>this.provider).getSigner());
+      await this.signer.signMessage("Connect with TankToys");
+      let le = await ServerCall.login(this.signer.address);
+      UserController.SetSigner(this.signer);
+      this.router.navigate(['/']).then(()=>{
+        if (UserController.Signer != null) {
+          ServerCall.getUser(UserController.Signer.address);
+        }}
+      );
+      console.log(le);
+    }
   }
 
   @HostListener('click', ['$event'])
   onClick(e:Event){
     switch ((<HTMLElement>e.target).className) {
       case "clickable":
-        this.hiddenToggle();
+        this.submitUsername();
         break;
       default:
         break;
     }
   }
 
-  hiddenToggle(){
-    if (this.login!.className.includes("hide") ) {
-      this.login!.classList.remove("hide");
-      this.signin!.classList.add("hide");
-  } else {
-      this.signin!.classList.remove("hide");
-      this.login!.classList.add("hide");
-  }
+  async submitUsername(){
+    let res = await ServerCall.register(this.signer.address, this.txtUsername.nativeElement.value);
+    console.log(res);
+    
   }
 
 
