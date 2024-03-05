@@ -32,7 +32,7 @@ export class MapComponent implements OnInit, AfterViewInit {
         for (const element of this.mapContainer.nativeElement.children) {
             for (const image of element.children) {
                 if ((<HTMLImageElement>image).src.includes("wall")) {
-                    (<HTMLElement>image).style.border = "1px green solid"
+                    (<HTMLElement>image).style.border = "1px green solid";
                     GameMap.registerCollider(image.getBoundingClientRect(), "wall"+uuid());
                 }
             }
@@ -45,24 +45,11 @@ export class MapComponent implements OnInit, AfterViewInit {
         this.generateMap(true);
     }
 
-    setMapStyle() {
-        return {
-            "width": "50px",
-            "height": "50px",
-            "display": 'flex'
-        }
-    }
-
     generateMap(random: boolean) {
         let projectItems = GameMap.createMap(random).map(project => {
             return (
                 `<div class="column">
-                    ${project.map(another => `<img height="50px" width="50px" src="/assets/images/map/${another}" [ngStyle]="{
-                            'position': 'absolute',
-                            'padding': '0', 
-                            'top': ${this.position.y = this.posy += 50},
-                            'left': ${this.position.x = this.posx}
-                        }"/>`)
+                    ${project.map(another => `<img height="50px" width="50px" style="margin: 0; padding: 0;" src="/assets/images/map/${another}" />`)
                 }
                 </div>`
             )

@@ -1,0 +1,13 @@
+*{
+    line-height: 0px;
+}
+
+.map{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+

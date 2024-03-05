@@ -164,13 +164,8 @@ export class GameMap {
     }
 
     public static registerCollider(element:DOMRect, type: string){
-        let collider: Collider = {
-            type : type,
-            bottom: element.bottom,
-            left: element.left,
-            right: element.right,
-            top: element.top
-        }
+        let collider: Collider = element.toJSON();
+        collider.type = type;
         this.colliders[type] = collider;
     }
 
@@ -236,7 +231,7 @@ export class GameMap {
                         x: 0,
                         y: 0
                     };
-    
+                    
                     // console.log("bullet position: " );
                     // console.log(position);
                     // console.log("collidercenter: ");
