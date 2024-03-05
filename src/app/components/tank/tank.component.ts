@@ -78,7 +78,7 @@ export class TankComponent implements OnInit, AfterViewInit {
             "position": 'absolute',
             "width": "45px",
             "height": "45px",
-            "zIndex": "50px",
+            "zIndex": "50",
             "rotate": `${TankController.tank.rotation}deg`,
             "border": '1px solid green'
         }

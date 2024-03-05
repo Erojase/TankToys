@@ -7,6 +7,7 @@ import { TankComponent } from "../tank/tank.component";
 import { BulletComponent } from "../bullet/bullet.component";
 import { MapComponent } from "../map/map.component";
 import { CpuComponent } from '../cpu/cpu.component';
+import { GamebarComponent } from '../gamebar/gamebar.component';
 import { ReferenceRepository } from '../../controllers/ReferenceRepository';
 
 @Component({
@@ -20,7 +21,8 @@ import { ReferenceRepository } from '../../controllers/ReferenceRepository';
         TankComponent,
         BulletComponent,
         MapComponent,
-        CpuComponent
+        CpuComponent,
+        GamebarComponent
     ]
 })
 export class MainCanvasComponent implements OnInit {

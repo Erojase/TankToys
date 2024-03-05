@@ -25,6 +25,9 @@ export class MapComponent implements OnInit, AfterViewInit {
 
     map: any;
 
+    imageY = 50;
+    imageX = 50;
+
     constructor() {
         this.position = GameMap.position;
     }
@@ -42,14 +45,18 @@ export class MapComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
+        this.imageY = window.innerHeight/18.22;
+        this.imageX = window.innerWidth/26.199;
+        
         this.generateMap(true);
+        
     }
 
     generateMap(random: boolean) {
         let projectItems = GameMap.createMap(random).map(project => {
             return (
                 `<div class="column">
-                    ${project.map(another => `<img height="50px" width="50px" style="margin: 0; padding: 0;" src="/assets/images/map/${another}" />`)
+                    ${project.map(another => `<img height="${this.imageY}px" width="${this.imageX}px" style="margin: 0; padding: 0;" src="/assets/images/map/${another}" />`)
                 }
                 </div>`
             )
