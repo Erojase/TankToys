@@ -242,19 +242,62 @@ export class GameMap {
                     
                     
                     if (position.x >= colliCenter.x) {
-                        // console.log("x mayor");                    
-                        diff.x = Math.abs((position.x-x) - colliCenter.x)
+                        console.log("x mayor");           
+                        if ((position.x - colliCenter.x) < Math.abs(x)) {
+                            console.log("Diferencia menor al avance de x");
+                            
+                            diff.x = position.x - colliCenter.x;
+                        } else {
+                            console.log("Diferencia mayor al avance de x");
+                            
+                            diff.x = Math.abs((position.x-x) - colliCenter.x)
+                            if (diff.x > collWidth/2) {
+                                console.log("Diferencia mayo a la mitad del ancho del bloque");
+                                
+                                diff.x = Math.abs((position.x-Math.abs(x)) - colliCenter.x)
+                            }
+                        }         
                     } else {
-                        // console.log("x menor");
-                        diff.x = Math.abs(colliCenter.x - (position.x+x))
+                        console.log("x menor");
+                        if ((colliCenter.x - position.x) < Math.abs(y)) {
+                            console.log("Diferencia menor al avance de x");
+                            diff.x = colliCenter.x - position.x;
+                        } else {
+                            console.log("Diferencia mayor al avance de x");
+                            diff.x = Math.abs(colliCenter.x - (position.x+x));
+                            if (diff.x > collWidth/2) {
+                                console.log("Diferencia mayo a la mitad del ancho del bloque");
+                                diff.x = Math.abs(colliCenter.x - (position.x+Math.abs(x)));
+                            }
+                        }
                     }
                     
                     if (position.y+y >= colliCenter.y) {
-                        // console.log("y mayor");
-                        diff.y = Math.abs((position.y-y) - colliCenter.y)
+                        console.log("y mayor");
+                        if ((position.y - colliCenter.y) < collHeight/2) {
+                            console.log("Diferencia menor al avance de y");
+                            diff.y = position.y - colliCenter.y;
+                        } else {
+                            console.log("Diferencia mayor al avance de y");
+                            diff.y = Math.abs((position.y-y) - colliCenter.y)
+                            if (diff.y > collHeight/2) {
+                                console.log("Diferencia mayo a la mitad del alto del bloque");
+                                diff.y = Math.abs((position.y-Math.abs(y)) - colliCenter.y)
+                            }
+                        } 
                     } else {
-                        // console.log("y menor");
-                        diff.y = Math.abs(colliCenter.y - (position.y+y))
+                        console.log("y menor");
+                        if ((colliCenter.y - position.y) < collHeight/2) {
+                            console.log("Diferencia menor al avance de y");
+                            diff.y = colliCenter.y - position.y;
+                        } else {
+                            console.log("Diferencia mayor al avance de y");
+                            diff.y = Math.abs(colliCenter.y - (position.y+y));
+                            if (diff.y > collWidth/2) {
+                                console.log("Diferencia mayo a la mitad del alto del bloque");
+                                diff.y = Math.abs(colliCenter.y - (position.y+Math.abs(y)));
+                            }
+                        }
                     }
                     
                     console.log("diff");
