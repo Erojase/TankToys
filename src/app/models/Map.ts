@@ -192,12 +192,16 @@ export class GameMap {
         }
         console.log(GameMap.blocksPos);
     }
-
+    
     public static checkIfBlockNullet(position: Position, x: number, y: number, owner: string) {
+        
         for (const collider in this.colliders) {
-            var overlap = !(position.x+x+20 < this.colliders[collider].left ||
+            let collWidth: number = this.colliders[collider].right - this.colliders[collider].left;
+            let collHeight: number = this.colliders[collider].bottom - this.colliders[collider].top;
+            
+            var overlap = !(position.x+x+(collWidth/2) < this.colliders[collider].left ||
                 position.x+x > this.colliders[collider].right ||
-                position.y+y+20 < this.colliders[collider].top ||
+                position.y+y+(collHeight/2) < this.colliders[collider].top ||
                 position.y+y > this.colliders[collider].bottom)
 
                 // console.log("");
@@ -215,29 +219,28 @@ export class GameMap {
                     // supertecnica disparo cascadaaaaaaaa
                 } else {
 
-                    // console.log("++x: " + x);
-                    // console.log("++y: " + y);
-                    // console.group("collider");
+                    console.group("disparo");
+                    console.log("++x: " + x);
+                    console.log("++y: " + y);
                     console.log(this.colliders[collider]);
-                    // console.groupEnd(); 
                     
-    
+
                     let colliCenter: Position =  {
-                        x: this.colliders[collider].right-25,
-                        y: this.colliders[collider].top+25
-                    };
+                        x: this.colliders[collider].right - (collWidth/2),
+                        y: this.colliders[collider].top + (collHeight/2)
+                    };  
                     
                     let diff: Position = {
                         x: 0,
                         y: 0
                     };
                     
-                    // console.log("bullet position: " );
-                    // console.log(position);
-                    // console.log("collidercenter: ");
-                    // console.log(colliCenter);
+                    console.log("bullet position: " );
+                    console.log(position);
+                    console.log("collidercenter: ");
+                    console.log(colliCenter);
                     
-    
+                    
                     if (position.x >= colliCenter.x) {
                         // console.log("x mayor");                    
                         diff.x = Math.abs((position.x-x) - colliCenter.x)
@@ -245,7 +248,7 @@ export class GameMap {
                         // console.log("x menor");
                         diff.x = Math.abs(colliCenter.x - (position.x+x))
                     }
-    
+                    
                     if (position.y+y >= colliCenter.y) {
                         // console.log("y mayor");
                         diff.y = Math.abs((position.y-y) - colliCenter.y)
@@ -253,10 +256,11 @@ export class GameMap {
                         // console.log("y menor");
                         diff.y = Math.abs(colliCenter.y - (position.y+y))
                     }
-    
-                    // console.log("diff");
-                    // console.log(diff);
-    
+                    
+                    console.log("diff");
+                    console.log(diff);
+                    console.groupEnd(); 
+                    
                     if (diff.x > diff.y) {
                         return [true,true];
                     } else {
