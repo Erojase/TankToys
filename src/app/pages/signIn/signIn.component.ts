@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { createWeb3Modal, defaultConfig } from '@web3modal/ethers';
 import { MatCardModule } from '@angular/material/card';
-import { JsonRpcSigner, ethers } from 'ethers';
+import { BrowserProvider, JsonRpcSigner, ethers } from 'ethers';
 import { ServerCall } from '../../utils/ServerCall';
 import { Router } from '@angular/router';
 import UserController from '../../controllers/user/UserController';
+import Web3Controller from '../../controllers/Web3Controller';
 
 
 
@@ -55,14 +56,16 @@ export class SignInComponent implements OnInit, AfterViewInit {
       this.signer = await ((<ethers.BrowserProvider>this.provider).getSigner());
       await this.signer.signMessage("Connect with TankToys");
       let le = await ServerCall.login(this.signer.address);
+      let j = await Web3Controller.LogPlayer(<BrowserProvider>this.provider);
 
       UserController.SetSigner(this.signer);
       
       this.router.navigate(['/']).then(()=>{
-        window.location.reload();
+        // window.location.reload();
         if (UserController.Signer != null) {
           ServerCall.getUser(UserController.Signer.address);
-        }}
+        }
+        console.log(j);}
       );
       console.log(le);
     }

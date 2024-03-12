@@ -34,7 +34,17 @@ export class NavbarComponent implements AfterViewInit, OnInit {
     if (user) {
       // const UserProfileRef = this.viewRef.createComponent(UserProfileComponent);
       // UserProfileRef.setInput("username", user.user);
-      currentAnchor.innerHTML = `<img width="45" src="${user.profileImage}"><div>${user.user}</div>`;
+      let img = document.createElement('img');
+      img.src = user.profileImage;
+      img.width = 45;
+
+      let div = document.createElement('div');
+      div.innerHTML = user.user;
+
+      currentAnchor.innerHTML = "";
+      currentAnchor.appendChild(img);
+      currentAnchor.appendChild(div);
+      // currentAnchor.innerHTML = `<img width="45" src="${user.profileImage}"><div>${user.user}</div>`;
     }   
   }
 
