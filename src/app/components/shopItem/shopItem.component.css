@@ -1,0 +1,10 @@
+.shopItem{
+    display: flex;
+    flex-direction: column;
+    width: min-content;
+    border: 1px solid black;
+    border-radius: 10px;
+    align-items: center;
+    padding: 0.5%;
+    margin: 2%;
+}
