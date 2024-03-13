@@ -9,7 +9,6 @@ import Web3Controller from '../../controllers/Web3Controller';
 
 
 
-
 @Component({
   selector: 'app-signIn',
   standalone: true,
@@ -56,12 +55,12 @@ export class SignInComponent implements OnInit, AfterViewInit {
       this.signer = await ((<ethers.BrowserProvider>this.provider).getSigner());
       await this.signer.signMessage("Connect with TankToys");
       let le = await ServerCall.login(this.signer.address);
-      let j = await Web3Controller.LogPlayer(<BrowserProvider>this.provider);
+      let j = Web3Controller.LogPlayer(<BrowserProvider>this.provider);
 
       UserController.SetSigner(this.signer);
       
       this.router.navigate(['/']).then(()=>{
-        // window.location.reload();
+        window.location.reload();
         if (UserController.Signer != null) {
           ServerCall.getUser(UserController.Signer.address);
         }

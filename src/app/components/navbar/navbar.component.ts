@@ -14,7 +14,7 @@ export class NavbarComponent implements AfterViewInit, OnInit {
   @ViewChild('links') linksParent: ElementRef;
 
   currentPage: string;
-  ignoredPages = ['singleplayer', 'multiplayer', 'online'];
+  ignoredPages = [''/*'singleplayer', 'multiplayer', 'online'*/];
 
   constructor(private viewRef: ViewContainerRef){    
   }
@@ -36,6 +36,7 @@ export class NavbarComponent implements AfterViewInit, OnInit {
       // UserProfileRef.setInput("username", user.user);
       let img = document.createElement('img');
       img.src = user.profileImage;
+      img.style.borderRadius = "10px";
       img.width = 45;
 
       let div = document.createElement('div');
