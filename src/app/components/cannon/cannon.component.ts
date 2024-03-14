@@ -7,7 +7,7 @@ import { TankController } from "../../controllers/TankController";
     selector: 'app-cannon',
     templateUrl: './cannon.component.html',
     standalone: true,
-    styleUrls: ['./cannon.component.css'],
+    styleUrls: ['./cannon.component.scss'],
     imports: [CommonModule]
 })
 export class CannonComponent implements OnInit {

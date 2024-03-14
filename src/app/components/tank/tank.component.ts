@@ -12,7 +12,7 @@ import { GameMap } from '../../models/Map';
     selector: 'app-tank',
     standalone: true,
     templateUrl: './tank.component.html',
-    styleUrls: ['./tank.component.css'],
+    styleUrls: ['./tank.component.scss'],
     imports: [CommonModule, CannonComponent, BulletComponent]
 })
 export class TankComponent implements OnInit, AfterViewInit {

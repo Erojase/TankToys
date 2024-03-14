@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-home',
   templateUrl: './home.component.html',
   standalone: true,
-  styleUrls: ['./home.component.css'],
+  styleUrls: ['./home.component.scss'],
   imports: [
   ]
 })

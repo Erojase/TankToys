@@ -10,7 +10,7 @@ import { CPUController } from '../../controllers/CPUController';
     selector: 'app-bullet',
     standalone: true,
     templateUrl: './bullet.component.html',
-    styleUrls: ['./bullet.component.css'],
+    styleUrls: ['./bullet.component.scss'],
     imports: [CommonModule]
 })
 export class BulletComponent implements OnInit {

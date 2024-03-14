@@ -7,7 +7,7 @@ import { GameMap, MapPosition } from '../../models/Map';
     selector: 'app-map',
     standalone: true,
     templateUrl: './map.component.html',
-    styleUrls: ['./map.component.css'],
+    styleUrls: ['./map.component.scss'],
     imports: [
         CommonModule
     ]

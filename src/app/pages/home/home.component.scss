@@ -1,5 +1,6 @@
+@use '../../../styles.scss' as global;
 div{
-    color: var(--text);
+    color: global.$text;
 }
 
 .main{
@@ -45,9 +46,27 @@ div{
 .patch{
     width: 50%;
     border: 2px solid black;
-    background-color: var(--principal);
+    background-color: global.$principal;
     opacity: 0.98;
-    border-radius: 15px;
+    border-radius: 10px;
     padding: 1%;
     overflow-y: auto;
+}
+
+@media only screen and (max-width: global.$min-width) {
+    .notes{
+        grid-area: 3 / 1 / 6 / 6;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .patch{
+        width: 100%;
+        border: 2px solid black;
+        background-color: global.$principal;
+        opacity: 0.98;
+        border-radius: 10px;
+        padding: 1%;
+        overflow-y: auto;
+    }   
 }

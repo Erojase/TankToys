@@ -7,7 +7,7 @@ import { GameController } from "../../controllers/GameController";
     selector: 'app-scope',
     standalone: true,
     templateUrl: './scope.component.html',
-    styleUrls: ['./scope.component.css'],
+    styleUrls: ['./scope.component.scss'],
     imports: [CommonModule]
 })
 export class ScopeComponent implements OnInit {

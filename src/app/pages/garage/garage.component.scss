@@ -1,4 +1,4 @@
-
+@use '../../../styles.scss' as global;
 .tankEditor {
     background-image: url(/assets/images/garage-back.jpeg);
     background-repeat: no-repeat;
@@ -10,7 +10,7 @@
     grid-template-rows: repeat(5, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
-    background-color: var(--principal);
+    background-color: global.$principal;
 }
 
 .infoView {
@@ -38,7 +38,7 @@
 }
 
 .tankView > div{
-    background-color: var(--principal);
+    background-color: global.$principal;
     padding: 2%;
     border-radius: 100%;
 }
@@ -70,7 +70,7 @@
     display: flex;
     justify-content: space-around;
     flex-direction: column;
-    color: var(--text);
+    color: global.$text;
     margin: 5px;
 }
 

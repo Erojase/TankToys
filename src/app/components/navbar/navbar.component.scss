@@ -1,3 +1,4 @@
+@use '../../../styles.scss' as global;
 .nav {
     position: absolute;
     top: 0;
@@ -8,7 +9,9 @@
     background: rgb(0, 0, 0);
     background: linear-gradient(180deg, rgba(0,0,0,0.9290091036414566) 6%, rgba(0,0,0,0.5508578431372548) 65%, rgba(135,196,177,0) 100%);
 }
-
+.burger{
+    display: none;
+}
 .nav>*>img {
     width: 70px;
 }
@@ -43,7 +46,7 @@
     height: 100%;
     justify-content: space-around;
     text-decoration: none;
-    color: var(--text);
+    color: global.$text;
     font-weight: bolder;
 }
 
@@ -63,3 +66,56 @@
     border-radius: 2px;
 }
 
+@media only screen and (max-width: global.$min-width) {
+    .burger{
+        display: flex;
+        justify-content: center;
+        flex-direction: row-reverse;
+        user-select: none;
+        align-items: center;
+        color: global.$text;
+        z-index: 53;
+        cursor: pointer;
+        font-size: 300%;
+        padding: 2%;
+        width: 20%;
+    }
+    .links {
+        transform: translateY(-100%);
+        width: 100%;
+        height: 60vh;
+        background-color: global.$trans-background;
+        position: fixed;
+        display: flex;
+        flex-direction: column!important;
+        align-items: center;
+        flex-direction: row;
+        z-index: 52;
+    }
+    .links>div {
+        width: 100%;
+        height: 40%;
+        margin: 0;
+    }
+    .links > div > a:hover {
+        border-top: 0px;
+        border-bottom: 0px;
+        background-color: global.$active-trans-background;
+        transition: background-color 200ms linear;
+        border-radius: 2px;
+    }
+    
+    .nav-active{
+        border-top: 0px;
+        border-bottom: 0px;
+        background-color: global.$active-trans-background;
+        border-radius: 2px;
+    }
+    .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        z-index: 50;
+    }
+  }

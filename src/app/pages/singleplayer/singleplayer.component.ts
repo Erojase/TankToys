@@ -6,7 +6,7 @@ import { MainCanvasComponent } from '../../components/mainCanvas/mainCanvas.comp
   selector: 'app-singleplayer',
   standalone: true,
   templateUrl: './singleplayer.component.html',
-  styleUrls: ['./singleplayer.component.css'],
+  styleUrls: ['./singleplayer.component.scss'],
   imports: [ MainCanvasComponent ]
 })
 export class SingleplayerComponent implements OnInit {

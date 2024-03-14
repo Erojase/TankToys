@@ -1,6 +1,4 @@
-/* *{
-    border: 1px solid red;
-} */
+@use '../../../styles.scss' as global;
 
 .loginMain{
     background-image: url(/assets/images/signIn-back.png);
@@ -61,7 +59,8 @@ input{
     justify-content: center;
     align-self: center;
     flex-direction: column;
-    width: 20%;
+    width: min-content;
+    padding: 2%;
     margin: auto;
     align-content: center;
     align-items: center;
@@ -79,20 +78,22 @@ input{
 }
 
 div{
-    color: var(--text);
+    color: global.$text;
 }
 
 .signButton{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-direction: row-reverse;
     padding: 10px;
-    margin: 5px;
-    width: 70%;
+    width: 100%;
     text-align: center;
     cursor: pointer;
-    border-radius: 15px;
-    color: var(--contrast-text);
+    border-radius: 5px;
+    height: 32px;
+    margin-top: 10%;
+    color: global.$contrast-text;
     background-color: white;
 }
 

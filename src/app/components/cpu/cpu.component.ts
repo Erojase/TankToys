@@ -12,7 +12,7 @@ import { BulletComponent } from '../bullet/bullet.component';
   selector: 'app-cpu',
   standalone: true,
   templateUrl: './cpu.component.html',
-  styleUrls: ['./cpu.component.css'],
+  styleUrls: ['./cpu.component.scss'],
   imports: [ CommonModule, CannonComponent ]
 })
 export class CpuComponent implements OnInit, AfterViewInit {

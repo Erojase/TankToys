@@ -1,12 +1,13 @@
-:root {
-    --principal: #292929;
-    --secondary: #3ece8d;
-    --contrast: #29ad74;
-    --background: #0e0e0e;
-    --container-bg: rgb(68, 68, 68);
-    --text: #fefefe;
-    --contrast-text: black;
-}
+$min-width:650px;
+$principal: #292929;
+$secondary: #3ece8d;
+$contrast: #29ad74;
+$background: #0e0e0e;
+$trans-background: #0e0e0ec5;
+$active-trans-background: #424242bb;
+$container-bg: rgb(68, 68, 68);
+$text: #fefefe;
+$contrast-text: black;
 
 *{
     font-family: sans-serif, 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS';
@@ -20,6 +21,11 @@ img{
 }
 
 h1, h2, h3, h4, h5{
-    color: var(--text);
+    color: $text;
     text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
+
+li{
+    text-align: justify;
+  text-justify: inter-word;
 }

@@ -14,7 +14,7 @@ import { ReferenceRepository } from '../../controllers/ReferenceRepository';
     selector: 'app-mainCanvas',
     standalone: true,
     templateUrl: './mainCanvas.component.html',
-    styleUrls: ['./mainCanvas.component.css'],
+    styleUrls: ['./mainCanvas.component.scss'],
     imports: [
         CommonModule,
         ScopeComponent,

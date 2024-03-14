@@ -6,6 +6,7 @@ import { ServerCall } from '../../utils/ServerCall';
 import { Router } from '@angular/router';
 import UserController from '../../controllers/user/UserController';
 import Web3Controller from '../../controllers/Web3Controller';
+import { GoogleLoginProvider, SocialAuthService, GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
 
 
 
@@ -13,8 +14,8 @@ import Web3Controller from '../../controllers/Web3Controller';
   selector: 'app-signIn',
   standalone: true,
   templateUrl: './signIn.component.html',
-  styleUrls: ['./signIn.component.css'],
-  imports: [MatCardModule]
+  styleUrls: ['./signIn.component.scss'],
+  imports: [MatCardModule, GoogleSigninButtonModule]
 })
 export class SignInComponent implements OnInit, AfterViewInit {
   @ViewChild('google') googleBtn: ElementRef<HTMLButtonElement>;
@@ -29,21 +30,18 @@ export class SignInComponent implements OnInit, AfterViewInit {
   contract: any;
   address: string;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private socialAuthService: SocialAuthService) { }
   
   ngOnInit() {
-  
+    this.socialAuthService.authState.subscribe((user) => this.signUp(user.id, user.name));
     this.login = document.getElementById("log");
     this.signin = document.getElementById("sign");
   }
 
   ngAfterViewInit(): void {
-    this.googleBtn.nativeElement.addEventListener('click', () => this.googleSignLog());
     this.metamaskBtn.nativeElement.addEventListener('click', () => this.metaSignLog());
   }
-  googleSignLog(): any {
-    throw new Error('Method not implemented.');
-  }
+
   async metaSignLog(): Promise<any> {
     if (window.ethereum == null) {
       console.log("MetaMask not installed; using read-only defaults");
@@ -81,11 +79,14 @@ export class SignInComponent implements OnInit, AfterViewInit {
     }
   }
 
-  async submitUsername(){
-    let res = await ServerCall.register(this.signer.address, this.txtUsername.nativeElement.value);
-    console.log(res);
+  async signUp(id:string, username:string){
+    console.log(`signin up ${username} user with id ${id}`);
     
+    let res = await ServerCall.register(id, username);
+    console.log(res);
   }
+
+  submitUsername = async () => await this.signUp(this.signer.address, this.txtUsername.nativeElement.value);
 
 
 }
