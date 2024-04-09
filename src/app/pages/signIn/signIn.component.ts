@@ -57,13 +57,13 @@ export class SignInComponent implements OnInit, AfterViewInit {
 
       UserController.SetSigner(this.signer);
       
-      this.router.navigate(['/']).then(()=>{
-        window.location.reload();
-        if (UserController.Signer != null) {
-          ServerCall.getUser(UserController.Signer.address);
-        }
-        console.log(j);}
-      );
+      // this.router.navigate(['/']).then(()=>{
+      //   window.location.reload();
+      //   if (UserController.Signer != null) {
+      //     ServerCall.getUser(UserController.Signer.address);
+      //   }
+      //   console.log(j);}
+      // );
       console.log(le);
     }
   }

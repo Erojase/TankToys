@@ -17,8 +17,8 @@ export const routes: Routes = [
     { path: 'garage', component: GarageComponent },
     { path: 'play', component: PlayComponent },
     { path: 'singleplayer', component: SingleplayerComponent },
-    { path: 'online', component: LocalMultiplayerComponent},
-    { path: 'multiplayer', component: OnlineMultiplayerComponent},
+    { path: 'online', component: OnlineMultiplayerComponent },
+    { path: 'multiplayer', component: LocalMultiplayerComponent },
     { path: 'signIn', component: SignInComponent },
     { path: 'shop', component: ShopComponent }
 ];

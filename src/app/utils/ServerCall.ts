@@ -3,7 +3,7 @@ import UserController from '../controllers/user/UserController';
 import HTTP from './HTTP';
 
 const apiPath = "/api/v1/";
-const multiplayerPath = `${apiPath}multi`;
+const multiplayerPath = `${apiPath}multiplayer`;
 const userPath = `${apiPath}user`;
 const rankingPath = `${apiPath}ranking`;
 const tankPath = `${apiPath}tank`;
@@ -32,6 +32,19 @@ export class ServerCall {
             return await res.text();
         }
         return null;
+    }
+
+    static joinRoom = async (playerAddress: string, roomId: string) => {
+        let res = await HTTP.PostRequest(`${this.serverUrl}${multiplayerPath}/joinRoom`, JSON.stringify({
+            roomId: roomId,
+            playerId: playerAddress,
+            gamemode: 0,
+        }))
+
+        if (res.ok) {
+            return true;
+        }
+        return false;
     }
 
     static login = async (playerAddress: string):Promise<LoginResponse> =>{
