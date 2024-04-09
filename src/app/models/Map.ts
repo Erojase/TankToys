@@ -94,6 +94,8 @@ export class GameMap {
             GameMap.aleatMapGenerator(map);
         }
 
+        GameMap._map = map;
+
         let posx:number = -50;
         let posy:number = 100;
 

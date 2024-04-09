@@ -37,6 +37,8 @@ export class MapComponent implements OnInit, AfterViewInit {
                 if ((<HTMLImageElement>image).src.includes("wall")) {
                     (<HTMLElement>image).style.border = "1px green solid";
                     GameMap.registerCollider(image.getBoundingClientRect(), "wall"+uuid());
+                } else {
+                    GameMap.registerCollider(image.getBoundingClientRect(), "floor"+uuid());
                 }
             }
         }
