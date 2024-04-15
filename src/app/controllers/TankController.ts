@@ -143,7 +143,7 @@ export class TankController {
     private static cont = 0;
 
     public static shootBullet() {
-        BulletController.shoot(this.bullets[this.cont], this.tank.position, this.scopePos, this.cannonRotation, "player");
+        BulletController.shoot(this.bullets[this.cont], this.tank.position, this.scopePos, this.cannonRotation, "player", "tankBullet"+this.cont);
         this.cont++;
         if (this.cont > this.bullets.length -1) {
             this.cont = 0;

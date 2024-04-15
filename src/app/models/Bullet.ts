@@ -22,7 +22,7 @@ export class Bullet {
     }
 
 
-    public async moveBullet(x:number,y:number, owner:string) { 
+    public async moveBullet(x:number,y:number, owner:string, bulletName:string) { 
         setTimeout(()=>{
             this.position.x += x;
             this.position.y += y;
@@ -32,7 +32,7 @@ export class Bullet {
             let block: boolean[] = GameMap.checkIfBlockNullet(this.position, x, y, owner);
             
             if (!block[0] && this.currentBounce <= this.maxBounce) {
-                this.moveBullet(x, y, owner);  
+                this.moveBullet(x, y, owner, bulletName);  
                 return;   
             } else {
                 this.currentBounce++;
@@ -53,7 +53,7 @@ export class Bullet {
                         console.log("-y");
                         
                     }
-                    this.moveBullet(x, y, owner); 
+                    this.moveBullet(x, y, owner, bulletName); 
                 } else {
                     this.position = {
                         x: -0,

@@ -54,32 +54,41 @@ export class CPUController {
             y: this.players[0].position.x + 25
         }
 
-        BulletController.shoot(this.bullet, this.position, realTargetPos, this.cannonRotation, "cpu");
+        this.pathfinding();
+        BulletController.shoot(this.bullet, this.position, realTargetPos, this.cannonRotation, "cpu", "cpuBullet"+0);
     }
 
     public static getQuadrant(tank:any) {
 
-        let posX = 0;
+        let posX = -1;
         let posY = 0;
+        
+        let w = GameMap.colliders[tank].right - GameMap.colliders[tank].left;
+        let h = GameMap.colliders[tank].bottom - GameMap.colliders[tank].top;
+
+        w = GameMap.colliders[tank].right - (w/2);
+        h = GameMap.colliders[tank].bottom - (h/2);
+
+        console.log(w);
+        console.log(h);
+        
 
         for (const collider in GameMap.colliders) {
-            var overlap = !(GameMap.colliders[tank].right < GameMap.colliders[collider].left ||
-                GameMap.colliders[tank].left > GameMap.colliders[collider].right ||
-                GameMap.colliders[tank].bottom < GameMap.colliders[collider].top ||
-                GameMap.colliders[tank].top > GameMap.colliders[collider].bottom)
-
-            if (overlap && GameMap.colliders[tank].type != tank) {
+            var overlap = (w < GameMap.colliders[collider].right &&
+                w > GameMap.colliders[collider].left &&
+                h < GameMap.colliders[collider].bottom &&
+                h > GameMap.colliders[collider].top)       
+            
+            if (overlap && GameMap.colliders[collider].type != tank) {
                 console.group("overlap");
                 console.log(GameMap.colliders[collider]);
                 console.groupEnd();
-
-
 
                 return posX + "," + posY;
             }
 
             posX++;
-            if (posX == 24) {
+            if (posX == 16) {
                 posY++;
                 posX = 0;
             }
@@ -106,13 +115,20 @@ export class CPUController {
         let tankPlayerQ = CPUController.getQuadrant("player");
         let tankCPUQ = CPUController.getQuadrant("cpu");
 
-        pathMap[Number.parseInt(tankPlayerQ.split(",")[1])][Number.parseInt(tankPlayerQ.split(",")[0])] = "T";
+        console.log("tankPlayerQ: " + tankPlayerQ);
+        console.log("tankCPUQ: " + tankCPUQ);
+        
+
+        pathMap[Number.parseInt(tankPlayerQ.split(",")[1])][Number.parseInt(tankPlayerQ.split(",")[0])] = "O";
         pathMap[Number.parseInt(tankCPUQ.split(",")[1])][Number.parseInt(tankCPUQ.split(",")[0])] = "T";
 
+        CPUController.paintMap(pathMap);
 
+        let tposX = Number.parseInt(tankCPUQ.split(",")[0]);
+        let tposY = Number.parseInt(tankCPUQ.split(",")[1]);
 
         let nextToExpand: String[] = [];
-        nextToExpand.push(tankPlayerQ);
+        nextToExpand.push(tankCPUQ);
 
         let find: boolean = false;
         let winRoute: String[] = [];
@@ -130,7 +146,7 @@ export class CPUController {
                 y = Number.parseInt(nextToExpand[i].split(",")[1]);
                 find = CPUController.expand(pathMap, aux, x, y, 1, 0, "D");
                 if (!find) {
-                    find = CPUController.expand(pathMap, aux, x, y, -1, 0, "D");
+                    find = CPUController.expand(pathMap, aux, x, y, 1, 0, "D");
                 }
                 if (!find) {
                     find = CPUController.expand(pathMap, aux, x, y, -1, 0, "U");
@@ -170,6 +186,7 @@ export class CPUController {
             }
         }
 
+        winRoute.shift();
         console.log(winRoute);
 
         for (let i = 0; i < map.length; i++) {
@@ -181,9 +198,9 @@ export class CPUController {
 
         }
 
-        // CPUController.paintMap(map);
-        // paintRoute(map, winRoute, tposX, tposY);
-        // CPUController.paintMap(map);
+        CPUController.paintMap(pathMap);
+        CPUController.paintRoute(pathMap, winRoute, tposX, tposY);
+        CPUController.paintMap(pathMap);
 
     }
 
@@ -204,7 +221,7 @@ export class CPUController {
     
     
     public static paintRoute(map:String[][], winRoute:String[], tposX:number, tposY:number) {
-        for (let i = 1; i < winRoute.length; i++) {
+        for (let i = 0; i < winRoute.length; i++) {
             switch (winRoute[i]) {
                 case "U":
                     tposX--;

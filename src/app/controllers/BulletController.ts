@@ -1,4 +1,5 @@
 import { Bullet } from "../models/Bullet";
+import { GameMap } from "../models/Map";
 import { Position } from "../models/Tank";
 import { TankController } from "./TankController";
 
@@ -27,14 +28,12 @@ export class BulletController {
     }
 
     
-    public static shoot(bullet:Bullet, tankPos: Position, target: Position, cannonRotation:number, owner: string) {
+    public static shoot(bullet:Bullet, tankPos: Position, target: Position, cannonRotation:number, owner: string, bulletName: string) {
 
         if (BulletController.enabled) {
             bullet.stopMoves();
             BulletController.disableShooting();
             bullet.currentBounce = 0;
-            bullet.position.x = tankPos.y+12.5;
-            bullet.position.y = tankPos.x+10;
             console.log("disparo");
             bullet.rotation = cannonRotation;
             let xDiff = target.x - tankPos.y+22.5;
@@ -56,9 +55,13 @@ export class BulletController {
             bullet.xDiff = xDiff;
             bullet.yDiff = yDiff;
 
+            bullet.position.x = tankPos.y+((GameMap.colliders["player"].bottom - GameMap.colliders["player"].top)/2)-15; //Falta hacer que el width de la bala sea ajustable hacer con GameMap.colliders
+            bullet.position.y = tankPos.x+((GameMap.colliders["player"].right - GameMap.colliders["player"].left)/2)-10;
             
-            
-            bullet.moveBullet(bullet.xDiff*-1,bullet.yDiff*-1, owner);
+            bullet.position.x += bullet.xDiff*-2;
+            bullet.position.y += bullet.yDiff*-2;
+
+            bullet.moveBullet(bullet.xDiff*-1,bullet.yDiff*-1, owner, bulletName);
 
             // console.log(xDiff);
             // console.log(yDiff);

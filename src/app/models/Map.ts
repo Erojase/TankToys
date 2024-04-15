@@ -114,7 +114,7 @@ export class GameMap {
             }
             this.blocksPos.push(row);
         }
-        console.log(this.blocksPos);
+        //console.log(this.blocksPos);
         
 
         let imgs = [];
@@ -161,7 +161,7 @@ export class GameMap {
             }
             collider.push(row);
         }
-        console.log(collider);
+        //console.log(collider);
         
     }
 
@@ -192,7 +192,7 @@ export class GameMap {
             
         
         }
-        console.log(GameMap.blocksPos);
+        //console.log(GameMap.blocksPos);
     }
     
     public static checkIfBlockNullet(position: Position, x: number, y: number, owner: string) {
@@ -206,13 +206,13 @@ export class GameMap {
                 position.y+y+(collHeight/2) < this.colliders[collider].top ||
                 position.y+y > this.colliders[collider].bottom)
 
-                // console.log("");
-                // console.log(position.x+x < collider.left);
-                // console.log(position.x+x > collider.right);
-                // console.log(position.y+y < collider.top);
-                // console.log(position.y+y > collider.bottom);
+                // //console.log("");
+                // //console.log(position.x+x < collider.left);
+                // //console.log(position.x+x > collider.right);
+                // //console.log(position.y+y < collider.top);
+                // //console.log(position.y+y > collider.bottom);
 
-            if (overlap && this.colliders[collider].type != owner) {
+            if (overlap && !this.colliders[collider].type.includes("floor") ) { //Poner aqui el que la bala se destruya si choca con otra bala o con un tanke
                 if (this.colliders[collider].type == "player" || this.colliders[collider].type == "cpu") {
                     ReferenceRepository.Component[this.colliders[collider].type].destroy();
                     const { [collider]: g, ...otro} = this.colliders;
@@ -221,10 +221,10 @@ export class GameMap {
                     // supertecnica disparo cascadaaaaaaaa
                 } else {
 
-                    console.group("disparo");
-                    console.log("++x: " + x);
-                    console.log("++y: " + y);
-                    console.log(this.colliders[collider]);
+                    //console.group("disparo");
+                    //console.log("++x: " + x);
+                    //console.log("++y: " + y);
+                    //console.log(this.colliders[collider]);
                     
 
                     let colliCenter: Position =  {
@@ -237,74 +237,74 @@ export class GameMap {
                         y: 0
                     };
                     
-                    console.log("bullet position: " );
-                    console.log(position);
-                    console.log("collidercenter: ");
-                    console.log(colliCenter);
+                    //console.log("bullet position: " );
+                    //console.log(position);
+                    //console.log("collidercenter: ");
+                    //console.log(colliCenter);
                     
                     
                     if (position.x >= colliCenter.x) {
-                        console.log("x mayor");           
+                        //console.log("x mayor");           
                         if ((position.x - colliCenter.x) < Math.abs(x)) {
-                            console.log("Diferencia menor al avance de x");
+                            //console.log("Diferencia menor al avance de x");
                             
                             diff.x = position.x - colliCenter.x;
                         } else {
-                            console.log("Diferencia mayor al avance de x");
+                            //console.log("Diferencia mayor al avance de x");
                             
                             diff.x = Math.abs((position.x-x) - colliCenter.x)
                             if (diff.x > collWidth/2) {
-                                console.log("Diferencia mayo a la mitad del ancho del bloque");
+                                //console.log("Diferencia mayo a la mitad del ancho del bloque");
                                 
                                 diff.x = Math.abs((position.x-Math.abs(x)) - colliCenter.x)
                             }
                         }         
                     } else {
-                        console.log("x menor");
+                        //console.log("x menor");
                         if ((colliCenter.x - position.x) < Math.abs(y)) {
-                            console.log("Diferencia menor al avance de x");
+                            //console.log("Diferencia menor al avance de x");
                             diff.x = colliCenter.x - position.x;
                         } else {
-                            console.log("Diferencia mayor al avance de x");
+                            //console.log("Diferencia mayor al avance de x");
                             diff.x = Math.abs(colliCenter.x - (position.x+x));
                             if (diff.x > collWidth/2) {
-                                console.log("Diferencia mayo a la mitad del ancho del bloque");
+                                //console.log("Diferencia mayo a la mitad del ancho del bloque");
                                 diff.x = Math.abs(colliCenter.x - (position.x+Math.abs(x)));
                             }
                         }
                     }
                     
                     if (position.y+y >= colliCenter.y) {
-                        console.log("y mayor");
+                        //console.log("y mayor");
                         if ((position.y - colliCenter.y) < collHeight/2) {
-                            console.log("Diferencia menor al avance de y");
+                            //console.log("Diferencia menor al avance de y");
                             diff.y = position.y - colliCenter.y;
                         } else {
-                            console.log("Diferencia mayor al avance de y");
+                            //console.log("Diferencia mayor al avance de y");
                             diff.y = Math.abs((position.y-y) - colliCenter.y)
                             if (diff.y > collHeight/2) {
-                                console.log("Diferencia mayo a la mitad del alto del bloque");
+                                //console.log("Diferencia mayo a la mitad del alto del bloque");
                                 diff.y = Math.abs((position.y-Math.abs(y)) - colliCenter.y)
                             }
                         } 
                     } else {
-                        console.log("y menor");
+                        //console.log("y menor");
                         if ((colliCenter.y - position.y) < collHeight/2) {
-                            console.log("Diferencia menor al avance de y");
+                            //console.log("Diferencia menor al avance de y");
                             diff.y = colliCenter.y - position.y;
                         } else {
-                            console.log("Diferencia mayor al avance de y");
+                            //console.log("Diferencia mayor al avance de y");
                             diff.y = Math.abs(colliCenter.y - (position.y+y));
                             if (diff.y > collWidth/2) {
-                                console.log("Diferencia mayo a la mitad del alto del bloque");
+                                //console.log("Diferencia mayo a la mitad del alto del bloque");
                                 diff.y = Math.abs(colliCenter.y - (position.y+Math.abs(y)));
                             }
                         }
                     }
                     
-                    console.log("diff");
-                    console.log(diff);
-                    console.groupEnd(); 
+                    //console.log("diff");
+                    //console.log(diff);
+                    //console.groupEnd(); 
                     
                     if (diff.x > diff.y) {
                         return [true,true];
@@ -326,10 +326,10 @@ export class GameMap {
                 tank.bottom+down < this.colliders[collider].top ||
                 tank.top+up > this.colliders[collider].bottom)
                 
-            if (overlap && this.colliders[collider].type != owner) {
-                console.group("overlap");
-                console.log(this.colliders[collider]);
-                console.groupEnd();
+            if (overlap && this.colliders[collider].type != owner && !this.colliders[collider].type.includes("floor")) {
+                //console.group("overlap");
+                //console.log(this.colliders[collider]);
+                //console.groupEnd();
                 return true;
             }
         }
