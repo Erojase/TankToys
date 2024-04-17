@@ -18,7 +18,7 @@ export class TankController {
 
     public static directions: string[] = [];
 
-    private static _tank: Tank = new Tank();
+    private static _tank: Tank = new Tank({x: 250,y: 100});
     public static get tank(): Tank {
         return this._tank;
     }

@@ -7,7 +7,7 @@ export default class HTTP {
     }
 
     static PostRequest = async (url:string, body:any) =>{
-        debugger;
+
         return await fetch(url, {
             method: 'post',
             body: body,

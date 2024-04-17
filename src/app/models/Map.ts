@@ -195,7 +195,7 @@ export class GameMap {
         //console.log(GameMap.blocksPos);
     }
     
-    public static checkIfBlockNullet(position: Position, x: number, y: number, owner: string) {
+    public static checkIfBlockNullet(position: Position, x: number, y: number, owner: string,  bulletName: string) {
         
         for (const collider in this.colliders) {
             let collWidth: number = this.colliders[collider].right - this.colliders[collider].left;
@@ -213,11 +213,23 @@ export class GameMap {
                 // //console.log(position.y+y > collider.bottom);
 
             if (overlap && !this.colliders[collider].type.includes("floor") ) { //Poner aqui el que la bala se destruya si choca con otra bala o con un tanke
-                if (this.colliders[collider].type == "player" || this.colliders[collider].type == "cpu") {
-                    ReferenceRepository.Component[this.colliders[collider].type].destroy();
-                    const { [collider]: g, ...otro} = this.colliders;
-                    this.colliders = otro;
-                    clearInterval(CpuComponent.cpuShoot);
+                if (this.colliders[collider].type == "player" || this.colliders[collider].type == "cpu" || (this.colliders[collider].type != bulletName && this.colliders[collider].type.includes("Bullet"))) {
+                    console.log(this.colliders[collider]);
+                    
+                    if (this.colliders[collider].type == "player" || this.colliders[collider].type == "cpu") {
+                        ReferenceRepository.Component[this.colliders[collider].type].destroy();
+                        const { [collider]: g, ...otro} = this.colliders;
+                        this.colliders = otro;
+                        clearInterval(CpuComponent.cpuShoot);
+                    } else {
+                        console.log("Choque con bala");
+                        
+                        position = {
+                            x: -0,
+                            y: -30
+                        }
+                    }
+
                     // supertecnica disparo cascadaaaaaaaa
                 } else {
 
@@ -326,10 +338,11 @@ export class GameMap {
                 tank.bottom+down < this.colliders[collider].top ||
                 tank.top+up > this.colliders[collider].bottom)
                 
-            if (overlap && this.colliders[collider].type != owner && !this.colliders[collider].type.includes("floor")) {
-                //console.group("overlap");
-                //console.log(this.colliders[collider]);
-                //console.groupEnd();
+            if (overlap && this.colliders[collider].type != owner && !this.colliders[collider].type.includes("floor") && !this.colliders[collider].type.includes("tank")) {
+                console.group("overlap");
+                console.log(this.colliders[collider]);
+                console.log(owner);
+                console.groupEnd();
                 return true;
             }
         }

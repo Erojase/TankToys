@@ -28,14 +28,18 @@ export class CpuComponent implements OnInit, AfterViewInit {
   }
   
   ngOnInit() {
+    GameController.addToGameLoop(()=>CPUController.pathfinding(this.self.nativeElement.getBoundingClientRect()));
+
         for (let i = 0; i < 1; i++) {
             const compref = this.mainViewRef.createComponent(BulletComponent);
             compref.setInput("type", "CPU");
-            console.log('jamon => ', compref);            
+            console.log('jamon => ', compref);           
+            GameController.addToGameLoop(()=> GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), "cpuBullet"+i));
         }
     CpuComponent.cpuShoot = setInterval(() => {
       CPUController.shootBullet();
     }, 4000);
+    GameController.addToGameLoop(()=> GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), "cpu"));
   }
   
   setCPURotation = (): number => CPUController.cannonRotation;
@@ -44,8 +48,8 @@ export class CpuComponent implements OnInit, AfterViewInit {
         "position": 'absolute',
         "width": "45px",
         "height": "45px",
-        "top": `500px`,
-        "left": `575px`,
+        "top": `${CPUController.cpu.position.x}px`,
+        "left": `${CPUController.cpu.position.y}px`,
         "rotate": `${TankController.tank.rotation}deg`,
         "display": 'flex',
         "justifyContent": 'center',

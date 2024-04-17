@@ -31,16 +31,17 @@ export class Cannon{
 export class Tank {
 
     public position: Position = {
-        x: 250,
-        y: 100
+        x: 0,
+        y: 0
     };
 
     public rotation: number = 0;
 
     public speed = 10;
 
-    constructor() {
-        
+
+    constructor(defaultPos: Position) {
+        this.position = defaultPos!;
     }
 
 
