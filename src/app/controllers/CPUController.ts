@@ -1,9 +1,9 @@
-import { delay } from 'rxjs';
 import { Bullet } from '../models/Bullet';
 import { Collider, GameMap } from "../models/Map";
 import { Position, Tank } from '../models/Tank';
 import { BulletController } from './BulletController';
 import { TankController } from './TankController';
+import { delay } from '../utils/utils';
 
 export class CPUController {
     
@@ -12,16 +12,19 @@ export class CPUController {
         y: 650
     }
 
-    private static _cpu: Tank = new Tank(this.position);
+    private static _cpu: Tank;
 
     public static bullet: Bullet;
 
     private static players: Tank[] = [];
 
     public static get cpu(): Tank {
+        if (this._cpu == null) {
+            this._cpu = new Tank(this.position);
+        }
         return this._cpu;
     }
-    public static set tank(v: Tank) {
+    public static set cpu(v: Tank) {
         this._cpu = v;
     }
 
@@ -279,38 +282,35 @@ export class CPUController {
             const step = winRoute[i];
             this.ocupado = true; 
             console.log(step);
-            
+            debugger;
             switch (step) {//U = L; L = U; R = D; D = R;
                 case "U":
                     if (!GameMap.checkIfBlockV2(cpu, TankController.tank.speed * -1,0,0,0, "cpu")) {
                     }
-                    CPUController._cpu.moveY(TankController.tank.speed*-4.5);
+                    await CPUController.cpu.moveYBot(TankController.tank.speed*-1);
                     break;
                 case "D":
                     if (!GameMap.checkIfBlockV2(cpu, TankController.tank.speed * -1,0,0,0, "cpu")) {
                     }
-                    CPUController._cpu.moveY(TankController.tank.speed*4.5);
+                    await CPUController.cpu.moveYBot(TankController.tank.speed*1);
                     break;
                 case "L":
                     if (!GameMap.checkIfBlockV2(cpu, TankController.tank.speed * -1,0,0,0, "cpu")) {
                     }
-                    CPUController._cpu.moveX(TankController.tank.speed*-4.5);
+                    await CPUController.cpu.moveXBot(TankController.tank.speed*-1);
                     break;
                 case "R":
                     if (!GameMap.checkIfBlockV2(cpu, TankController.tank.speed * -1,0,0,0, "cpu")) {
                     }
-                    CPUController._cpu.moveX(TankController.tank.speed*4.5);
+                    await CPUController.cpu.moveXBot(TankController.tank.speed*1);
                     break;
             }
-            await this.delay(500);
+            await delay(24);
         }
         this.ocupado = false;
     }
-    public static async delay(t:number) {
-        return new Promise(function(resolve) {
-            setTimeout(function() {
-                resolve(true);
-            }, t);
-        });
-     }
+    
+
+    
+
 }

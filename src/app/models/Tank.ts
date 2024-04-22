@@ -1,5 +1,6 @@
-import { angleToCoords } from "../utils/utils";
-import { GameMap } from "./Map";
+import { CPUController } from "../controllers/CPUController";
+import { angleToCoords, delay } from "../utils/utils";
+import { Collider, GameMap } from "./Map";
 
 export interface Position{
     x: number;
@@ -62,6 +63,38 @@ export class Tank {
      */
     public moveY(steps:number) {
         this.position.y += steps;
+    }
+
+    public async moveXBot(steps:number) {
+        let nextBlock: Boolean = false;
+        let tankCPUQ = CPUController.getQuadrant("cpu");
+        debugger;
+        while (!nextBlock) {
+            this.position.x += steps;
+            let checkQ = CPUController.getQuadrant("cpu");
+            if (tankCPUQ != checkQ) {
+                nextBlock = true
+            }
+            await delay(24);
+        }
+    }
+
+    
+    public async moveYBot(steps:number) {
+        let nextBlock: Boolean = false;
+        let tankCPUQ = CPUController.getQuadrant("cpu");
+        debugger;
+        while (!nextBlock) {
+            this.position.y += steps;
+            let checkQ = CPUController.getQuadrant("cpu");
+            console.log("checkQ: " + checkQ);
+            console.log("tankCPUQ: " + tankCPUQ);
+            
+            if (tankCPUQ != checkQ) {
+                nextBlock = true
+            }
+            await delay(24);
+        }
     }
 
     public move(pos:Position){

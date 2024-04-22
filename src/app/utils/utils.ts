@@ -11,3 +11,11 @@ export interface dimensions {
   
     return {x: Xf, y: Yf}
   }
+
+  export const delay = async (t:number) => {
+    return new Promise(function(resolve) {
+        setTimeout(function() {
+            resolve(true);
+        }, t);
+    });
+ }
