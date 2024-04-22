@@ -20,10 +20,18 @@ export class RoomFormComponent implements OnInit {
   onClick(e:Event){
     switch (true) {
       case (<HTMLElement>e.target).className.includes("join"):
-          MultiplayerController.joinRoom(UserController.user?.address!, this.roomIdField.nativeElement.value);
+          MultiplayerController.joinRoom(UserController.user?.address!, this.roomIdField.nativeElement.value).then(res => {
+            if (res) {
+              alert("joined room");
+            } else {
+              alert("could't join room");
+            }
+          });
         break;
       case (<HTMLElement>e.target).className.includes("create"):
-          MultiplayerController.createRoom(UserController.user?.address!, 0);
+          MultiplayerController.createRoom(UserController.user?.address!, 0).then(res => {
+            alert(res);
+          });
         break;
       default:
         break;

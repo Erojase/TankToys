@@ -1,5 +1,19 @@
 
+.container {
+    background-color: rgba(0, 0, 0, 0.527);
+    padding: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row-reverse;
+    width: 30%;
+}
+
+.container > * {
+    width: min-content;
+}
+
 .clickable {
-    margin-top: 70px;
     cursor: pointer;
 }

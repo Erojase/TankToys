@@ -2,12 +2,12 @@ import { jwtDecode } from "jwt-decode";
 import UserController from '../controllers/user/UserController';
 import HTTP from './HTTP';
 
-const apiPath = "/api/v1/";
-const multiplayerPath = `${apiPath}multiplayer`;
-const userPath = `${apiPath}user`;
-const rankingPath = `${apiPath}ranking`;
-const tankPath = `${apiPath}tank`;
-const mapPath = `${apiPath}map`;
+const apiPath = "/";
+const multiplayerPath = `${apiPath}Multiplayer`;
+const userPath = `${apiPath}User`;
+const rankingPath = `${apiPath}Ranking`;
+const tankPath = `${apiPath}Tank`;
+const mapPath = `${apiPath}Map`;
 
 export enum LoginResponse{
     LOGGED = "LOGGED",
@@ -20,10 +20,11 @@ export enum RegisterResponse{
 }
 
 export class ServerCall {
-    private static serverUrl: string = "http://localhost:8090";
+    private static serverUrl: string = "http://localhost:5090";
 
     static createRoom = async (playerAddress: string, gamemode: number) => {
         let res = await HTTP.PostRequest(`${this.serverUrl}${multiplayerPath}/createRoom`, JSON.stringify({
+            roomId: "string",
             playerId: playerAddress,
             gamemode: gamemode
         }))
@@ -40,11 +41,15 @@ export class ServerCall {
             playerId: playerAddress,
             gamemode: 0,
         }))
+        return res.ok;
+    }
 
-        if (res.ok) {
-            return true;
-        }
-        return false;
+    static leaveRoom = async (playerAddress: string, roomId: string) => {
+        let res = await HTTP.PostRequest(`${this.serverUrl}${multiplayerPath}/leaveRoom`, JSON.stringify({
+            roomId: roomId,
+            playerId: playerAddress
+        }))
+        return res.ok;
     }
 
     static login = async (playerAddress: string):Promise<LoginResponse> =>{
