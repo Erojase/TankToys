@@ -338,7 +338,10 @@ export class GameMap {
                 tank.bottom+down < this.colliders[collider].top ||
                 tank.top+up > this.colliders[collider].bottom)
                 
-            if (overlap && this.colliders[collider].type != owner && !this.colliders[collider].type.includes("floor") && !this.colliders[collider].type.includes("tank")) {
+            if (overlap && this.colliders[collider].type != owner && !this.colliders[collider].type.includes("floor") && !this.colliders[collider].type.includes(owner)) {
+                debugger;
+                console.log("overlap para: " + owner);
+                
                 console.group("overlap");
                 console.log(this.colliders[collider]);
                 console.log(owner);

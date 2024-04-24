@@ -74,9 +74,18 @@ export class Tank {
             let checkQ = CPUController.getQuadrant("cpu");
             if (tankCPUQ != checkQ) {
                 nextBlock = true
+                tankCPUQ = checkQ;
             }
             await delay(24);
         }
+        debugger;
+        let cpu = GameMap.colliders["cpu"];
+        if (steps > 0) {
+            this.position.x += (((cpu.bottom - cpu.top)/3)); 
+        } else {
+            this.position.x += (((cpu.bottom - cpu.top)/3))*-1; 
+        }
+        
     }
 
     
@@ -94,6 +103,13 @@ export class Tank {
                 nextBlock = true
             }
             await delay(24);
+        }
+        debugger;
+        let cpu = GameMap.colliders["cpu"];
+        if (steps > 0) {
+            this.position.y += (((cpu.right - cpu.left)/3)); 
+        } else {
+            this.position.y += (((cpu.right - cpu.left)/3))*-1; 
         }
     }
 

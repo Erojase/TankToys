@@ -38,7 +38,7 @@ export class TankComponent implements OnInit, AfterViewInit {
             const compref = this.mainViewRef.createComponent(BulletComponent);
             compref.setInput("type", "player");
             console.log('jamon => ', compref);            
-            GameController.addToGameLoop(()=> GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), "tankBullet"+i));
+            GameController.addToGameLoop(()=> GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), "playerBullet"+i));
         }
         
     }

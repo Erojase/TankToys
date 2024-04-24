@@ -100,7 +100,6 @@ export class TankController {
         }
     }
     public static MoveV2(tank:DOMRect) {
-        
         if (MovementKeys.Up.filter(x => TankController.directions.includes(x)).length > 0) {
             if (!GameMap.checkIfBlockV2(tank,TankController.tank.speed * -1,0,0,0, "player")) {
                 console.log("Moving Up");

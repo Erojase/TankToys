@@ -90,7 +90,7 @@ export class CPUController {
                 console.log(GameMap.colliders[collider]);
                 console.groupEnd();
 
-                return posX + "," + posY;
+                return posX + "," + posY+ ","+ collider;
             }
 
             posX++;
@@ -99,9 +99,11 @@ export class CPUController {
                 posX = 0;
             }
         }
-        return "2,2";
+        return "2,2,tumadre";
     }
 
+    static winRoute:string[] = [];
+    static tankPlayerQ:string = "";
     public static pathfinding(cpu:DOMRect) {
         let map:number[][] = GameMap._map;
         let pathMap:string[][] = [];
@@ -117,15 +119,17 @@ export class CPUController {
             }
             pathMap.push(row);
         }
-
-        let tankPlayerQ = CPUController.getQuadrant("player");
+        if (CPUController.getQuadrant("player") == this.tankPlayerQ && this.cont < this.winRoute.length) {
+            return
+        }
+        this.tankPlayerQ = CPUController.getQuadrant("player");
         let tankCPUQ = CPUController.getQuadrant("cpu");
 
-        console.log("tankPlayerQ: " + tankPlayerQ);
+        console.log("this.tankPlayerQ: " + this.tankPlayerQ);
         console.log("tankCPUQ: " + tankCPUQ);
         
 
-        pathMap[Number.parseInt(tankPlayerQ.split(",")[1])][Number.parseInt(tankPlayerQ.split(",")[0])] = "O";
+        pathMap[Number.parseInt(this.tankPlayerQ.split(",")[1])][Number.parseInt(this.tankPlayerQ.split(",")[0])] = "O";
         pathMap[Number.parseInt(tankCPUQ.split(",")[1])][Number.parseInt(tankCPUQ.split(",")[0])] = "T";
 
         CPUController.paintMap(pathMap);
@@ -137,7 +141,7 @@ export class CPUController {
         nextToExpand.push(tankCPUQ);
 
         let find: boolean = false;
-        let winRoute: string[] = [];
+        CPUController.winRoute = [];
 
         let routeEndX: number = 0;
         let routeEndY: number = 0;
@@ -178,7 +182,7 @@ export class CPUController {
         
         let reachT = false;
         while (!reachT) {
-            winRoute.unshift(pathMap[y][x]);
+            CPUController.winRoute.unshift(pathMap[y][x]);
             console.log(pathMap[y][x]);
             console.log(x + "," + y);
 
@@ -202,24 +206,13 @@ export class CPUController {
         }
 
         console.log("Checkpoint 2");
-        winRoute.shift();
-        console.log(winRoute);
+        CPUController.winRoute.shift();
+        console.log(CPUController.winRoute);
 
-        // for (let i = 0; i < map.length; i++) {
-        //     for (let j = 0; j < map[i].length; j++) {
-        //         if (pathMap[i][j] != "X" && pathMap[i][j] != "T" && pathMap[i][j] != "O") {
-        //             pathMap[i][j] = " ";
-        //         }
-        //     }
-
-        // }
-
-        // CPUController.paintMap(pathMap);
-        // CPUController.paintRoute(pathMap, winRoute, tposX, tposY);
-        // CPUController.paintMap(pathMap);
-
-        CPUController.moveViaPath(cpu, winRoute);
-        winRoute = [];
+        this.cont = 0;
+        CPUController.moveViaPath(cpu);
+        this.callOnce = true;
+        CPUController.winRoute = [];
         console.log("Checkpoint 3");
     }
 
@@ -272,42 +265,45 @@ export class CPUController {
         }
     }
 
-    static ocupado = false;
-    public static async moveViaPath(cpu:DOMRect, winRoute: string[]) {
-        if (this.ocupado) {
+    static muerto = false;
+    static cont:number = 0;
+    static callOnce = false;
+    public static async moveViaPath(cpu:DOMRect) {
+        if (this.muerto || this.callOnce) {
             return;
         }
-        for (let i = 0; i < winRoute.length; i++) {
+        for (CPUController.cont = 0; CPUController.cont < CPUController.winRoute.length; CPUController.cont++) {
+            
+            let step = this.winRoute[this.cont];
 
-            const step = winRoute[i];
-            this.ocupado = true; 
             console.log(step);
             debugger;
             switch (step) {//U = L; L = U; R = D; D = R;
                 case "U":
-                    if (!GameMap.checkIfBlockV2(cpu, TankController.tank.speed * -1,0,0,0, "cpu")) {
-                    }
+                    if (!GameMap.checkIfBlockV2(cpu, 0,0,TankController.tank.speed * -1,0, "cpu")) {
+                    } 
                     await CPUController.cpu.moveYBot(TankController.tank.speed*-1);
                     break;
                 case "D":
-                    if (!GameMap.checkIfBlockV2(cpu, TankController.tank.speed * -1,0,0,0, "cpu")) {
-                    }
-                    await CPUController.cpu.moveYBot(TankController.tank.speed*1);
+                    if (!GameMap.checkIfBlockV2(cpu, 0,0,0,TankController.tank.speed * 1, "cpu")) {
+                    } 
                     break;
+                    await CPUController.cpu.moveYBot(TankController.tank.speed*1);
                 case "L":
                     if (!GameMap.checkIfBlockV2(cpu, TankController.tank.speed * -1,0,0,0, "cpu")) {
-                    }
+                    } 
                     await CPUController.cpu.moveXBot(TankController.tank.speed*-1);
                     break;
                 case "R":
-                    if (!GameMap.checkIfBlockV2(cpu, TankController.tank.speed * -1,0,0,0, "cpu")) {
-                    }
+                    if (!GameMap.checkIfBlockV2(cpu, 0,TankController.tank.speed * 1,0,0, "cpu")) {
+                    } 
                     await CPUController.cpu.moveXBot(TankController.tank.speed*1);
                     break;
             }
-            await delay(24);
+            await delay(100);
+
         }
-        this.ocupado = false;
+        this.callOnce = false;
     }
     
 
