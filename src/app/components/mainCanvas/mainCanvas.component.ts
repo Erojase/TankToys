@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, HostListener, Input, OnInit, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { dimensions } from '../../utils/utils';
 import { TankController } from "../../controllers/TankController";
@@ -26,6 +26,7 @@ import { ReferenceRepository } from '../../controllers/ReferenceRepository';
     ]
 })
 export class MainCanvasComponent implements OnInit {
+    @Input('type') type: string;
 
     currentWindow: dimensions = {
         height: 0,
@@ -57,12 +58,14 @@ export class MainCanvasComponent implements OnInit {
         this.viewRef.clear();
         const TankComponentRef = this.viewRef.createComponent(TankComponent);
         TankComponentRef.setInput("mainViewRef", this.viewRef);
-        
-        const CpuComponentRef = this.viewRef.createComponent(CpuComponent);  
-        CpuComponentRef.setInput("mainViewRef", this.viewRef);
+        if (this.type == "singleplayer") {
+            
+            const CpuComponentRef = this.viewRef.createComponent(CpuComponent);  
+            CpuComponentRef.setInput("mainViewRef", this.viewRef);
+            ReferenceRepository.Component["cpu"] = CpuComponentRef;
+        }
         
         ReferenceRepository.Component["player"] = TankComponentRef;
-        ReferenceRepository.Component["cpu"] = CpuComponentRef;
     }
 
 }

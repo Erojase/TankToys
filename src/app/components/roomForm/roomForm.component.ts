@@ -33,6 +33,13 @@ export class RoomFormComponent implements OnInit {
             alert(res);
           });
         break;
+      case (<HTMLElement>e.target).className.includes("test"):
+          setInterval(()=>{
+            MultiplayerController.roomData(this.roomIdField.nativeElement.value, {x:100, y:150}).then(res => {
+              console.table(res);
+            })
+          }, 200)
+        break;
       default:
         break;
     }
