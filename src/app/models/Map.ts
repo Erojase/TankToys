@@ -213,7 +213,7 @@ export class GameMap {
                 // //console.log(position.y+y > collider.bottom);
 
             if (overlap && !this.colliders[collider].type.includes("floor") ) { //Poner aqui el que la bala se destruya si choca con otra bala o con un tanke
-                if (this.colliders[collider].type == "player" || this.colliders[collider].type == "cpu" || (this.colliders[collider].type != bulletName && this.colliders[collider].type.includes("Bullet"))) {
+                if (this.colliders[collider].type != owner || (this.colliders[collider].type != bulletName && this.colliders[collider].type.includes("Bullet"))) {
                     console.log(this.colliders[collider]);
                     
                     if (this.colliders[collider].type == "player" || this.colliders[collider].type == "cpu") {

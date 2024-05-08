@@ -287,8 +287,8 @@ export class CPUController {
                 case "D":
                     if (!GameMap.checkIfBlockV2(cpu, 0,0,0,TankController.tank.speed * 1, "cpu")) {
                     } 
-                    break;
                     await CPUController.cpu.moveYBot(TankController.tank.speed*1);
+                    break;
                 case "L":
                     if (!GameMap.checkIfBlockV2(cpu, TankController.tank.speed * -1,0,0,0, "cpu")) {
                     } 
