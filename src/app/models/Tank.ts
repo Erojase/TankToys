@@ -68,7 +68,7 @@ export class Tank {
     public async moveXBot(steps:number) {
         let nextBlock: Boolean = false;
         let tankCPUQ = CPUController.getQuadrant("cpu");
-        debugger;
+        //debugger;
         while (!nextBlock) {
             this.position.x += steps;
             let checkQ = CPUController.getQuadrant("cpu");
@@ -78,7 +78,7 @@ export class Tank {
             }
             await delay(24);
         }
-        debugger;
+        //debugger;
         let cpu = GameMap.colliders["cpu"];
         if (steps > 0) {
             this.position.x += (((cpu.bottom - cpu.top)/3)); 
@@ -92,7 +92,7 @@ export class Tank {
     public async moveYBot(steps:number) {
         let nextBlock: Boolean = false;
         let tankCPUQ = CPUController.getQuadrant("cpu");
-        debugger;
+        //debugger;
         while (!nextBlock) {
             this.position.y += steps;
             let checkQ = CPUController.getQuadrant("cpu");
@@ -104,7 +104,7 @@ export class Tank {
             }
             await delay(24);
         }
-        debugger;
+        //debugger;
         let cpu = GameMap.colliders["cpu"];
         if (steps > 0) {
             this.position.y += (((cpu.right - cpu.left)/3)); 

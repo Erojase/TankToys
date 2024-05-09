@@ -33,9 +33,9 @@ export class CPUController {
     public static cannonRotation: number = 50;
 
     public static addPlayerToTrack(player: Tank) {
-        console.log("tumadre un tanke");
+        //console.log("tumadre un tanke");
 
-        console.log(player);
+        //console.log(player);
 
         this.players.push(player);
     }
@@ -44,18 +44,22 @@ export class CPUController {
         let centerX = 500;
         let centerY = 575;
 
+        
+        
+        
+
         // this.scopePos = { x: e.pageX, y: e.pageY }
-        let dx = this.players[0].position.y - centerY;
-        let dy = this.players[0].position.x - centerX;
+        let dx = this.players[0].position.y - this.position.y;
+        let dy = this.players[0].position.x - this.position.x;
         let theta = Math.atan2(dy, dx);
         this.cannonRotation = theta;
 
     }
 
     public static shootBullet() {
-        console.log("CPUShoot");
+        //console.log("CPUShoot");
 
-        console.log(this.players[0].position);
+        //console.log(this.players[0].position);
         let realTargetPos: Position = {
             x: this.players[0].position.y + 25,
             y: this.players[0].position.x + 25
@@ -75,8 +79,8 @@ export class CPUController {
         w = GameMap.colliders[tank].right - (w/2);
         h = GameMap.colliders[tank].bottom - (h/2);
 
-        console.log(w);
-        console.log(h);
+        //console.log(w);
+        //console.log(h);
         
 
         for (const collider in GameMap.colliders) {
@@ -86,9 +90,9 @@ export class CPUController {
                 h > GameMap.colliders[collider].top)       
             
             if (overlap && GameMap.colliders[collider].type != tank) {
-                console.group("overlap");
-                console.log(GameMap.colliders[collider]);
-                console.groupEnd();
+                //console.group("overlap");
+                //console.log(GameMap.colliders[collider]);
+                //console.groupEnd();
 
                 return posX + "," + posY+ ","+ collider;
             }
@@ -125,8 +129,8 @@ export class CPUController {
         this.tankPlayerQ = CPUController.getQuadrant("player");
         let tankCPUQ = CPUController.getQuadrant("cpu");
 
-        console.log("this.tankPlayerQ: " + this.tankPlayerQ);
-        console.log("tankCPUQ: " + tankCPUQ);
+        //console.log("this.tankPlayerQ: " + this.tankPlayerQ);
+        //console.log("tankCPUQ: " + tankCPUQ);
         
 
         pathMap[Number.parseInt(this.tankPlayerQ.split(",")[1])][Number.parseInt(this.tankPlayerQ.split(",")[0])] = "O";
@@ -174,17 +178,17 @@ export class CPUController {
             aux = [];
         }
 
-        console.log("Checkpoint 1");
-        // console.log(winRoute);
+        //console.log("Checkpoint 1");
+        // //console.log(winRoute);
         CPUController.paintMap(pathMap);
-        console.log(x + "," + y);
+        //console.log(x + "," + y);
         
         
         let reachT = false;
         while (!reachT) {
             CPUController.winRoute.unshift(pathMap[y][x]);
-            console.log(pathMap[y][x]);
-            console.log(x + "," + y);
+            //console.log(pathMap[y][x]);
+            //console.log(x + "," + y);
 
             switch (pathMap[y][x]) {
                 case "U":
@@ -205,15 +209,15 @@ export class CPUController {
             }
         }
 
-        console.log("Checkpoint 2");
+        //console.log("Checkpoint 2");
         CPUController.winRoute.shift();
-        console.log(CPUController.winRoute);
+        //console.log(CPUController.winRoute);
 
         this.cont = 0;
         CPUController.moveViaPath(cpu);
         this.callOnce = true;
         CPUController.winRoute = [];
-        console.log("Checkpoint 3");
+        //console.log("Checkpoint 3");
     }
 
     public static expand(map:string[][],aux:string[], x:number, y:number, plusX:number, plusY:number, letter:string): boolean {
@@ -260,7 +264,7 @@ export class CPUController {
             for (let j = 0; j < map[0].length; j++) {
                 line += map[i][j];
             }
-            console.log(line + i);
+            //console.log(line + i);
             line = "";
         }
     }
@@ -276,8 +280,8 @@ export class CPUController {
             
             let step = this.winRoute[this.cont];
 
-            console.log(step);
-            debugger;
+            //console.log(step);
+            //debugger;
             switch (step) {//U = L; L = U; R = D; D = R;
                 case "U":
                     if (!GameMap.checkIfBlockV2(cpu, 0,0,TankController.tank.speed * -1,0, "cpu")) {
