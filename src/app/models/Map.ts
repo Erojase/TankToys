@@ -206,18 +206,17 @@ export class GameMap {
                 position.y+y+(collHeight/2) < this.colliders[collider].top ||
                 position.y+y > this.colliders[collider].bottom)
 
-                // //console.log("");
-                // //console.log(position.x+x < collider.left);
-                // //console.log(position.x+x > collider.right);
-                // //console.log(position.y+y < collider.top);
-                // //console.log(position.y+y > collider.bottom);
-
             if (overlap && !this.colliders[collider].type.includes("floor") ) { //Poner aqui el que la bala se destruya si choca con otra bala o con un tanke
                 if ((this.colliders[collider].type == "player" || this.colliders[collider].type == "cpu") || (this.colliders[collider].type != bulletName && this.colliders[collider].type.includes("Bullet"))) {
                     console.log(this.colliders[collider]);
                     
                     if (this.colliders[collider].type != owner) {
-                        debugger;
+                        //debugger;
+                        
+                        console.log("PA ELIMINA MI PANA");
+                        
+                        console.log(this.colliders[collider].type);
+                        
                         ReferenceRepository.Component[this.colliders[collider].type].destroy();
                         const { [collider]: g, ...otro} = this.colliders;
                         this.colliders = otro;
@@ -232,13 +231,7 @@ export class GameMap {
                     }
 
                     // supertecnica disparo cascadaaaaaaaa
-                } else {
-
-                    //console.group("disparo");
-                    //console.log("++x: " + x);
-                    //console.log("++y: " + y);
-                    //console.log(this.colliders[collider]);
-                    
+                } else {                
 
                     let colliCenter: Position =  {
                         x: this.colliders[collider].right - (collWidth/2),
@@ -248,13 +241,7 @@ export class GameMap {
                     let diff: Position = {
                         x: 0,
                         y: 0
-                    };
-                    
-                    //console.log("bullet position: " );
-                    //console.log(position);
-                    //console.log("collidercenter: ");
-                    //console.log(colliCenter);
-                    
+                    };                  
                     
                     if (position.x >= colliCenter.x) {
                         //console.log("x mayor");           
@@ -314,10 +301,6 @@ export class GameMap {
                             }
                         }
                     }
-                    
-                    //console.log("diff");
-                    //console.log(diff);
-                    //console.groupEnd(); 
                     
                     if (diff.x > diff.y) {
                         return [true,true];

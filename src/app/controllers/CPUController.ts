@@ -123,18 +123,29 @@ export class CPUController {
             }
             pathMap.push(row);
         }
-        if (CPUController.getQuadrant("player") == this.tankPlayerQ && this.cont < this.winRoute.length) {
-            return
+        let tankCPUQ = "2,2";
+        try {
+            if (CPUController.getQuadrant("player") == this.tankPlayerQ && this.cont < this.winRoute.length) {
+                return
+            }
+            this.tankPlayerQ = CPUController.getQuadrant("player");
+            tankCPUQ = CPUController.getQuadrant("cpu");
+        } catch (error) {
+            
         }
-        this.tankPlayerQ = CPUController.getQuadrant("player");
-        let tankCPUQ = CPUController.getQuadrant("cpu");
 
         //console.log("this.tankPlayerQ: " + this.tankPlayerQ);
         //console.log("tankCPUQ: " + tankCPUQ);
         
-
-        pathMap[Number.parseInt(this.tankPlayerQ.split(",")[1])][Number.parseInt(this.tankPlayerQ.split(",")[0])] = "O";
-        pathMap[Number.parseInt(tankCPUQ.split(",")[1])][Number.parseInt(tankCPUQ.split(",")[0])] = "T";
+        
+        try {
+            pathMap[Number.parseInt(this.tankPlayerQ.split(",")[1])][Number.parseInt(this.tankPlayerQ.split(",")[0])] = "O";
+            pathMap[Number.parseInt(tankCPUQ.split(",")[1])][Number.parseInt(tankCPUQ.split(",")[0])] = "T";
+        } catch (error) {
+            debugger;
+            pathMap[Number.parseInt(this.tankPlayerQ.split(",")[1])][Number.parseInt(this.tankPlayerQ.split(",")[0])] = "O";
+            pathMap[Number.parseInt(tankCPUQ.split(",")[1])][Number.parseInt(tankCPUQ.split(",")[0])] = "T";
+        }
 
         CPUController.paintMap(pathMap);
 
