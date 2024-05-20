@@ -40,4 +40,9 @@ export class GameController {
     public static stopUpdate(){
         this.running = false;
     }
+
+    public static reloadUpdate(){
+        this.stopUpdate();
+        this.InitialiseUpdate();
+    }
 }
