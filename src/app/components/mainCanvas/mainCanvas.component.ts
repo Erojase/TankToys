@@ -9,7 +9,6 @@ import { MapComponent } from "../map/map.component";
 import { CpuComponent } from '../cpu/cpu.component';
 import { GamebarComponent } from '../gamebar/gamebar.component';
 import { ReferenceRepository } from '../../controllers/ReferenceRepository';
-import { GameMap } from '../../models/Map';
 
 @Component({
     selector: 'app-mainCanvas',
@@ -59,11 +58,17 @@ export class MainCanvasComponent implements OnInit {
         const TankComponentRef = this.viewRef.createComponent(TankComponent);
         TankComponentRef.setInput("mainViewRef", this.viewRef);
         
-        const CpuComponentRef = this.viewRef.createComponent(CpuComponent);  
-        CpuComponentRef.setInput("mainViewRef", this.viewRef);
+        const Cpu1ComponentRef = this.viewRef.createComponent(CpuComponent);  
+        Cpu1ComponentRef.setInput("mainViewRef", this.viewRef);
+        Cpu1ComponentRef.setInput("name", "cpu1");
+
+        const Cpu2ComponentRef = this.viewRef.createComponent(CpuComponent);  
+        Cpu2ComponentRef.setInput("mainViewRef", this.viewRef);
+        Cpu2ComponentRef.setInput("name", "cpu2");
         
         ReferenceRepository.Component["player"] = TankComponentRef;
-        ReferenceRepository.Component["cpu"] = CpuComponentRef;
+        ReferenceRepository.Component["cpu1"] = Cpu1ComponentRef;
+        ReferenceRepository.Component["cpu2"] = Cpu2ComponentRef;
     }
 
 }

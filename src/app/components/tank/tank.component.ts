@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CannonComponent } from "../cannon/cannon.component";
 import { GameController } from "../../controllers/GameController";
 import { TankController } from "../../controllers/TankController";
-import { Position, Tank } from "../../models/Tank";
-import { CPUController } from '../../controllers/CPUController';
+import { CPUManager } from '../../controllers/CPUController';
 import { BulletComponent } from "../bullet/bullet.component";
 import { GameMap } from '../../models/Map';
 
@@ -31,7 +30,7 @@ export class TankComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         GameController.addToGameLoop(()=>TankController.MoveV2(this.self.nativeElement.getBoundingClientRect()));
        
-        CPUController.addPlayerToTrack(TankController.tank);
+        CPUManager.addPlayerToTrack(TankController.tank);
         
         // this.viewRef.clear();
         for (let i = 0; i < 3; i++) {

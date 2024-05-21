@@ -40,9 +40,12 @@ export class Tank {
 
     public speed = 10;
 
+    public _parentName:string;
 
-    constructor(defaultPos: Position) {
+
+    constructor(defaultPos: Position, parentName:string) {
         this.position = defaultPos!;
+        this._parentName = parentName;
     }
 
 
@@ -65,13 +68,13 @@ export class Tank {
         this.position.y += steps;
     }
 
-    public async moveXBot(steps:number) {
+    public async moveXBot(controller: CPUController, steps:number) {
         let nextBlock: Boolean = false;
-        let tankCPUQ = CPUController.getQuadrant("cpu");
+        let tankCPUQ = controller.getQuadrant(this._parentName);
         //debugger;
         while (!nextBlock) {
             this.position.x += steps;
-            let checkQ = CPUController.getQuadrant("cpu");
+            let checkQ = controller.getQuadrant(this._parentName);
             if (tankCPUQ != checkQ) {
                 nextBlock = true
                 tankCPUQ = checkQ;
@@ -79,7 +82,7 @@ export class Tank {
             await delay(24);
         }
         //debugger;
-        let cpu = GameMap.colliders["cpu"];
+        let cpu = GameMap.colliders[this._parentName];
         if (steps > 0) {
             this.position.x += (((cpu.bottom - cpu.top)/3)); 
         } else {
@@ -89,13 +92,13 @@ export class Tank {
     }
 
     
-    public async moveYBot(steps:number) {
+    public async moveYBot(controller:CPUController, steps:number) {
         let nextBlock: Boolean = false;
-        let tankCPUQ = CPUController.getQuadrant("cpu");
+        let tankCPUQ = controller.getQuadrant(this._parentName);
         //debugger;
         while (!nextBlock) {
             this.position.y += steps;
-            let checkQ = CPUController.getQuadrant("cpu");
+            let checkQ = controller.getQuadrant(this._parentName);
             
             if (tankCPUQ != checkQ) {
                 nextBlock = true
@@ -103,7 +106,7 @@ export class Tank {
             await delay(24);
         }
         //debugger;
-        let cpu = GameMap.colliders["cpu"];
+        let cpu = GameMap.colliders[this._parentName];
         if (steps > 0) {
             this.position.y += (((cpu.right - cpu.left)/3)); 
         } else {

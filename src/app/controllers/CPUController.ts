@@ -5,64 +5,76 @@ import { BulletController } from './BulletController';
 import { TankController } from './TankController';
 import { delay } from '../utils/utils';
 
-export class CPUController {
+
+export class CPUManager {
+    public static CPUs: CPUController[] = [];
     
-    private static position: Position = {
-        x: 500,
-        y: 650
+    public static trackTank(){
+        this.CPUs.forEach(CPU => {
+            CPU.trackTank();
+        });
     }
 
-    private static _cpu: Tank;
+    static addPlayerToTrack(tank: Tank) {
+        this.CPUs.forEach(CPU => {
+            CPU.addPlayerToTrack(tank);
+        });
+    }
+}
 
-    public static bullet: Bullet;
 
-    private static players: Tank[] = [];
+export class CPUController {
+    
+    constructor(position:Position){
+        this._position = position;
+    }
 
-    public static get cpu(): Tank {
+    public _name:string = "";
+
+    private _position: Position 
+
+    private _cpu: Tank;
+
+    public bullet: Bullet;
+
+    private players: Tank[] = [];
+
+    public get cpu(): Tank {
         if (this._cpu == null) {
-            this._cpu = new Tank(this.position);
+            this._cpu = new Tank(this._position, this._name);
         }
         return this._cpu;
     }
-    public static set cpu(v: Tank) {
+    public set cpu(v: Tank) {
         this._cpu = v;
     }
 
-    public static temporalNotDefinitiveArray: string[];
+    public temporalNotDefinitiveArray: string[];
 
-    public static cannonRotation: number = 50;
+    public cannonRotation: number = 50;
 
-    public static addPlayerToTrack(player: Tank) {
+    public addPlayerToTrack(player: Tank) {
         this.players.push(player);
     }
 
-    public static trackTank() {
-        let centerX = 500;
-        let centerY = 575;
-
-        
-        
-        
-
-        // this.scopePos = { x: e.pageX, y: e.pageY }
-        let dx = this.players[0].position.y - this.position.y;
-        let dy = this.players[0].position.x - this.position.x;
+    public trackTank() {
+        let dx = this.players[0].position.y - this._position.y;
+        let dy = this.players[0].position.x - this._position.x;
         let theta = Math.atan2(dy, dx);
         this.cannonRotation = theta;
 
     }
 
-    public static shootBullet() {
+    public shootBullet() {
         let realTargetPos: Position = {
             x: this.players[0].position.y + 25,
             y: this.players[0].position.x + 25
         }
 
-        BulletController.shoot(this.bullet, this.position, realTargetPos, this.cannonRotation, "cpu", "cpuBullet"+0);
+        BulletController.shoot(this.bullet, this._position, realTargetPos, this.cannonRotation, "cpu", "cpuBullet"+0);
     }
 
-    public static getQuadrant(tank:any) {
-
+    public getQuadrant(tank:any) {
         let posX = -1;
         let posY = 0;
         
@@ -92,9 +104,9 @@ export class CPUController {
         return "2,2,tumadre";
     }
 
-    static winRoute:string[] = [];
-    static tankPlayerQ:string = "";
-    public static pathfinding(cpu:DOMRect) {
+    winRoute:string[] = [];
+    tankPlayerQ:string = "";
+    public pathfinding(cpu:DOMRect) {
         let map:number[][] = GameMap._map;
         let pathMap:string[][] = [];
 
@@ -111,11 +123,11 @@ export class CPUController {
         }
         let tankCPUQ = "2,2";
         try {
-            if (CPUController.getQuadrant("player") == this.tankPlayerQ && this.cont < this.winRoute.length) {
+            if (this.getQuadrant("player") == this.tankPlayerQ && this.cont < this.winRoute.length) {
                 return
             }
-            this.tankPlayerQ = CPUController.getQuadrant("player");
-            tankCPUQ = CPUController.getQuadrant("cpu");
+            this.tankPlayerQ = this.getQuadrant("player");
+            tankCPUQ = this.getQuadrant(this._name);
         } catch (error) {
             
         }
@@ -133,16 +145,13 @@ export class CPUController {
             pathMap[Number.parseInt(tankCPUQ.split(",")[1])][Number.parseInt(tankCPUQ.split(",")[0])] = "T";
         }
 
-        CPUController.paintMap(pathMap);
-
-        let tposX = Number.parseInt(tankCPUQ.split(",")[0]);
-        let tposY = Number.parseInt(tankCPUQ.split(",")[1]);
+        this.paintMap(pathMap);
 
         let nextToExpand: string[] = [];
         nextToExpand.push(tankCPUQ);
 
         let find: boolean = false;
-        CPUController.winRoute = [];
+        this.winRoute = [];
 
         let routeEndX: number = 0;
         let routeEndY: number = 0;
@@ -155,18 +164,18 @@ export class CPUController {
             for (let i = 0; i < nextToExpand.length && !find; i++) {
                 x = Number.parseInt(nextToExpand[i].split(",")[0]);
                 y = Number.parseInt(nextToExpand[i].split(",")[1]);
-                find = CPUController.expand(pathMap, aux, x, y, 1, 0, "R");
+                find = this.expand(pathMap, aux, x, y, 1, 0, "R");
                 if (!find) {
-                    find = CPUController.expand(pathMap, aux, x, y, 1, 0, "R");
+                    find = this.expand(pathMap, aux, x, y, 1, 0, "R");
                 }
                 if (!find) {
-                    find = CPUController.expand(pathMap, aux, x, y, -1, 0, "L");
+                    find = this.expand(pathMap, aux, x, y, -1, 0, "L");
                 }
                 if (!find) {
-                    find = CPUController.expand(pathMap, aux, x, y, 0, +1, "D");
+                    find = this.expand(pathMap, aux, x, y, 0, +1, "D");
                 }
                 if (!find) {
-                    find = CPUController.expand(pathMap, aux, x, y, 0, -1, "U");
+                    find = this.expand(pathMap, aux, x, y, 0, -1, "U");
                 }
                 routeEndX = x;
                 routeEndY = y;
@@ -175,13 +184,13 @@ export class CPUController {
             aux = [];
         }
 
-        CPUController.paintMap(pathMap);
+        this.paintMap(pathMap);
 
         
         
         let reachT = false;
         while (!reachT) {
-            CPUController.winRoute.unshift(pathMap[y][x]);
+            this.winRoute.unshift(pathMap[y][x]);
 
             switch (pathMap[y][x]) {
                 case "U":
@@ -203,17 +212,16 @@ export class CPUController {
         }
 
         
-        CPUController.winRoute.shift();
-        
+        this.winRoute.shift();
 
         this.cont = 0;
-        CPUController.moveViaPath(cpu);
+        this.moveViaPath(cpu);
         this.callOnce = true;
-        CPUController.winRoute = [];
+        this.winRoute = [];
         
     }
 
-    public static expand(map:string[][],aux:string[], x:number, y:number, plusX:number, plusY:number, letter:string): boolean {
+    public expand(map:string[][],aux:string[], x:number, y:number, plusX:number, plusY:number, letter:string): boolean {
         if ((map[y+plusY][x+plusX] == " " || map[y+plusY][x+plusX] == "O")) {
             if (map[y+plusY][x+plusX] == "O") {
                 //funcion para guardar ruta
@@ -229,7 +237,7 @@ export class CPUController {
     }
     
     
-    public static paintRoute(map:string[][], winRoute:string[], tposX:number, tposY:number) {
+    public paintRoute(map:string[][], winRoute:string[], tposX:number, tposY:number) {
         for (let i = 0; i < winRoute.length; i++) {
             switch (winRoute[i]) {
                 case "U":
@@ -251,7 +259,7 @@ export class CPUController {
     
     }
     
-    public static paintMap(map:string[][]) {
+    public paintMap(map:string[][]) {
         for (let i = 0; i < map.length; i++) {
             let line:string = "";
             for (let j = 0; j < map[0].length; j++) {
@@ -262,14 +270,14 @@ export class CPUController {
         }
     }
 
-    static muerto = false;
-    static cont:number = 0;
-    static callOnce = false;
-    public static async moveViaPath(cpu:DOMRect) {
+ muerto = false;
+ cont:number = 0;
+ callOnce = false;
+    public async moveViaPath(cpu:DOMRect) {
         if (this.muerto || this.callOnce) {
             return;
         }
-        for (CPUController.cont = 0; CPUController.cont < CPUController.winRoute.length; CPUController.cont++) {
+        for (this.cont = 0; this.cont < this.winRoute.length; this.cont++) {
             
             let step = this.winRoute[this.cont];
 
@@ -279,22 +287,22 @@ export class CPUController {
                 case "U":
                     if (!GameMap.checkIfBlockV2(cpu, 0,0,TankController.tank.speed * -1,0, "cpu")) {
                     } 
-                    await CPUController.cpu.moveYBot(TankController.tank.speed*-1);
+                    await this.cpu.moveYBot(this, TankController.tank.speed*-1);
                     break;
                 case "D":
                     if (!GameMap.checkIfBlockV2(cpu, 0,0,0,TankController.tank.speed * 1, "cpu")) {
                     } 
-                    await CPUController.cpu.moveYBot(TankController.tank.speed*1);
+                    await this.cpu.moveYBot(this, TankController.tank.speed*1);
                     break;
                 case "L":
                     if (!GameMap.checkIfBlockV2(cpu, TankController.tank.speed * -1,0,0,0, "cpu")) {
                     } 
-                    await CPUController.cpu.moveXBot(TankController.tank.speed*-1);
+                    await this.cpu.moveXBot(this, TankController.tank.speed*-1);
                     break;
                 case "R":
                     if (!GameMap.checkIfBlockV2(cpu, 0,TankController.tank.speed * 1,0,0, "cpu")) {
                     } 
-                    await CPUController.cpu.moveXBot(TankController.tank.speed*1);
+                    await this.cpu.moveXBot(this, TankController.tank.speed*1);
                     break;
             }
             await delay(100);

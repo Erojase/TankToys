@@ -1,8 +1,9 @@
 import { Position, Tank } from "../models/Tank";
 import { Bullet } from '../models/Bullet';
 import { GameMap } from "../models/Map";
-import { CPUController } from "./CPUController";
+import { CPUManager } from "./CPUController";
 import { BulletController } from "./BulletController";
+
 
 
 class MovementKeys {
@@ -12,13 +13,12 @@ class MovementKeys {
     static readonly Down = ["s", "S", "ArrowDown"]
 }
 
-let directions: string[] = [];
 
 export class TankController {
 
     public static directions: string[] = [];
 
-    private static _tank: Tank = new Tank({x: 250,y: 100});
+    private static _tank: Tank = new Tank(GameMap.PositionAssign(), "player");
     public static get tank(): Tank {
         return this._tank;
     }
@@ -117,7 +117,7 @@ export class TankController {
             }
         }
 
-        CPUController.trackTank();
+        CPUManager.trackTank();
     }
 
 

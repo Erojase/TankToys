@@ -1,11 +1,8 @@
 import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GameController } from "../../controllers/GameController";
-import { BulletController } from "../../controllers/BulletController";
 import { Bullet } from '../../models/Bullet';
 import { TankController } from '../../controllers/TankController';
 import { CPUController } from '../../controllers/CPUController';
-import { GameMap } from '../../models/Map';
 
 @Component({
     selector: 'app-bullet',
@@ -17,6 +14,7 @@ import { GameMap } from '../../models/Map';
 export class BulletComponent implements OnInit, AfterViewInit {
     @ViewChild('self') self: ElementRef<HTMLElement>;
     @Input("type") type: "player" | "CPU";
+    @Input("controller") controller: undefined | CPUController;
     @Input("name") name: string;
 
     bullet: Bullet;
@@ -26,10 +24,11 @@ export class BulletComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {      
+        
         if (this.type == "player") {
             TankController.bullets.push(this.bullet);
         } else {
-            CPUController.bullet = this.bullet;
+            this.controller!.bullet = this.bullet;
         }
         //GameController.addToGameLoop(() => GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), this.name));
     }
