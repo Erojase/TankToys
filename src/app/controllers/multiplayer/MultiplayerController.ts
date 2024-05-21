@@ -5,7 +5,14 @@ import UserController from "../user/UserController";
 export default class MultiplayerController {
     
     static createRoom = async (playerId: string, gamemode: number) : Promise<any> => {
-        return await ServerCall.createRoom(playerId, gamemode);
+        if (playerId == null || playerId == undefined) {
+            return "Address not set";
+        }
+        let res = await ServerCall.createRoom(playerId, gamemode);
+        if (res == null) {
+            return "Some problem";
+        }
+        return res;
     }
 
     static joinRoom = async (playerId: string, roomId: string) : Promise<boolean> => {
@@ -14,11 +21,15 @@ export default class MultiplayerController {
 
     static leaveRoom = async (playerId: string, roomId: string) => {
         let res = await ServerCall.leaveRoom(playerId, roomId);
+        if (res) {
+            window.localStorage.removeItem("room");
+        }
         console.log(res);
     }
 
     static roomData = async (roomid: string, positions:Position) : Promise<any> => {
         let address = UserController.user?.address;
+        debugger;
         if (address != undefined) {
             let res = await ServerCall.roomData(roomid, address, positions);
             return res;

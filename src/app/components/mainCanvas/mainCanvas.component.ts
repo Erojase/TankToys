@@ -7,7 +7,6 @@ import { TankComponent } from "../tank/tank.component";
 import { BulletComponent } from "../bullet/bullet.component";
 import { MapComponent } from "../map/map.component";
 import { CpuComponent } from '../cpu/cpu.component';
-import { GamebarComponent } from '../gamebar/gamebar.component';
 import { ReferenceRepository } from '../../controllers/ReferenceRepository';
 
 @Component({
@@ -21,8 +20,7 @@ import { ReferenceRepository } from '../../controllers/ReferenceRepository';
         TankComponent,
         BulletComponent,
         MapComponent,
-        CpuComponent,
-        GamebarComponent
+        CpuComponent
     ]
 })
 export class MainCanvasComponent implements OnInit {
@@ -39,8 +37,6 @@ export class MainCanvasComponent implements OnInit {
     onMouseMove(e: MouseEvent){
         TankController.scopePlacement(e);
     }
-
-
 
     setDivStyles(){
         return {
@@ -59,12 +55,10 @@ export class MainCanvasComponent implements OnInit {
         const TankComponentRef = this.viewRef.createComponent(TankComponent);
         TankComponentRef.setInput("mainViewRef", this.viewRef);
         if (this.type == "singleplayer") {
-            
             const CpuComponentRef = this.viewRef.createComponent(CpuComponent);  
             CpuComponentRef.setInput("mainViewRef", this.viewRef);
             ReferenceRepository.Component["cpu"] = CpuComponentRef;
         }
-        
         ReferenceRepository.Component["player"] = TankComponentRef;
     }
 

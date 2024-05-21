@@ -57,7 +57,7 @@ export class ServerCall {
         let res = await HTTP.PostRequest(`${this.serverUrl}${multiplayerPath}/data`, JSON.stringify({
             id: roomId,
             playerPositions: {
-                playerId: { xcoord: position.x, ycoord: position.y }
+                [playerId]: { xcoord: position.x, ycoord: position.y }
             }
         }))
         return await res.json();
