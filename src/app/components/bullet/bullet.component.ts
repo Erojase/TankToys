@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameController } from "../../controllers/GameController";
 import { BulletController } from "../../controllers/BulletController";
 import { Bullet } from '../../models/Bullet';
 import { TankController } from '../../controllers/TankController';
 import { CPUController } from '../../controllers/CPUController';
+import { GameMap } from '../../models/Map';
 
 @Component({
     selector: 'app-bullet',
@@ -13,25 +14,28 @@ import { CPUController } from '../../controllers/CPUController';
     styleUrls: ['./bullet.component.scss'],
     imports: [CommonModule]
 })
-export class BulletComponent implements OnInit {
+export class BulletComponent implements OnInit, AfterViewInit {
+    @ViewChild('self') self: ElementRef<HTMLElement>;
     @Input("type") type: "player" | "CPU";
+    @Input("name") name: string;
 
-    bullet : Bullet;
+    bullet: Bullet;
 
     constructor() {
         this.bullet = new Bullet();
+    }
 
-        
-     }
-
-    ngOnInit() {
-        console.log(this.type);
-        
+    ngOnInit() {      
         if (this.type == "player") {
             TankController.bullets.push(this.bullet);
         } else {
             CPUController.bullet = this.bullet;
         }
+        //GameController.addToGameLoop(() => GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), this.name));
+    }
+
+    ngAfterViewInit() {
+        //GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), this.name);
     }
 
     setStyles() {

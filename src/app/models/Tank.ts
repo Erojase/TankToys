@@ -96,8 +96,6 @@ export class Tank {
         while (!nextBlock) {
             this.position.y += steps;
             let checkQ = CPUController.getQuadrant("cpu");
-            console.log("checkQ: " + checkQ);
-            console.log("tankCPUQ: " + tankCPUQ);
             
             if (tankCPUQ != checkQ) {
                 nextBlock = true

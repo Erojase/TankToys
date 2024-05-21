@@ -1,6 +1,7 @@
 import { Bullet } from "../models/Bullet";
 import { GameMap } from "../models/Map";
 import { Position } from "../models/Tank";
+import { GameController } from "./GameController";
 import { TankController } from "./TankController";
 
 
@@ -29,12 +30,12 @@ export class BulletController {
 
     
     public static shoot(bullet:Bullet, tankPos: Position, target: Position, cannonRotation:number, owner: string, bulletName: string) {
-
+        console.log(GameMap.colliders[bulletName])
         if (BulletController.enabled) {
             bullet.stopMoves();
             BulletController.disableShooting();
             bullet.currentBounce = 0;
-            console.log("disparo");
+            console.log("disparo");                       
             bullet.rotation = cannonRotation;
             let xDiff = target.x - tankPos.y+22.5;
             let yDiff = target.y - tankPos.x+22.5;
@@ -46,8 +47,6 @@ export class BulletController {
                 ySeg = (tankPos.x+22.5 + ySeg)/2;
                 xDiff = tankPos.y+22.5 - xSeg;
                 yDiff = tankPos.x+22.5 - ySeg;
-                // console.log(xDiff);
-                // console.log(yDiff);
             }
             console.log(xDiff);
             console.log(yDiff);
@@ -61,13 +60,7 @@ export class BulletController {
             bullet.position.x += bullet.xDiff*-2;
             bullet.position.y += bullet.yDiff*-2;
 
-            bullet.moveBullet(bullet.xDiff*-1,bullet.yDiff*-1, owner, bulletName);
-
-            // console.log(xDiff);
-            // console.log(yDiff);
-            
-            
-           
+            bullet.moveBullet(bullet.xDiff*-1,bullet.yDiff*-1, owner, bulletName);       
         }
 
         

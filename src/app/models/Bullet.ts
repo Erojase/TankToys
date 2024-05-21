@@ -62,14 +62,13 @@ export class Bullet {
                 }
                 
             }
-            GameMap.colliders[bulletName]
+            console.log(GameMap.colliders[bulletName])
         }, this.speed)
         
 
     }
 
     public stopMoves(){
-        
         this.currentBounce = this.maxBounce;
     }
 

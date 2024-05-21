@@ -9,6 +9,7 @@ import { MapComponent } from "../map/map.component";
 import { CpuComponent } from '../cpu/cpu.component';
 import { GamebarComponent } from '../gamebar/gamebar.component';
 import { ReferenceRepository } from '../../controllers/ReferenceRepository';
+import { GameMap } from '../../models/Map';
 
 @Component({
     selector: 'app-mainCanvas',

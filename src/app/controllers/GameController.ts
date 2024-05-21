@@ -16,7 +16,6 @@ export class GameController {
             console.log(`${func.name} añadido al loop`);
         }
     }
-    
 
     public static InitialiseUpdate() {
         if (this.running) {
@@ -39,10 +38,5 @@ export class GameController {
 
     public static stopUpdate(){
         this.running = false;
-    }
-
-    public static reloadUpdate(){
-        this.stopUpdate();
-        this.InitialiseUpdate();
     }
 }
