@@ -2,9 +2,18 @@ import { Position } from "../../models/Tank";
 import { ServerCall } from "../../utils/ServerCall"
 import UserController from "../user/UserController";
 
+export interface RoomData {
+    id: string,
+    playerPositions: {
+        [x: string]: {
+            xCoord: number, yCoord: number
+        }
+    }
+}
+
 export default class MultiplayerController {
-    
-    static createRoom = async (playerId: string, gamemode: number) : Promise<any> => {
+
+    static createRoom = async (playerId: string, gamemode: number): Promise<any> => {
         if (playerId == null || playerId == undefined) {
             return "Address not set";
         }
@@ -15,7 +24,7 @@ export default class MultiplayerController {
         return res;
     }
 
-    static joinRoom = async (playerId: string, roomId: string) : Promise<boolean> => {
+    static joinRoom = async (playerId: string, roomId: string): Promise<boolean> => {
         return await ServerCall.joinRoom(playerId, roomId);
     }
 
@@ -27,7 +36,7 @@ export default class MultiplayerController {
         console.log(res);
     }
 
-    static roomData = async (roomid: string, positions:Position) : Promise<any> => {
+    static roomData = async (roomid: string, positions: Position): Promise<any> => {
         let address = UserController.user?.address;
         debugger;
         if (address != undefined) {
@@ -36,5 +45,5 @@ export default class MultiplayerController {
         }
         return null;
     }
-    
+
 } 
