@@ -75,7 +75,7 @@ export class CPUController {
     }
 
     public getQuadrant(tank:any) {
-        let posX = -1;
+        let posX = 0;
         let posY = 0;
         
         let w = GameMap.colliders[tank].right - GameMap.colliders[tank].left;
@@ -84,21 +84,23 @@ export class CPUController {
         w = GameMap.colliders[tank].right - (w/2);
         h = GameMap.colliders[tank].bottom - (h/2);
         
-
+        debugger;
         for (const collider in GameMap.colliders) {
-            var overlap = (w < GameMap.colliders[collider].right &&
-                w > GameMap.colliders[collider].left &&
-                h < GameMap.colliders[collider].bottom &&
-                h > GameMap.colliders[collider].top)       
-            
-            if (overlap && GameMap.colliders[collider].type != tank) {
-                return posX + "," + posY+ ","+ collider;
-            }
-
-            posX++;
-            if (posX == 16) {
-                posY++;
-                posX = 0;
+            if (!GameMap.colliders[collider].type.includes('cpu')) {
+                var overlap = (w < GameMap.colliders[collider].right &&
+                    w > GameMap.colliders[collider].left &&
+                    h < GameMap.colliders[collider].bottom &&
+                    h > GameMap.colliders[collider].top)       
+                
+                if (overlap && GameMap.colliders[collider].type != tank) {
+                    return posX + "," + posY+ ","+ collider;
+                }
+    
+                posX++;
+                if (posX == 16) {
+                    posY++;
+                    posX = 0;
+                }
             }
         }
         return "2,2,tumadre";
@@ -128,13 +130,10 @@ export class CPUController {
             }
             this.tankPlayerQ = this.getQuadrant("player");
             tankCPUQ = this.getQuadrant(this._name);
+            debugger;
         } catch (error) {
             
         }
-
-        
-        
-        
         
         try {
             pathMap[Number.parseInt(this.tankPlayerQ.split(",")[1])][Number.parseInt(this.tankPlayerQ.split(",")[0])] = "O";
