@@ -28,12 +28,12 @@ export class TankComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        GameController.addToGameLoop(()=>TankController.MoveV2(this.self.nativeElement.getBoundingClientRect()));
+        GameController.addToGameLoop("move_player", ()=>TankController.MoveV2(this.self.nativeElement.getBoundingClientRect()));
        
-        CPUManager.addPlayerToTrack(TankController.tank);
-        
+        CPUManager.addPlayerToTrack(TankController.tank);      
         // this.viewRef.clear();
         for (let i = 0; i < 3; i++) {
+    
             const compref = this.mainViewRef.createComponent(BulletComponent);
             compref.setInput("type", "player");
             compref.setInput("name", "playerBullet" + i);
@@ -45,7 +45,7 @@ export class TankComponent implements OnInit, AfterViewInit {
     }
     
     ngAfterViewInit(){
-        GameController.addToGameLoop(()=> GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), "player"));
+        GameController.addToGameLoop("collider_player", ()=> GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), "player"));
     }
     
     @HostListener('window:keypress', ['$event'])

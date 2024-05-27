@@ -1,5 +1,7 @@
+import { ComponentRef } from "@angular/core";
 import { CpuComponent } from "../components/cpu/cpu.component";
 import { ReferenceRepository } from "../controllers/ReferenceRepository";
+import { GameController } from "../controllers/GameController";
 
 export interface MapPosition {
     x: number,
@@ -233,13 +235,9 @@ export class GameMap {
             if (overlap && !this.colliders[collider].type.includes("floor")) { //Poner aqui el que la bala se destruya si choca con otra bala o con un tanke
                 let tumadre = this.colliders[collider].type;
                 console.log(tumadre);
-                if (tumadre.includes("Bullet")) {
 
-                    debugger;
-                }
-                if ((this.colliders[collider].type == "player" || this.colliders[collider].type == "cpu") || (this.colliders[collider].type != bulletName && this.colliders[collider].type.includes("Bullet"))) {
+                if ((this.colliders[collider].type == "player" || this.colliders[collider].type.includes("cpu")) || (this.colliders[collider].type != bulletName && this.colliders[collider].type.includes("Bullet"))) {
                     if (this.colliders[collider].type != owner && !this.colliders[collider].type.includes("Bullet")) {
-                        //debugger;
 
                         console.log("PA ELIMINA MI PANA");
 
@@ -247,13 +245,14 @@ export class GameMap {
                         console.log(owner);
                         console.log(bulletName);
 
-                        ReferenceRepository.Component[this.colliders[collider].type].destroy();
+                        let component = ReferenceRepository.Component[this.colliders[collider].type];
                         const { [collider]: g, ...otro } = this.colliders;
                         this.colliders = otro;
-                        clearInterval(CpuComponent.cpuShoot);
+                        clearInterval((<ComponentRef<CpuComponent>>component).instance.cpuShoot);
+                        GameController.removeFromUpdate("pathFind_"+collider);
+                        component.destroy();
                     } else if (this.colliders[collider].type.includes("Bullet")) {
                         console.log("Choque con bala");
-                        debugger;
                         position = {
                             x: -0,
                             y: -30

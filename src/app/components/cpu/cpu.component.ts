@@ -27,7 +27,7 @@ export class CpuComponent implements OnInit, AfterViewInit {
     CPUManager.CPUs.push(this._cpuController);
   }
   
-  public static cpuShoot: any;
+  public cpuShoot: any;
   
   ngAfterViewInit() {
     GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), this.name);
@@ -35,7 +35,7 @@ export class CpuComponent implements OnInit, AfterViewInit {
   
   ngOnInit() {
     this._cpuController._name = this.name;
-    GameController.addToGameLoop(() => this._cpuController.pathfinding(this.self.nativeElement.getBoundingClientRect()));
+    GameController.addToGameLoop("pathFind_"+this.name, () => this._cpuController.pathfinding(this.self.nativeElement.getBoundingClientRect()));
     for (let i = 0; i < 1; i++) {
       const compref = this.mainViewRef.createComponent(BulletComponent);
       compref.setInput("type", "CPU");
@@ -44,11 +44,11 @@ export class CpuComponent implements OnInit, AfterViewInit {
       console.log('jamon => ', compref);
       //GameController.addToGameLoop(() => GameMap.registerCollider(compref.location.nativeElement.getBoundingClientRect(), "cpuBullet" + i));
     }
-    CpuComponent.cpuShoot = setInterval(() => {
+    this.cpuShoot = setInterval(() => {
       this._cpuController.shootBullet();
     }, 4000);
     
-    GameController.addToGameLoop(() => GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), this.name)); 
+    GameController.addToGameLoop("collider_"+this.name, () => GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), this.name)); 
   }
 
   setCPURotation = (): number => this._cpuController.cannonRotation;

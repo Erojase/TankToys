@@ -1,19 +1,23 @@
+interface IUpdatable{
+    [key:string]: ()=>any
+}
+
 export class GameController {
 
     private static running:boolean = false;
     
-    private static _updatable : (()=>any)[] = [];
+    private static _updatable : IUpdatable = {};
 
 
-    public static get updatable() : (()=>any)[] {
+    public static get updatable() : IUpdatable {
         return this._updatable;
     }
     
 
-    public static addToGameLoop(func:()=>any) {
-        if (!this._updatable.includes(func)) {
-            this._updatable.push(func);
-            console.log(`${func.name} añadido al loop`);
+    public static addToGameLoop(funcId:string, func:()=>any) {
+        if (this._updatable[funcId] == null || this._updatable[funcId] == undefined) {
+            this._updatable[funcId] = func;
+            console.log(`${funcId} añadido al loop`);
         }
     }
 
@@ -26,14 +30,18 @@ export class GameController {
     }
 
     public static Update(){
-        this._updatable.forEach(func=>{
-            func();
+        Object.keys(this._updatable).forEach(funcId=>{
+            this._updatable[funcId]();
         })
         if (this.running) {
             setTimeout(() => {
                 this.Update();
             }, 24);
         }
+    }
+
+    public static removeFromUpdate(funcId:string){
+        delete this._updatable[funcId];
     }
 
     public static stopUpdate(){

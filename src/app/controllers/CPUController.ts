@@ -84,7 +84,7 @@ export class CPUController {
         w = GameMap.colliders[tank].right - (w/2);
         h = GameMap.colliders[tank].bottom - (h/2);
         
-        debugger;
+        //debugger;
         for (const collider in GameMap.colliders) {
             if (!GameMap.colliders[collider].type.includes('cpu')) {
                 var overlap = (w < GameMap.colliders[collider].right &&
@@ -130,7 +130,6 @@ export class CPUController {
             }
             this.tankPlayerQ = this.getQuadrant("player");
             tankCPUQ = this.getQuadrant(this._name);
-            debugger;
         } catch (error) {
             
         }
@@ -139,7 +138,6 @@ export class CPUController {
             pathMap[Number.parseInt(this.tankPlayerQ.split(",")[1])][Number.parseInt(this.tankPlayerQ.split(",")[0])] = "O";
             pathMap[Number.parseInt(tankCPUQ.split(",")[1])][Number.parseInt(tankCPUQ.split(",")[0])] = "T";
         } catch (error) {
-            debugger;
             pathMap[Number.parseInt(this.tankPlayerQ.split(",")[1])][Number.parseInt(this.tankPlayerQ.split(",")[0])] = "O";
             pathMap[Number.parseInt(tankCPUQ.split(",")[1])][Number.parseInt(tankCPUQ.split(",")[0])] = "T";
         }
