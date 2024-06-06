@@ -38,7 +38,6 @@ export default class MultiplayerController {
 
     static roomData = async (roomid: string, positions: Position): Promise<any> => {
         let address = UserController.user?.address;
-        debugger;
         if (address != undefined) {
             let res = await ServerCall.roomData(roomid, address, positions);
             return res;

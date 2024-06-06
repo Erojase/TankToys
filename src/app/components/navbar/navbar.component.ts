@@ -44,7 +44,7 @@ export class NavbarComponent implements AfterViewInit, OnInit {
       img.width = 45;
 
       let div = document.createElement('div');
-      div.innerHTML = user.user;
+      div.innerHTML = user.username;
 
       currentAnchor.innerHTML = "";
       currentAnchor.appendChild(img);

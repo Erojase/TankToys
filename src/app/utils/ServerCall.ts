@@ -84,11 +84,10 @@ export class ServerCall {
 
     static register = async (playerAddress: string, username: string) => {
         let res = await HTTP.PostRequest(`${this.serverUrl}${userPath}`, JSON.stringify({
-            address: {
-                address: playerAddress
-            },
-            user: username,
-            level: 0
+            id: playerAddress,
+            username: username,
+            level: 0,
+            profileImage: ""
         }))
         if (res.ok) {
             return RegisterResponse.CREATED
