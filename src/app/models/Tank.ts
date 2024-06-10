@@ -17,6 +17,7 @@ export class Cannon{
     constructor() {
         
     }
+    
 
     public static mouseTrack(e: globalThis.MouseEvent) {
     
@@ -42,6 +43,8 @@ export class Tank {
 
     public _parentName:string;
 
+    //0 - Nomral; 1 - Sniper; 2 - Subfusil; 3 - Shotgun
+    public bulletType: number = 2;
 
     constructor(defaultPos: Position, parentName:string) {
         this.position = defaultPos!;

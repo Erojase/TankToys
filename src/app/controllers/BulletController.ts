@@ -37,16 +37,16 @@ export class BulletController {
             bullet.currentBounce = 0;
             console.log("disparo");                       
             bullet.rotation = cannonRotation;
-            let xDiff = target.x - tankPos.y+22.5;
-            let yDiff = target.y - tankPos.x+22.5;
+            let xDiff = target.x - tankPos.y+bullet.wBullet;
+            let yDiff = target.y - tankPos.x+bullet.hBullet;
             
             let xSeg = target.x;
             let ySeg = target.y;
-            while (Math.abs(xDiff) > 20 || Math.abs(yDiff) > 20) {
-                xSeg = (tankPos.y+22.5 + xSeg)/2;
-                ySeg = (tankPos.x+22.5 + ySeg)/2;
-                xDiff = tankPos.y+22.5 - xSeg;
-                yDiff = tankPos.x+22.5 - ySeg;
+            while (Math.abs(xDiff) > bullet.hBullet || Math.abs(yDiff) > bullet.wBullet) {
+                xSeg = (tankPos.y+bullet.wBullet + xSeg)/2;
+                ySeg = (tankPos.x+bullet.hBullet + ySeg)/2;
+                xDiff = tankPos.y+bullet.wBullet - xSeg;
+                yDiff = tankPos.x+bullet.hBullet - ySeg;
             }
             console.log(xDiff);
             console.log(yDiff);
@@ -54,8 +54,8 @@ export class BulletController {
             bullet.xDiff = xDiff;
             bullet.yDiff = yDiff;
 
-            bullet.position.x = tankPos.y+((GameMap.colliders["player"].bottom - GameMap.colliders["player"].top)/2)-15; //Falta hacer que el width de la bala sea ajustable hacer con GameMap.colliders
-            bullet.position.y = tankPos.x+((GameMap.colliders["player"].right - GameMap.colliders["player"].left)/2)-10;
+            bullet.position.x = tankPos.y+((GameMap.colliders["player"].bottom - GameMap.colliders["player"].top)/2)-(bullet.wBullet/2); //Falta hacer que el width de la bala sea ajustable hacer con GameMap.colliders
+            bullet.position.y = tankPos.x+((GameMap.colliders["player"].right - GameMap.colliders["player"].left)/2)-(bullet.hBullet/2);
             
             bullet.position.x += bullet.xDiff*-2;
             bullet.position.y += bullet.yDiff*-2;

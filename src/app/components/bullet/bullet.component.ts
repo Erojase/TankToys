@@ -16,15 +16,23 @@ export class BulletComponent implements OnInit, AfterViewInit {
     @Input("type") type: "player" | "CPU";
     @Input("controller") controller: undefined | CPUController;
     @Input("name") name: string;
+    @Input("wBullet") wBullet:number = 30;
+    @Input("hBullet") hBullet:number = 20;
+    @Input("bounces") maxBounces:number = 1;
 
     bullet: Bullet;
+    // _wBullet:number;
+    // _hBullet:number;
 
     constructor() {
         this.bullet = new Bullet();
+        
     }
 
     ngOnInit() {      
-        
+        this.bullet.wBullet = this.wBullet;
+        this.bullet.hBullet = this.hBullet;
+        this.bullet.maxBounce = this.maxBounces;
         if (this.type == "player") {
             TankController.bullets.push(this.bullet);
         } else {
@@ -41,8 +49,8 @@ export class BulletComponent implements OnInit, AfterViewInit {
         return {
             "position": 'absolute',
             "zIndex": 60,
-            "width": "30px",
-            "height": "20px",
+            "width": `${this.wBullet}px`,
+            "height": `${this.hBullet}px`,
             "top": `${this.bullet.position.y}px`,
             "left": `${this.bullet.position.x}px`,
             "rotate": `${this.bullet.rotation}rad`

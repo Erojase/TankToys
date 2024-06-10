@@ -4,7 +4,6 @@ import { Position } from './Tank';
 
 export class Bullet {
 
-    private maxBounce = 1;
     public currentBounce = 0;
 
     public position: Position = {
@@ -16,6 +15,10 @@ export class Bullet {
     public rotation = 0;
     public xDiff:number = 0;
     public yDiff:number = 0;
+    public wBullet:number = 0;
+    public hBullet:number = 0;
+    public maxBounce:number = 0;
+    public cooldown:number = 0;
 
     constructor() {
         // BulletComponent;
@@ -35,8 +38,9 @@ export class Bullet {
                 this.moveBullet(x, y, owner, bulletName);  
                 return;   
             } else {
-                this.currentBounce++;
+                console.log(this.maxBounce);
                 
+                this.currentBounce++;
                 if (this.currentBounce <= this.maxBounce) {
                     if (block[1]) {
                         let rotatInDeg = ((this.rotation*180)/Math.PI);
@@ -62,7 +66,6 @@ export class Bullet {
                 }
                 
             }
-            console.log(GameMap.colliders[bulletName])
         }, this.speed)
         
 
