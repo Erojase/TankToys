@@ -109,8 +109,7 @@ export class TankComponent implements OnInit, AfterViewInit {
             "rotate": `${TankController.tank.rotation}deg`,
             "display": 'flex',
             "justifyContent": 'center',
-            "alignItems": 'center',
-            "border": '1px solid green'
+            "alignItems": 'center'
         }
     }
 
@@ -120,8 +119,7 @@ export class TankComponent implements OnInit, AfterViewInit {
             "width": "45px",
             "height": "45px",
             "zIndex": "50",
-            "rotate": `${TankController.tank.rotation}deg`,
-            "border": '1px solid green'
+            "rotate": `${TankController.tank.rotation}deg`
         }
     }
 

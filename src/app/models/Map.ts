@@ -146,11 +146,12 @@ export class GameMap {
 
 
         let imgs = [];
-        let terrains: string[] = ["wall.png", "floor.jpg", "dirt.jpg"];
+        let terrains: string[] = ["wall", "floor", "dirt"];
         for (let i = 0; i < map.length; i++) {
             let row = [];
             for (let j = 0; j < map[i].length; j++) {
-                row[j] = terrains[map[i][j]]
+                let rand = Math.floor(Math.random() * 5)+1
+                row[j] = `${terrains[map[i][j]]}_${rand}.png`
             }
             imgs[i] = row;
         }

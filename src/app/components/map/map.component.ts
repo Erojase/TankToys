@@ -35,7 +35,6 @@ export class MapComponent implements OnInit, AfterViewInit {
         for (const element of this.mapContainer.nativeElement.children) {
             for (const image of element.children) {
                 if ((<HTMLImageElement>image).src.includes("wall")) {
-                    (<HTMLElement>image).style.border = "1px green solid";
                     GameMap.registerCollider(image.getBoundingClientRect(), "wall"+uuid());
                 } else {
                     GameMap.registerCollider(image.getBoundingClientRect(), "floor"+uuid());
