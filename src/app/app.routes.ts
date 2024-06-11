@@ -14,11 +14,11 @@ import { ShopComponent } from './pages/shop/shop.component';
 export const routes: Routes = [
     { path: '', redirectTo: '/home' , pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
-    // { path: 'garage', component: GarageComponent },
+    { path: 'garage', component: GarageComponent },
     { path: 'play', component: PlayComponent },
     { path: 'singleplayer', component: SingleplayerComponent },
-    { path: 'online', component: LocalMultiplayerComponent},
-    { path: 'multiplayer', component: OnlineMultiplayerComponent},
+    { path: 'online', component: OnlineMultiplayerComponent },
+    { path: 'multiplayer', component: LocalMultiplayerComponent },
     { path: 'signIn', component: SignInComponent },
     { path: 'shop', component: ShopComponent }
 ];

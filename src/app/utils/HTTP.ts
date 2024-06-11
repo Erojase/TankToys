@@ -7,14 +7,17 @@ export default class HTTP {
     }
 
     static PostRequest = async (url:string, body:any) =>{
-
-        return await fetch(url, {
-            method: 'post',
-            body: body,
-            headers: {
-                Accept: '*/*',
-                'Content-Type': 'application/json'
-              }
-        });
+        try {
+            return await fetch(url, {
+                method: 'post',
+                body: body,
+                headers: {
+                    Accept: '*/*',
+                    'Content-Type': 'application/json'
+                  }
+            });
+        } catch (error) {
+            return {ok:false, text: ()=>{return "no"}, json: ()=>{return "no"}};
+        }
     }
 }
