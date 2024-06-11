@@ -29,7 +29,7 @@ export const Pos1: Position = { x: 250, y: 100 };
 
 export const Pos2: Position = { x: 500, y: 650 };
 
-export const Pos3: Position = { x: 800, y: 700 };
+export const Pos3: Position = { x: 650, y: 550 };
 
 interface AvailablePositions{
     [x:string]: { position: Position, available: boolean}
@@ -239,7 +239,6 @@ export class GameMap {
 
                 if ((this.colliders[collider].type == "player" || this.colliders[collider].type.includes("cpu")) || (this.colliders[collider].type != bulletName && this.colliders[collider].type.includes("Bullet"))) {
                     if (this.colliders[collider].type != owner && !this.colliders[collider].type.includes("Bullet")) {
-
                         console.log("PA ELIMINA MI PANA");
 
                         console.log(this.colliders[collider].type);
