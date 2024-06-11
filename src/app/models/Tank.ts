@@ -39,12 +39,12 @@ export class Tank {
 
     public rotation: number = 0;
 
-    public speed = 10;
+    public speed = 5;
 
     public _parentName:string;
 
     //0 - Nomral; 1 - Sniper; 2 - Subfusil; 3 - Shotgun
-    public bulletType: number = 2;
+    public bulletType: number = 0;
 
     constructor(defaultPos: Position, parentName:string) {
         this.position = defaultPos!;
