@@ -1,4 +1,4 @@
-import { Position, Tank } from "../models/Tank";
+import { BulletType, Position, Tank } from "../models/Tank";
 import { Bullet } from '../models/Bullet';
 import { GameMap } from "../models/Map";
 import { CPUManager } from "./CPUController";
@@ -135,10 +135,14 @@ export class TankController {
 
     public static shootBullet() {
         //debugger;
-        BulletController.shoot(this.bullets[this.cont], this.tank.position, this.scopePos, this.cannonRotation, "player", "playerBullet"+this.cont);
-        TankController.cont++;
-        if (TankController.cont > this.bullets.length -1) {
-            TankController.cont = 0;
+        if (this.tank.bulletType == BulletType.Shotgun) {
+            BulletController.shootShotgun(this.bullets, this.tank.position, this.scopePos, this.cannonRotation, "player", "playerBullet"+this.cont)
+        } else {
+            BulletController.shoot(this.bullets[this.cont], this.tank.position, this.scopePos, this.cannonRotation, "player", "playerBullet"+this.cont);
+            TankController.cont++;
+            if (TankController.cont > this.bullets.length -1) {
+                TankController.cont = 0;
+            }
         }
     }
 

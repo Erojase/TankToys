@@ -38,11 +38,11 @@ export const BulletType = {
         cooldown: 24
     },
     Shotgun: {
-        numBullets: 10,
+        numBullets: 5,
         wBullet: 20,
         hBullet: 20,
         bounces: -0,
-        cooldown: 30
+        cooldown: 1000
     }
 }
 
@@ -83,7 +83,7 @@ export class Tank {
     public _parentName: string;
 
     //0 - Nomral; 1 - Sniper; 2 - Subfusil; 3 - Shotgun
-    public bulletType: BulletType = BulletType.Sniper;
+    public bulletType: BulletType = BulletType.Shotgun;
 
     constructor(defaultPos: Position, parentName: string) {
         this.position = defaultPos!;
