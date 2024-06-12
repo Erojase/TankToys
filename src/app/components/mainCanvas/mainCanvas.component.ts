@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, HostListener, Input, OnInit, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { dimensions } from '../../utils/utils';
 import { TankController } from "../../controllers/TankController";
@@ -25,7 +25,7 @@ import { GameController } from '../../controllers/GameController';
         CpuComponent
     ]
 })
-export class MainCanvasComponent implements OnInit {
+export class MainCanvasComponent implements OnInit, AfterViewInit {
     @Input('type') type: string;
 
     currentWindow: dimensions = {
@@ -33,7 +33,16 @@ export class MainCanvasComponent implements OnInit {
         width: 0
     }
 
+    audioController: HTMLAudioElement;
+
     constructor(private viewRef: ViewContainerRef) { }
+
+    ngAfterViewInit(): void {
+        this.audioController = new Audio();
+        this.audioController.src = "/assets/audio/videoplayback.wav";
+        this.audioController.load();
+        this.audioController.play();
+    }
 
     @HostListener('mousemove', ['$event'])
     onMouseMove(e: MouseEvent) {
@@ -54,8 +63,6 @@ export class MainCanvasComponent implements OnInit {
             width: window.innerWidth
         }
         this.viewRef.clear();
-
-        
 
         const TankComponentRef = this.viewRef.createComponent(TankComponent);
         TankComponentRef.setInput("mainViewRef", this.viewRef);
