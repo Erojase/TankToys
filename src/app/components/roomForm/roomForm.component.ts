@@ -18,7 +18,7 @@ export class RoomFormComponent implements OnInit {
 	constructor(private ele: ElementRef<HTMLElement>) { }
 
 	ngOnInit() {
-		let room = window.localStorage.getItem("room");
+		let room = window.sessionStorage.getItem("room");
 		if (room != null || room != undefined) {
 			this.joinRoom();
 		}
@@ -28,13 +28,13 @@ export class RoomFormComponent implements OnInit {
 	onClick(e: Event) {
 		switch (true) {
 			case (<HTMLElement>e.target).className.includes("join"):
-				window.localStorage.setItem("room", this.roomIdField.nativeElement.value);
+				window.sessionStorage.setItem("room", this.roomIdField.nativeElement.value);
 				this.joinRoom();
 				break;
 			case (<HTMLElement>e.target).className.includes("create"):
 				MultiplayerController.createRoom(UserController.user?.address!, 0).then(res => {
 					if (Number.parseInt(res)) {
-						window.localStorage.setItem("room", res);
+						window.sessionStorage.setItem("room", res);
 						this.joinRoom();
 					} else {
 						alert(res)
@@ -47,11 +47,11 @@ export class RoomFormComponent implements OnInit {
 	}
 
 	joinRoom = () => {
-		MultiplayerController.joinRoom(UserController.user?.address!, window.localStorage.getItem("room")!).then(res => {
+		MultiplayerController.joinRoom(UserController.user?.address!, window.sessionStorage.getItem("room")!).then(res => {
 			if (res) {
-				alert("joined room: " + window.localStorage.getItem("room")!);
+				alert("joined room: " + window.sessionStorage.getItem("room")!);
 				GameController.addToGameLoop("Room", () => {
-					MultiplayerController.roomData(window.localStorage.getItem("room")!, { x: TankController.tank.position.x, y: TankController.tank.position.y }).then(res => {
+					MultiplayerController.roomData(window.sessionStorage.getItem("room")!, { x: TankController.tank.position.x, y: TankController.tank.position.y }).then(res => {
 						console.log(JSON.stringify(res));
 						let players = "Players in room:</br>";
 						Object.keys((<RoomData>res).playerPositions).map(playerId => {

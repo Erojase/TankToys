@@ -31,7 +31,7 @@ export default class MultiplayerController {
     static leaveRoom = async (playerId: string, roomId: string) => {
         let res = await ServerCall.leaveRoom(playerId, roomId);
         if (res) {
-            window.localStorage.removeItem("room");
+            window.sessionStorage.removeItem("room");
         }
         console.log(res);
     }

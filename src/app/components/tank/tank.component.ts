@@ -6,6 +6,7 @@ import { TankController } from "../../controllers/TankController";
 import { CPUManager } from '../../controllers/CPUController';
 import { BulletComponent } from "../bullet/bullet.component";
 import { GameMap } from '../../models/Map';
+import { BulletType } from '../../models/Tank';
 
 @Component({
     selector: 'app-tank',
@@ -19,6 +20,8 @@ export class TankComponent implements OnInit, AfterViewInit {
     @Input('mainViewRef') mainViewRef: ViewContainerRef;
     // @ViewChild('b1') bullet1: ElementRef<BulletComponent>;
     
+    tipoBullet:BulletType = BulletType.Normal;
+
     constructor() { 
     }
     
@@ -32,50 +35,18 @@ export class TankComponent implements OnInit, AfterViewInit {
        
         CPUManager.addPlayerToTrack(TankController.tank);     
 
-        let tipoBullet = TankController.tank.bulletType;
+        this.tipoBullet = TankController.tank.bulletType;
 
-        let numBullets:number = 0;
-        let wBullet:number = 0;
-        let hBullet:number = 0;
-        let bounces:number = 0;
-        let speed:number = 0;
-
-        //0 - Nomral; 1 - Sniper; 2 - Subfusil; 3 - Shotgun
-        if (tipoBullet == 0) {
-            numBullets = 3;
-            wBullet = 30;
-            hBullet = 20;
-            bounces = 1;
-            speed = 20;
-        } else if (tipoBullet == 1) {
-            numBullets = 1;
-            wBullet = 80;
-            hBullet = 20;
-            bounces = 4;
-            speed = 80;
-        } else if (tipoBullet == 2) {
-            numBullets = 5;
-            wBullet = 20;
-            hBullet = 10;
-            bounces = -0;
-            speed = 70;
-        } else if (tipoBullet == 3) {
-            numBullets = 10;
-            wBullet = 20;
-            hBullet = 20;
-            bounces = -0;
-            speed = 30;
-        }
 
         // this.viewRef.clear();
-        for (let i = 0; i < numBullets; i++) {
+        for (let i = 0; i < this.tipoBullet.numBullets; i++) {
     
             const compref = this.mainViewRef.createComponent(BulletComponent);
             compref.setInput("type", "player");
             compref.setInput("name", "playerBullet" + i);
-            compref.setInput("wBullet", wBullet);
-            compref.setInput("hBullet", hBullet);
-            compref.setInput("bounces", bounces);
+            compref.setInput("wBullet", this.tipoBullet.wBullet);
+            compref.setInput("hBullet", this.tipoBullet.hBullet);
+            compref.setInput("bounces", this.tipoBullet.bounces);
             console.log('jamon => ', compref);            
             
             //GameController.addToGameLoop(()=> GameMap.registerCollider(compref.location.nativeElement.getBoundingClientRect(), "playerBullet"+i));
