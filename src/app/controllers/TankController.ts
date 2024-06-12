@@ -137,6 +137,8 @@ export class TankController {
         //debugger;
         if (this.tank.bulletType == BulletType.Shotgun) {
             BulletController.shootShotgun(this.bullets, this.tank.position, this.scopePos, this.cannonRotation, "player", "playerBullet"+this.cont)
+        } else if (this.tank.bulletType == BulletType.Rafagas) {
+            BulletController.shootRafagas(this.bullets, this.tank.position, this.scopePos, this.cannonRotation, "player", "playerBullet"+this.cont)
         } else {
             BulletController.shoot(this.bullets[this.cont], this.tank.position, this.scopePos, this.cannonRotation, "player", "playerBullet"+this.cont);
             TankController.cont++;
