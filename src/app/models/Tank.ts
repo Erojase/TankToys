@@ -83,7 +83,7 @@ export class Tank {
     public _parentName: string;
 
     //0 - Nomral; 1 - Sniper; 2 - Subfusil; 3 - Shotgun
-    public bulletType: BulletType = BulletType.Sniper;
+    public bulletType: BulletType = BulletType.Normal;
 
     constructor(defaultPos: Position, parentName: string) {
         this.position = defaultPos!;

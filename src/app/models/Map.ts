@@ -6,6 +6,7 @@ import { Maplist } from "./MapList";
 import { TankComponent } from "../components/tank/tank.component";
 import { TankController } from "../controllers/TankController";
 import { CPUController } from "../controllers/CPUController";
+import { StageController } from "../controllers/StageController";
 
 export interface MapPosition {
     x: number,
@@ -29,23 +30,6 @@ export interface Colliders {
     [x: string]: Collider;
 }
 
-export const Pos1: Position = { x: 4, y: 4.5 };
-
-export const Pos2: Position = { x: 1.5, y: 1.2 };
-
-export const Pos3: Position = { x: 2.6, y: 2 };
-
-interface AvailablePositions{
-    [x:string]: { position: Position, available: boolean}
-}
-
-export const availablePositions:AvailablePositions = {
-    "pos1": { "position": Pos1, "available": true },
-    "pos2": { "position": Pos2, "available": true },
-    "pos3": { "position": Pos3, "available": true }
-}
-
-
 export class GameMap {
 
     private _width: number;
@@ -56,6 +40,7 @@ export class GameMap {
     public static blocksPos: MapPosition[][] = [];
 
     public static PositionAssign(maxWidth: number, maXHeight:number): Position {
+        let availablePositions = StageController.currentStage.availablePositions;
         for (const position of Object.keys(availablePositions)) {
             if (availablePositions[position].available) {
                 availablePositions[position].available = false;
@@ -114,7 +99,7 @@ export class GameMap {
         let map = GameMap._map;
 
         if (!random) {
-            map = Maplist.TactiCool
+            map = StageController.currentStage.map
         } else {
             GameMap.aleatMapGenerator(map);
         }
@@ -233,6 +218,13 @@ export class GameMap {
                 if ((this.colliders[collider].type == "player" || this.colliders[collider].type.includes("cpu")) || (this.colliders[collider].type != bulletName && this.colliders[collider].type.includes("Bullet"))) {
                     if (!this.colliders[collider].type.includes(owner) && !this.colliders[collider].type.includes("Bullet")) {
                         debugger;
+
+                        if (this.colliders[collider].type.includes("cpu")) {
+                            StageController.killEnemy();
+                        } else {
+                            StageController.lose();
+                        }
+
                         let component = ReferenceRepository.Component[this.colliders[collider].type];
                         const { [collider]: g, ...otro } = this.colliders;
                         this.colliders = otro;

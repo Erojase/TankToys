@@ -41,7 +41,7 @@ export class MainCanvasComponent implements OnInit, AfterViewInit {
         this.audioController = new Audio();
         this.audioController.src = "/assets/audio/videoplayback.wav";
         this.audioController.load();
-        this.audioController.play();
+        // this.audioController.play();
     }
 
     @HostListener('mousemove', ['$event'])
@@ -76,16 +76,12 @@ export class MainCanvasComponent implements OnInit, AfterViewInit {
     initializeSingleplayer() {
         GameController.isSingleplayer = true;
         StageController.Init();
-        const Cpu1ComponentRef = this.viewRef.createComponent(CpuComponent);
-        Cpu1ComponentRef.setInput("mainViewRef", this.viewRef);
-        Cpu1ComponentRef.setInput("name", "cpu1");
-
-        const Cpu2ComponentRef = this.viewRef.createComponent(CpuComponent);
-        Cpu2ComponentRef.setInput("mainViewRef", this.viewRef);
-        Cpu2ComponentRef.setInput("name", "cpu2");
-
-        ReferenceRepository.Component["cpu1"] = Cpu1ComponentRef;
-        ReferenceRepository.Component["cpu2"] = Cpu2ComponentRef;
+        for (let i = 0; i < StageController.currentStage.enemies; i++) {
+            let cpuComponent = this.viewRef.createComponent(CpuComponent);
+            cpuComponent.setInput("mainViewRef", this.viewRef);
+            cpuComponent.setInput("name", "cpu"+(i+1));
+            ReferenceRepository.Component["cpu"+(i+1)] = cpuComponent;
+        }
     }
 
 }
