@@ -130,3 +130,11 @@ export class BulletController {
 
 
 }
+
+
+
+
+// Rafagas:
+// let sumDiff = Math.abs(bullet.xDiff) + Math.abs(bullet.yDiff);
+//                 let dispersionx = ((Math.abs(bullet.xDiff)/(sumDiff/100)));
+//                 let dispersiony = ((Math.abs(bullet.yDiff)/(sumDiff/100)));
