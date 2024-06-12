@@ -2,7 +2,7 @@ import { ComponentRef } from "@angular/core";
 import { CpuComponent } from "../components/cpu/cpu.component";
 import { ReferenceRepository } from "../controllers/ReferenceRepository";
 import { GameController } from "../controllers/GameController";
-import { BasicMap, Maze, TactiCool } from "./MapList";
+import { Maplist } from "./MapList";
 import { TankComponent } from "../components/tank/tank.component";
 import { TankController } from "../controllers/TankController";
 import { CPUController } from "../controllers/CPUController";
@@ -29,11 +29,11 @@ export interface Colliders {
     [x: string]: Collider;
 }
 
-export const Pos1: Position = { x: 4, y: 4 };
+export const Pos1: Position = { x: 4, y: 4.5 };
 
-export const Pos2: Position = { x: 1.5, y: 1.5 };
+export const Pos2: Position = { x: 1.5, y: 1.2 };
 
-export const Pos3: Position = { x: 2.3, y: 2 };
+export const Pos3: Position = { x: 2.6, y: 2 };
 
 interface AvailablePositions{
     [x:string]: { position: Position, available: boolean}
@@ -115,7 +115,7 @@ export class GameMap {
         let map = GameMap._map;
 
         if (!random) {
-            map = Maze
+            map = Maplist.Maze
         } else {
             GameMap.aleatMapGenerator(map);
         }
