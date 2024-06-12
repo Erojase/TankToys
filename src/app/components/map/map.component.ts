@@ -35,22 +35,29 @@ export class MapComponent implements OnInit, AfterViewInit {
         for (const element of this.mapContainer.nativeElement.children) {
             for (const image of element.children) {
                 if ((<HTMLImageElement>image).src.includes("wall")) {
-                    GameMap.registerCollider(image.getBoundingClientRect(), "wall"+uuid());
+                    GameMap.registerCollider(image.getBoundingClientRect(), "wall" + uuid());
                 } else {
-                    GameMap.registerCollider(image.getBoundingClientRect(), "floor"+uuid());
+                    GameMap.registerCollider(image.getBoundingClientRect(), "floor" + uuid());
                 }
             }
         }
         console.log(GameMap.colliders);
-        
+
     }
 
     ngOnInit() {
-        this.imageY = window.innerHeight/18.22;
-        this.imageX = window.innerWidth/26.199;
-        
+        this.imageY = window.innerHeight / 16;
+        this.imageX = window.innerWidth / 24;
+
         this.generateMap(true);
-        
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event:any) {
+        this.imageY = window.innerHeight / 16;
+        this.imageX = window.innerWidth / 24.2;
+
+        this.generateMap(true);
     }
 
     generateMap(random: boolean) {

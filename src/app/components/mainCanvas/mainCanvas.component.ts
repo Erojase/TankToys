@@ -8,6 +8,8 @@ import { BulletComponent } from "../bullet/bullet.component";
 import { MapComponent } from "../map/map.component";
 import { CpuComponent } from '../cpu/cpu.component';
 import { ReferenceRepository } from '../../controllers/ReferenceRepository';
+import { StageController } from '../../controllers/StageController';
+import { GameController } from '../../controllers/GameController';
 
 @Component({
     selector: 'app-mainCanvas',
@@ -52,22 +54,31 @@ export class MainCanvasComponent implements OnInit {
             width: window.innerWidth
         }
         this.viewRef.clear();
+
+        
+
         const TankComponentRef = this.viewRef.createComponent(TankComponent);
         TankComponentRef.setInput("mainViewRef", this.viewRef);
-        
-        if (this.type == "singleplayer") {
-            const Cpu1ComponentRef = this.viewRef.createComponent(CpuComponent);
-            Cpu1ComponentRef.setInput("mainViewRef", this.viewRef);
-            Cpu1ComponentRef.setInput("name", "cpu1");
-
-            const Cpu2ComponentRef = this.viewRef.createComponent(CpuComponent);
-            Cpu2ComponentRef.setInput("mainViewRef", this.viewRef);
-            Cpu2ComponentRef.setInput("name", "cpu2");
-
-            ReferenceRepository.Component["cpu1"] = Cpu1ComponentRef;
-            ReferenceRepository.Component["cpu2"] = Cpu2ComponentRef;
-        }
         ReferenceRepository.Component["player"] = TankComponentRef;
+
+        if (this.type == "singleplayer") {
+            this.initializeSingleplayer();
+        }
+    }
+
+    initializeSingleplayer() {
+        GameController.isSingleplayer = true;
+        StageController.Init();
+        const Cpu1ComponentRef = this.viewRef.createComponent(CpuComponent);
+        Cpu1ComponentRef.setInput("mainViewRef", this.viewRef);
+        Cpu1ComponentRef.setInput("name", "cpu1");
+
+        const Cpu2ComponentRef = this.viewRef.createComponent(CpuComponent);
+        Cpu2ComponentRef.setInput("mainViewRef", this.viewRef);
+        Cpu2ComponentRef.setInput("name", "cpu2");
+
+        ReferenceRepository.Component["cpu1"] = Cpu1ComponentRef;
+        ReferenceRepository.Component["cpu2"] = Cpu2ComponentRef;
     }
 
 }

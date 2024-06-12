@@ -8,6 +8,7 @@ export class GameController {
     
     private static _updatable : IUpdatable = {};
 
+    public static isSingleplayer : boolean = false;
 
     public static get updatable() : IUpdatable {
         return this._updatable;

@@ -1,5 +1,12 @@
 *{
     line-height: 0px;
+    box-sizing: border-box;
+}
+
+
+.container{
+    overflow: hidden;
+    height: 100vh;
 }
 
 .map{
