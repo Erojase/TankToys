@@ -19,6 +19,7 @@ export class BulletComponent implements OnInit, AfterViewInit {
     @Input("wBullet") wBullet:number = 30;
     @Input("hBullet") hBullet:number = 20;
     @Input("bounces") maxBounces:number = 1;
+    @Input("cooldown") cooldown:number = 200;
 
     bullet: Bullet;
     // _wBullet:number;
@@ -33,6 +34,7 @@ export class BulletComponent implements OnInit, AfterViewInit {
         this.bullet.wBullet = this.wBullet;
         this.bullet.hBullet = this.hBullet;
         this.bullet.maxBounce = this.maxBounces;
+        this.bullet.cooldown = this.cooldown;
         if (this.type == "player") {
             TankController.bullets.push(this.bullet);
         } else {

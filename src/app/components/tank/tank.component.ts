@@ -49,6 +49,7 @@ export class TankComponent implements OnInit, AfterViewInit {
             compref.setInput("wBullet", this.tipoBullet.wBullet);
             compref.setInput("hBullet", this.tipoBullet.hBullet);
             compref.setInput("bounces", this.tipoBullet.bounces);
+            compref.setInput("cooldown", this.tipoBullet.cooldown);
             console.log('jamon => ', compref);            
             
             //GameController.addToGameLoop(()=> GameMap.registerCollider(compref.location.nativeElement.getBoundingClientRect(), "playerBullet"+i));
