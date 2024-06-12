@@ -59,7 +59,6 @@ export class GameMap {
         for (const position of Object.keys(availablePositions)) {
             if (availablePositions[position].available) {
                 availablePositions[position].available = false;
-                debugger;
                 return {
                     x: maXHeight / availablePositions[position].position.x,
                     y: maxWidth / availablePositions[position].position.y
@@ -115,7 +114,7 @@ export class GameMap {
         let map = GameMap._map;
 
         if (!random) {
-            map = Maplist.Maze
+            map = Maplist.TactiCool
         } else {
             GameMap.aleatMapGenerator(map);
         }
@@ -231,17 +230,9 @@ export class GameMap {
                 position.y + y > this.colliders[collider].bottom)
 
             if (overlap && !this.colliders[collider].type.includes("floor")) { //Poner aqui el que la bala se destruya si choca con otra bala o con un tanke
-                let tumadre = this.colliders[collider].type;
-                //console.log(tumadre);
-
                 if ((this.colliders[collider].type == "player" || this.colliders[collider].type.includes("cpu")) || (this.colliders[collider].type != bulletName && this.colliders[collider].type.includes("Bullet"))) {
-                    if (this.colliders[collider].type != owner && !this.colliders[collider].type.includes("Bullet")) {
-                        //console.log("PA ELIMINA MI PANA");
-
-                        //console.log(this.colliders[collider].type);
-                        //console.log(owner);
-                        //console.log(bulletName);
-
+                    if (!this.colliders[collider].type.includes(owner) && !this.colliders[collider].type.includes("Bullet")) {
+                        debugger;
                         let component = ReferenceRepository.Component[this.colliders[collider].type];
                         const { [collider]: g, ...otro } = this.colliders;
                         this.colliders = otro;
