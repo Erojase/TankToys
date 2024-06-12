@@ -12,37 +12,37 @@ export interface BulletType{
     wBullet: number,
     hBullet: number,
     bounces: number,
-    speed: number
+    cooldown: number
 }
 
 export const BulletType = {
     Normal: {
-        numBullets: 3,
+        numBullets: 5   ,
         wBullet: 30,
         hBullet: 20,
         bounces: 1,
-        speed: 20
+        cooldown: 200
     },
     Sniper: {
-        numBullets: 1,
-        wBullet: 80,
-        hBullet: 20,
+        numBullets: 5,
+        wBullet: 50,
+        hBullet: 10,
         bounces: 4,
-        speed: 80
+        cooldown: 2000
     },
     Sufusil: {
         numBullets: 5,
         wBullet: 20,
         hBullet: 10,
         bounces: -0,
-        speed: 70
+        cooldown: 24
     },
     Shotgun: {
         numBullets: 10,
         wBullet: 20,
         hBullet: 20,
         bounces: -0,
-        speed: 30
+        cooldown: 30
     }
 }
 
@@ -83,7 +83,7 @@ export class Tank {
     public _parentName: string;
 
     //0 - Nomral; 1 - Sniper; 2 - Subfusil; 3 - Shotgun
-    public bulletType: BulletType = BulletType.Normal;
+    public bulletType: BulletType = BulletType.Sniper;
 
     constructor(defaultPos: Position, parentName: string) {
         this.position = defaultPos!;

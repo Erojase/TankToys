@@ -19,12 +19,12 @@ export class BulletController {
 
 
 
-    public static async disableShooting(){
+    public static async disableShooting(bullet: Bullet){
         BulletController.enabled = false;
         return new Promise<void>(() => {
             setTimeout(() => {
                 BulletController.enabled = true;
-            }, 200);
+            }, bullet.cooldown);
         })
     }
 
@@ -33,7 +33,7 @@ export class BulletController {
         //console.log(GameMap.colliders[bulletName])
         if (BulletController.enabled) {
             bullet.stopMoves();
-            BulletController.disableShooting();
+            BulletController.disableShooting(bullet);
             bullet.currentBounce = 0;
             //console.log("disparo");                       
             bullet.rotation = cannonRotation;
@@ -42,7 +42,7 @@ export class BulletController {
             
             let xSeg = target.x;
             let ySeg = target.y;
-            while (Math.abs(xDiff) > bullet.hBullet || Math.abs(yDiff) > bullet.wBullet) {
+            while (Math.abs(xDiff) > 24 || Math.abs(yDiff) > 24) {
                 xSeg = (tankPos.y+bullet.wBullet + xSeg)/2;
                 ySeg = (tankPos.x+bullet.hBullet + ySeg)/2;
                 xDiff = tankPos.y+bullet.wBullet - xSeg;
