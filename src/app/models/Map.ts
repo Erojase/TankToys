@@ -3,6 +3,9 @@ import { CpuComponent } from "../components/cpu/cpu.component";
 import { ReferenceRepository } from "../controllers/ReferenceRepository";
 import { GameController } from "../controllers/GameController";
 import { BasicMap, Maze, TactiCool } from "./MapList";
+import { TankComponent } from "../components/tank/tank.component";
+import { TankController } from "../controllers/TankController";
+import { CPUController } from "../controllers/CPUController";
 
 export interface MapPosition {
     x: number,
@@ -26,11 +29,11 @@ export interface Colliders {
     [x: string]: Collider;
 }
 
-export const Pos1: Position = { x: 250, y: 100 };
+export const Pos1: Position = { x: 4, y: 4 };
 
-export const Pos2: Position = { x: 500, y: 650 };
+export const Pos2: Position = { x: 1.5, y: 1.5 };
 
-export const Pos3: Position = { x: 650, y: 550 };
+export const Pos3: Position = { x: 2.3, y: 2 };
 
 interface AvailablePositions{
     [x:string]: { position: Position, available: boolean}
@@ -45,7 +48,6 @@ export const availablePositions:AvailablePositions = {
 
 export class GameMap {
 
-    private tileTypes = ["Grass", "Water", "Mountain", "Woods"]
     private _width: number;
     private _height: number;
     public static _map: number[][] = [];
@@ -53,14 +55,33 @@ export class GameMap {
 
     public static blocksPos: MapPosition[][] = [];
 
-    public static PositionAssign(): Position {
+    public static PositionAssign(maxWidth: number, maXHeight:number): Position {
         for (const position of Object.keys(availablePositions)) {
             if (availablePositions[position].available) {
                 availablePositions[position].available = false;
-                return availablePositions[position].position
+                debugger;
+                return {
+                    x: maXHeight / availablePositions[position].position.x,
+                    y: maxWidth / availablePositions[position].position.y
+                }
             }
         }
+        
         return {x: 0, y:0};
+    }
+
+    public static reallocateTanks(){
+        for (const tank in ReferenceRepository.Component) {
+            if (tank.includes("cpu")) {
+                let collider = this.getCurrentFloor(<DOMRect>ReferenceRepository.Component[tank].instance.self.nativeElement.getBoundingClientRect());
+                (<CPUController>ReferenceRepository.Component[tank].instance._cpuController).cpu.position = {x: collider.left, y: collider.top}
+            } else {
+                let collider = this.getCurrentFloor(<DOMRect>ReferenceRepository.Component[tank].instance.self.nativeElement.getBoundingClientRect())
+                TankController.tank.position = {x: collider.left, y: collider.top}
+            }
+            console.log(ReferenceRepository.Component[tank].instance);
+            
+        }
     }
 
     // TODO: generate map using wave function collapse
@@ -93,7 +114,7 @@ export class GameMap {
 
         let map = GameMap._map;
 
-        if (random) {
+        if (!random) {
             map = Maze
         } else {
             GameMap.aleatMapGenerator(map);
@@ -211,15 +232,15 @@ export class GameMap {
 
             if (overlap && !this.colliders[collider].type.includes("floor")) { //Poner aqui el que la bala se destruya si choca con otra bala o con un tanke
                 let tumadre = this.colliders[collider].type;
-                console.log(tumadre);
+                //console.log(tumadre);
 
                 if ((this.colliders[collider].type == "player" || this.colliders[collider].type.includes("cpu")) || (this.colliders[collider].type != bulletName && this.colliders[collider].type.includes("Bullet"))) {
                     if (this.colliders[collider].type != owner && !this.colliders[collider].type.includes("Bullet")) {
-                        console.log("PA ELIMINA MI PANA");
+                        //console.log("PA ELIMINA MI PANA");
 
-                        console.log(this.colliders[collider].type);
-                        console.log(owner);
-                        console.log(bulletName);
+                        //console.log(this.colliders[collider].type);
+                        //console.log(owner);
+                        //console.log(bulletName);
 
                         let component = ReferenceRepository.Component[this.colliders[collider].type];
                         const { [collider]: g, ...otro } = this.colliders;
@@ -228,7 +249,7 @@ export class GameMap {
                         GameController.removeFromUpdate("pathFind_"+collider);
                         component.destroy();
                     } else if (this.colliders[collider].type.includes("Bullet")) {
-                        console.log("Choque con bala");
+                        //console.log("Choque con bala");
                         position = {
                             x: -0,
                             y: -30
@@ -316,6 +337,20 @@ export class GameMap {
             }
         }
         return false;
+    }
+
+    public static getCurrentFloor(tank: DOMRect){
+        for (const collider in this.colliders) {
+            var overlap = !(tank.right < this.colliders[collider].left ||
+                tank.left > this.colliders[collider].right ||
+                tank.bottom < this.colliders[collider].top ||
+                tank.top > this.colliders[collider].bottom)
+
+            if (overlap && this.colliders[collider].type.includes("floor")) {
+                return this.colliders[collider];
+            }
+        }
+        return this.colliders[7];
     }
 
 

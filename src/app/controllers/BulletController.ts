@@ -30,12 +30,12 @@ export class BulletController {
 
     
     public static shoot(bullet:Bullet, tankPos: Position, target: Position, cannonRotation:number, owner: string, bulletName: string) {
-        console.log(GameMap.colliders[bulletName])
+        //console.log(GameMap.colliders[bulletName])
         if (BulletController.enabled) {
             bullet.stopMoves();
             BulletController.disableShooting();
             bullet.currentBounce = 0;
-            console.log("disparo");                       
+            //console.log("disparo");                       
             bullet.rotation = cannonRotation;
             let xDiff = target.x - tankPos.y+bullet.wBullet;
             let yDiff = target.y - tankPos.x+bullet.hBullet;
@@ -48,8 +48,8 @@ export class BulletController {
                 xDiff = tankPos.y+bullet.wBullet - xSeg;
                 yDiff = tankPos.x+bullet.hBullet - ySeg;
             }
-            console.log(xDiff);
-            console.log(yDiff);
+            //console.log(xDiff);
+            //console.log(yDiff);
             
             bullet.xDiff = xDiff;
             bullet.yDiff = yDiff;

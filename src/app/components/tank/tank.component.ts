@@ -6,7 +6,7 @@ import { TankController } from "../../controllers/TankController";
 import { CPUManager } from '../../controllers/CPUController';
 import { BulletComponent } from "../bullet/bullet.component";
 import { GameMap } from '../../models/Map';
-import { BulletType } from '../../models/Tank';
+import { BulletType, Tank } from '../../models/Tank';
 
 @Component({
     selector: 'app-tank',
@@ -31,6 +31,8 @@ export class TankComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
+        window.innerHeight
+        TankController.tank = new Tank(GameMap.PositionAssign(window.innerWidth, window.innerHeight), "player")
         GameController.addToGameLoop("move_player", ()=>TankController.MoveV2(this.self.nativeElement.getBoundingClientRect()));
        
         CPUManager.addPlayerToTrack(TankController.tank);     

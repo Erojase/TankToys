@@ -38,11 +38,9 @@ export class BulletComponent implements OnInit, AfterViewInit {
         } else {
             this.controller!.bullet = this.bullet;
         }
-        //GameController.addToGameLoop(() => GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), this.name));
     }
 
     ngAfterViewInit() {
-        //GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), this.name);
     }
 
     setStyles() {

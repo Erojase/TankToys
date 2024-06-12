@@ -41,6 +41,7 @@ export class MapComponent implements OnInit, AfterViewInit {
                 }
             }
         }
+        // GameMap.reallocateTanks();
         console.log(GameMap.colliders);
 
     }
@@ -49,7 +50,7 @@ export class MapComponent implements OnInit, AfterViewInit {
         this.imageY = window.innerHeight / 16;
         this.imageX = window.innerWidth / 24;
 
-        this.generateMap(true);
+        this.generateMap(false);
     }
 
     @HostListener('window:resize', ['$event'])
@@ -57,7 +58,7 @@ export class MapComponent implements OnInit, AfterViewInit {
         this.imageY = window.innerHeight / 16;
         this.imageX = window.innerWidth / 24.2;
 
-        this.generateMap(true);
+        this.generateMap(false);
     }
 
     generateMap(random: boolean) {

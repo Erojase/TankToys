@@ -18,7 +18,7 @@ export class TankController {
 
     public static directions: string[] = [];
 
-    private static _tank: Tank = new Tank(GameMap.PositionAssign(), "player");
+    private static _tank: Tank;
     public static get tank(): Tank {
         return this._tank;
     }

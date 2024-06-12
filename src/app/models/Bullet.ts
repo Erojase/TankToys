@@ -30,7 +30,7 @@ export class Bullet {
             this.position.x += x;
             this.position.y += y;
             // this.moveBullet(x, y);
-            // console.log("x: " + this.position.x + ",y: " + this.position.y);
+            // // console.log("x: " + this.position.x + ",y: " + this.position.y);
             
             let block: boolean[] = GameMap.checkIfBlockNullet(this.position, x, y, owner, bulletName);
             
@@ -38,23 +38,23 @@ export class Bullet {
                 this.moveBullet(x, y, owner, bulletName);  
                 return;   
             } else {
-                console.log(this.maxBounce);
+                // console.log(this.maxBounce);
                 
                 this.currentBounce++;
                 if (this.currentBounce <= this.maxBounce) {
                     if (block[1]) {
                         let rotatInDeg = ((this.rotation*180)/Math.PI);
                         this.rotation = ((((180-rotatInDeg)*Math.PI)/180));
-                        // console.log((this.rotation*180)/Math.PI);
+                        // // console.log((this.rotation*180)/Math.PI);
                         x = x*-1;
-                        console.log("-x");
+                        // console.log("-x");
                         
                     } else {
-                        // console.log((this.rotation*180)/Math.PI);
+                        // // console.log((this.rotation*180)/Math.PI);
                         this.rotation *= -1;
-                        // console.log((this.rotation*180)/Math.PI);
+                        // // console.log((this.rotation*180)/Math.PI);
                         y = y*-1;
-                        console.log("-y");
+                        // console.log("-y");
                         
                     }
                     this.moveBullet(x, y, owner, bulletName); 

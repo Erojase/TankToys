@@ -23,7 +23,7 @@ export class CpuComponent implements OnInit, AfterViewInit {
   _cpuController: CPUController;
 
   constructor() { 
-    this._cpuController = new CPUController(GameMap.PositionAssign());
+    this._cpuController = new CPUController(GameMap.PositionAssign(window.innerWidth, window.innerHeight));
     CPUManager.CPUs.push(this._cpuController);
   }
   
