@@ -17,6 +17,7 @@ import { BulletType, Tank } from '../../models/Tank';
 })
 export class TankComponent implements OnInit, AfterViewInit {
     @ViewChild('self') self: ElementRef<HTMLElement>;
+    @ViewChild('img') img: ElementRef<HTMLImageElement>;
     @Input('mainViewRef') mainViewRef: ViewContainerRef;
     // @ViewChild('b1') bullet1: ElementRef<BulletComponent>;
 
@@ -143,6 +144,7 @@ export class TankComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
+        this.img.nativeElement.src = "/assets/images/tanks/tanky-bot-2.png";
         GameController.addToGameLoop("collider_player", () => GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), "player"));
     }
 

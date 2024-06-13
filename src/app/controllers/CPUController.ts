@@ -27,7 +27,10 @@ export class CPUController {
     
     constructor(position:Position){
         this._position = position;
+        this.bulletController = new BulletController();
     }
+
+    private bulletController: BulletController;
 
     public _name:string = "";
 
@@ -71,7 +74,7 @@ export class CPUController {
             y: this.players[0].position.x + 25
         }
 
-        BulletController.shoot(this.bullet, this._position, realTargetPos, this.cannonRotation, "cpu", "cpuBullet"+0);
+        this.bulletController.shoot(this.bullet, this._position, realTargetPos, this.cannonRotation, "cpu", "cpuBullet"+0);
     }
 
     public getQuadrant(tank:any) {

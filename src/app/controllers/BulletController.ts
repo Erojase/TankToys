@@ -8,32 +8,32 @@ import { TankController } from "./TankController";
 
 export class BulletController {
 
-    private static enabled = true;
+    private enabled = true;
 
-    // private static _bullet : Bullet = new Bullet();
-    // public static get bullet() : Bullet {
+    // private _bullet : Bullet = new Bullet();
+    // public get bullet() : Bullet {
     //     return this._bullet;
     // }
-    // public static set bullet(v : Bullet) {
+    // public set bullet(v : Bullet) {
     //     this._bullet = v;
     // }
 
 
 
-    public static async disableShooting(bullet: Bullet) {
-        BulletController.enabled = false;
+    public async disableShooting(bullet: Bullet) {
+        this.enabled = false;
         return new Promise<void>(() => {
             setTimeout(() => {
-                BulletController.enabled = true;
+                this.enabled = true;
             }, bullet.cooldown);
         })
     }
 
-    public static shoot(bullet: Bullet, tankPos: Position, target: Position, cannonRotation: number, owner: string, bulletName: string) {
+    public shoot(bullet: Bullet, tankPos: Position, target: Position, cannonRotation: number, owner: string, bulletName: string) {
         //console.log(GameMap.colliders[bulletName])
-        if (BulletController.enabled) {
+        if (this.enabled) {
             bullet.stopMoves();
-            BulletController.disableShooting(bullet);
+            this.disableShooting(bullet);
             bullet.currentBounce = 0;
             //console.log("disparo");                       
             bullet.rotation = cannonRotation;
@@ -66,14 +66,14 @@ export class BulletController {
 
     }
 
-    public static shootSuperNormal(bullets: Bullet[], tankPos: Position, target: Position, cannonRotation: number, owner: string, bulletName: string) {
+    public shootSuperNormal(bullets: Bullet[], tankPos: Position, target: Position, cannonRotation: number, owner: string, bulletName: string) {
         //console.log(GameMap.colliders[bulletName])
-        if (BulletController.enabled) {
+        if (this.enabled) {
 
             let dispersion: number = 1;
             bullets.forEach(bullet => {
                 bullet.stopMoves();
-                BulletController.disableShooting(bullet);
+                this.disableShooting(bullet);
                 bullet.currentBounce = 0;
                 //console.log("disparo");                       
                 bullet.rotation = cannonRotation;
@@ -120,13 +120,13 @@ export class BulletController {
 
     }
 
-    public static shootShotgun(bullets: Bullet[], tankPos: Position, target: Position, cannonRotation: number, owner: string, bulletName: string, dispersion:number) {
-        if (BulletController.enabled) {
+    public shootShotgun(bullets: Bullet[], tankPos: Position, target: Position, cannonRotation: number, owner: string, bulletName: string, dispersion:number) {
+        if (this.enabled) {
             // let dispersion: number = 3;
             for (const bullet of bullets) {
 
                 bullet.stopMoves();
-                BulletController.disableShooting(bullet);
+                this.disableShooting(bullet);
                 bullet.currentBounce = 0;
                 //console.log("disparo");                       
                 bullet.rotation = cannonRotation;
@@ -172,12 +172,12 @@ export class BulletController {
         }
     }
 
-    public static async shootSuperSubfusil(bullets: Bullet[], tankPos: Position, target: Position, cannonRotation: number, owner: string, bulletName: string) {
-        if (BulletController.enabled) {
+    public async shootSuperSubfusil(bullets: Bullet[], tankPos: Position, target: Position, cannonRotation: number, owner: string, bulletName: string) {
+        if (this.enabled) {
 
             for (const bullet of bullets) {
                 bullet.stopMoves();
-                BulletController.disableShooting(bullet);
+                this.disableShooting(bullet);
                 bullet.currentBounce = 0;
                 //console.log("disparo");                       
                 bullet.rotation = cannonRotation;
@@ -219,12 +219,12 @@ export class BulletController {
         }
     }
 
-    public static async shootRafagas(bullets: Bullet[], tankPos: Position, target: Position, cannonRotation: number, owner: string, bulletName: string) {
-        if (BulletController.enabled) {
+    public async shootRafagas(bullets: Bullet[], tankPos: Position, target: Position, cannonRotation: number, owner: string, bulletName: string) {
+        if (this.enabled) {
 
             for (const bullet of bullets) {
                 bullet.stopMoves();
-                BulletController.disableShooting(bullet);
+                this.disableShooting(bullet);
                 bullet.currentBounce = 0;
                 //console.log("disparo");                       
                 bullet.rotation = cannonRotation;
@@ -256,14 +256,14 @@ export class BulletController {
         }
     }
 
-    public static shootTurtle(bullets: Bullet[], tankPos: Position, target: Position, owner: string, bulletName: string, diff:number) {
-        if (BulletController.enabled) {
+    public shootTurtle(bullets: Bullet[], tankPos: Position, target: Position, owner: string, bulletName: string, diff:number) {
+        if (this.enabled) {
             let startRotation = 0;
             // let diff = -0.375;
             bullets.forEach(bullet => {
 
                 bullet.stopMoves();
-                BulletController.disableShooting(bullet);
+                this.disableShooting(bullet);
                 bullet.currentBounce = 0;
                 //console.log("disparo");   
                 bullet.rotation = startRotation;

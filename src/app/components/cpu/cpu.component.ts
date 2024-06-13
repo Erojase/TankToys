@@ -48,7 +48,7 @@ export class CpuComponent implements OnInit, AfterViewInit {
     }
     this.cpuShoot = setInterval(() => {
       this._cpuController.shootBullet();
-    }, 4000);
+    }, Math.floor(Math.random() * 1000)+6000);
     
     GameController.addToGameLoop("collider_"+this.name, () => GameMap.registerCollider(this.self.nativeElement.getBoundingClientRect(), this.name)); 
   }

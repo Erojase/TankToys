@@ -18,7 +18,7 @@ export interface Stage {
 const StagesDefinition: Stage[] = [
     {
         id: 0,
-        name: "Stage 1",
+        name: "Entrenamiento",
         enemies: 1,
         map: Maplist.BasicMap,
         availablePositions: {
@@ -31,8 +31,8 @@ const StagesDefinition: Stage[] = [
     },
     {
         id: 1,
-        name: "Stage 2",
-        enemies: 4,
+        name: "Laberinto",
+        enemies: 2,
         map: Maplist.Maze,
         availablePositions: {
             pos1: { position: { x: 4, y: 4.5 }, available: true },
@@ -44,8 +44,8 @@ const StagesDefinition: Stage[] = [
     },
     {
         id: 2,
-        name: "Stage 3",
-        enemies: 4,
+        name: "Tres son multitud",
+        enemies: 3,
         map: Maplist.TactiCool,
         availablePositions: {
             pos1: { position: { x: 4, y: 4.5 }, available: true },
@@ -54,7 +54,35 @@ const StagesDefinition: Stage[] = [
             pos4: { position: { x: 3, y: 2 }, available: true },
             pos5: { position: { x: 2, y: 3 }, available: true }
         }
-    }
+    },
+    {
+        id: 3,
+        name: "Castillo",
+        enemies: 4,
+        map: Maplist.Pvp,
+        availablePositions: {
+            pos1: { position: { x: 4, y: 4.5 }, available: true },
+            pos2: { position: { x: 2, y: 1.4 }, available: true },
+            pos3: { position: { x: 2.6, y: 2 }, available: true },
+            pos4: { position: { x: 3, y: 2 }, available: true },
+            pos5: { position: { x: 2, y: 3 }, available: true }
+        }
+    },
+    {
+        id: 4,
+        name: "Cementerio",
+        enemies: 5,
+        map: Maplist.TombOfTheUndead,
+        availablePositions: {
+            pos1: { position: { x: 7, y: 4.5 }, available: true },
+            pos2: { position: { x: 2.1, y: 1.5 }, available: true },
+            pos3: { position: { x: 2.1, y: 2.7 }, available: true },
+            pos4: { position: { x: 3.5, y: 2.7 }, available: true },
+            pos5: { position: { x: 3, y: 3.1 }, available: true },
+            pos6: { position: { x: 5, y: 2.7 }, available: true }
+        }
+    },
+    
 ]
 
 export class StageController {
@@ -74,8 +102,12 @@ export class StageController {
         StageController.CheckWin();
     }
 
-    static lose() {
+    static async lose() {
         // StageController.currentStage = { ...StagesDefinition[0] };
+        await Swal.fire({
+            title: `${StageController.currentStage.name} no superada`,
+            icon: "error"
+        })
         StageController.reloadCallback.loose();
     }
 
@@ -92,7 +124,7 @@ export class StageController {
                 title: `${StageController.currentStage.name} superada`,
                 icon: "success"
             });
-            if (res.isConfirmed) {
+            if (!res.isDenied) {
                 StageController.nextStage();
                 StageController.reloadCallback.initializeSingleplayer();
                 return true;
