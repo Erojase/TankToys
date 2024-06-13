@@ -14,7 +14,7 @@ export default class UserController {
     public static get user(): User | undefined {
         try {
             // mock user
-            //return {address:"", level:10, username:"mockuser", profileImage:"https://t3.ftcdn.net/jpg/04/51/57/42/360_F_451574291_2fCf9rUfMSnYP7X3ieZJTCq5u2InaKej.jpg"}
+            // return {address:"", level:10, username:"mockuser", profileImage:"https://t3.ftcdn.net/jpg/04/51/57/42/360_F_451574291_2fCf9rUfMSnYP7X3ieZJTCq5u2InaKej.jpg"}
             return jwtDecode<any>(window.sessionStorage.getItem("auth")!);
         } catch (error) {
             return undefined;

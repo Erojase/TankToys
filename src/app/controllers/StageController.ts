@@ -114,7 +114,17 @@ export class StageController {
     static nextStage() {
         if (StagesDefinition[StageController.currentStage.id + 1] != undefined) {
             StageController.currentStage = { ...StagesDefinition[StageController.currentStage.id + 1] }
+        } else {
+            StageController.fullWin();
         }
+    }
+
+    static async fullWin(){
+        await Swal.fire({
+            title: `Bravo! Llegaste hasta el final`,
+            icon: "success"
+        })
+        StageController.reloadCallback.loose();
     }
 
     static async CheckWin(): Promise<boolean> {

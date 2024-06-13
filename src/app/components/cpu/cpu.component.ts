@@ -37,7 +37,7 @@ export class CpuComponent implements OnInit, AfterViewInit {
     this._cpuController._name = this.name;
     setTimeout(() => {
       GameController.addToGameLoop("pathFind_"+this.name, () => this._cpuController.pathfinding(this.self.nativeElement.getBoundingClientRect()));
-    }, 3000);
+    }, 1500);
     for (let i = 0; i < 1; i++) {
       const compref = this.mainViewRef.createComponent(BulletComponent);
       compref.setInput("type", "CPU");

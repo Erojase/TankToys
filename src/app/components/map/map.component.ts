@@ -77,7 +77,11 @@ export class MapComponent implements OnInit, AfterViewInit {
             )
         });
 
-        this.mapContainer.nativeElement.innerHTML = projectItems.toString().replaceAll('>,<', '><');
+        try {
+            this.mapContainer.nativeElement.innerHTML = projectItems.toString().replaceAll('>,<', '><');
+        } catch (error) {
+            
+        }
     }
 
 }
