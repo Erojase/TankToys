@@ -157,8 +157,10 @@ export class CPUController {
 
         let x: number = 0;
         let y: number = 0;
+        let lleno = false;
 
-        while (!find) {
+        while (!find && !lleno) {
+            
             let aux: string[] = [];
             for (let i = 0; i < nextToExpand.length && !find; i++) {
                 x = Number.parseInt(nextToExpand[i].split(",")[0]);
@@ -181,6 +183,16 @@ export class CPUController {
             }
             nextToExpand = aux;
             aux = [];
+
+            lleno = true;
+            for (let i = 0; i < pathMap.length; i++) {
+                for (let j = 0; j < pathMap[i].length; j++) {
+                    if (pathMap[i][j] == " ") {
+                        lleno = false;
+                    }
+                }
+                
+            }
         }
 
         this.paintMap(pathMap);
@@ -190,7 +202,7 @@ export class CPUController {
         let reachT = false;
         while (!reachT) {
             this.winRoute.unshift(pathMap[y][x]);
-
+            
             switch (pathMap[y][x]) {
                 case "U":
                     y++;
@@ -273,6 +285,7 @@ export class CPUController {
  cont:number = 0;
  callOnce = false;
     public async moveViaPath(cpu:DOMRect) {
+        
         if (this.muerto || this.callOnce) {
             return;
         }
@@ -285,30 +298,31 @@ export class CPUController {
             //debugger;
             switch (step) {//U = L; L = U; R = D; D = R;
                 case "U":
-                    if (!GameMap.checkIfBlockV2(cpu, 0,0,TankController.tank.speed * -1,0, "cpu")) {
+                    if (!GameMap.checkIfBotBlockV2(cpu, 0,0,TankController.tank.speed * -1,0, "cpu")) {
+                        await this.cpu.moveYBot(this, TankController.tank.speed*-1);
                     } 
-                    await this.cpu.moveYBot(this, TankController.tank.speed*-1);
                     break;
                 case "D":
-                    if (!GameMap.checkIfBlockV2(cpu, 0,0,0,TankController.tank.speed * 1, "cpu")) {
+                    if (!GameMap.checkIfBotBlockV2(cpu, 0,0,0,TankController.tank.speed * 1, "cpu")) {
+                        await this.cpu.moveYBot(this, TankController.tank.speed*1);
                     } 
-                    await this.cpu.moveYBot(this, TankController.tank.speed*1);
                     break;
                 case "L":
-                    if (!GameMap.checkIfBlockV2(cpu, TankController.tank.speed * -1,0,0,0, "cpu")) {
+                    if (!GameMap.checkIfBotBlockV2(cpu, TankController.tank.speed * -1,0,0,0, "cpu")) {
+                        await this.cpu.moveXBot(this, TankController.tank.speed*-1);
                     } 
-                    await this.cpu.moveXBot(this, TankController.tank.speed*-1);
                     break;
                 case "R":
-                    if (!GameMap.checkIfBlockV2(cpu, 0,TankController.tank.speed * 1,0,0, "cpu")) {
+                    if (!GameMap.checkIfBotBlockV2(cpu, 0,TankController.tank.speed * 1,0,0, "cpu")) {
+                        await this.cpu.moveXBot(this, TankController.tank.speed*1);
                     } 
-                    await this.cpu.moveXBot(this, TankController.tank.speed*1);
                     break;
             }
             await delay(100);
 
         }
         this.callOnce = false;
+        this.cont = 0;
     }
     
 

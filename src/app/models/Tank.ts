@@ -171,6 +171,7 @@ export class Tank {
         let tankCPUQ = controller.getQuadrant(this._parentName);
         //debugger;
         while (!nextBlock) {
+            
             this.position.x += steps;
             let checkQ = controller.getQuadrant(this._parentName);
             if (tankCPUQ != checkQ) {
