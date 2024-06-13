@@ -31,5 +31,6 @@ export default class UserController {
         this._Signer = signer;
     }
 
+    static isGameRunning = true;
 
 }

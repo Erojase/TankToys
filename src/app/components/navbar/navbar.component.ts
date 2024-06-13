@@ -31,6 +31,7 @@ export class NavbarComponent implements AfterViewInit, OnInit {
     this.burger.nativeElement.addEventListener('click', ()=>{this.menuTransitionToggle(this.linksParent)})
     this.currentPage = window.location.href.split("/").slice(-1)[0];
     this.whiteBarLogic()
+    this.ultimateShowdown();
   }
 
   isLogged(currentAnchor: HTMLAnchorElement) {
@@ -52,6 +53,16 @@ export class NavbarComponent implements AfterViewInit, OnInit {
       currentAnchor.href = "/user";
       // currentAnchor.innerHTML = `<img width="45" src="${user.profileImage}"><div>${user.user}</div>`;
     }   
+  }
+
+  ultimateShowdown(){
+    setInterval(()=>{
+      if (!UserController.isGameRunning) {
+        this.nav.nativeElement.style.visibility = "collapse";
+      } else {
+        this.nav.nativeElement.style.visibility = "visible";
+      }
+    }, 1000)
   }
 
   whiteBarLogic(){

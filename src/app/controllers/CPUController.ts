@@ -139,7 +139,6 @@ export class CPUController {
             pathMap[Number.parseInt(this.tankPlayerQ.split(",")[1])][Number.parseInt(this.tankPlayerQ.split(",")[0])] = "O";
             pathMap[Number.parseInt(tankCPUQ.split(",")[1])][Number.parseInt(tankCPUQ.split(",")[0])] = "T";
         } catch (error) {
-            debugger;
             pathMap[Number.parseInt(this.tankPlayerQ.split(",")[1])][Number.parseInt(this.tankPlayerQ.split(",")[0])] = "O";
             pathMap[Number.parseInt(tankCPUQ.split(",")[1])][Number.parseInt(tankCPUQ.split(",")[0])] = "T";
         }

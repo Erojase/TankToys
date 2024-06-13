@@ -1,3 +1,5 @@
+import UserController from "./user/UserController";
+
 interface IUpdatable{
     [key:string]: ()=>any
 }
@@ -32,7 +34,11 @@ export class GameController {
 
     public static Update(){
         Object.keys(this._updatable).forEach(funcId=>{
-            this._updatable[funcId]();
+            if (UserController.isGameRunning) {
+                delete this._updatable[funcId];       
+            } else {
+                this._updatable[funcId]();    
+            }
         })
         if (this.running) {
             setTimeout(() => {
@@ -47,5 +53,12 @@ export class GameController {
 
     public static stopUpdate(){
         this.running = false;
+    }
+
+    public static clear(){
+        for (const key in this._updatable) {
+            delete this._updatable[key];       
+            
+        }
     }
 }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, HostListener, Input, OnInit, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { dimensions } from '../../utils/utils';
 import { TankController } from "../../controllers/TankController";
@@ -10,6 +10,7 @@ import { CpuComponent } from '../cpu/cpu.component';
 import { ReferenceRepository } from '../../controllers/ReferenceRepository';
 import { StageController } from '../../controllers/StageController';
 import { GameController } from '../../controllers/GameController';
+import { GameMap } from '../../models/Map';
 
 @Component({
     selector: 'app-mainCanvas',
@@ -27,6 +28,7 @@ import { GameController } from '../../controllers/GameController';
 })
 export class MainCanvasComponent implements OnInit, AfterViewInit {
     @Input('type') type: string;
+    @ViewChild('map') map: MapComponent;
 
     currentWindow: dimensions = {
         height: 0,
@@ -42,6 +44,11 @@ export class MainCanvasComponent implements OnInit, AfterViewInit {
         this.audioController.src = "/assets/audio/videoplayback.wav";
         this.audioController.load();
         // this.audioController.play();
+
+        if (this.type == "singleplayer") {
+            StageController.Init(this);
+            this.initializeSingleplayer();
+        }
     }
 
     @HostListener('mousemove', ['$event'])
@@ -63,19 +70,24 @@ export class MainCanvasComponent implements OnInit, AfterViewInit {
             width: window.innerWidth
         }
         this.viewRef.clear();
+    }
+
+    loose(){
+        window.location.href = "/play";
+    }
+
+    initializeSingleplayer() {
+        GameController.clear();
+        GameMap.resetColliders();
+        this.viewRef.clear();
+        this.map.reload();
+        TankController.bullets = [];
+        GameController.isSingleplayer = true;
 
         const TankComponentRef = this.viewRef.createComponent(TankComponent);
         TankComponentRef.setInput("mainViewRef", this.viewRef);
         ReferenceRepository.Component["player"] = TankComponentRef;
 
-        if (this.type == "singleplayer") {
-            this.initializeSingleplayer();
-        }
-    }
-
-    initializeSingleplayer() {
-        GameController.isSingleplayer = true;
-        StageController.Init();
         for (let i = 0; i < StageController.currentStage.enemies; i++) {
             let cpuComponent = this.viewRef.createComponent(CpuComponent);
             cpuComponent.setInput("mainViewRef", this.viewRef);

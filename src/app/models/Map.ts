@@ -2,8 +2,6 @@ import { ComponentRef } from "@angular/core";
 import { CpuComponent } from "../components/cpu/cpu.component";
 import { ReferenceRepository } from "../controllers/ReferenceRepository";
 import { GameController } from "../controllers/GameController";
-import { Maplist } from "./MapList";
-import { TankComponent } from "../components/tank/tank.component";
 import { TankController } from "../controllers/TankController";
 import { CPUController } from "../controllers/CPUController";
 import { StageController } from "../controllers/StageController";
@@ -68,43 +66,24 @@ export class GameMap {
         }
     }
 
-    // TODO: generate map using wave function collapse
-    constructor(width: number, height: number) {
-        this._width = width;
-        this._height = height;
-    }
+
 
     public static position: MapPosition = {
         x: 0,
         y: 130
     };
 
-    public get height(): number {
-        return this._height;
-    }
-    public set height(v: number) {
-        this._height = v;
-    }
-
-    public get width(): number {
-        return this._width;
-    }
-    public set width(v: number) {
-        this._width = v;
-    }
-
 
     public static createMap(random: boolean) {
 
-        let map = GameMap._map;
-
+        let map = this._map;
         if (!random) {
             map = StageController.currentStage.map
         } else {
-            GameMap.aleatMapGenerator(map);
+            this.aleatMapGenerator(map);
         }
 
-        GameMap._map = map;
+        this._map = map;
 
         let posx: number = -50;
         let posy: number = 100;
@@ -180,6 +159,12 @@ export class GameMap {
         this.colliders[type] = collider;
     }
 
+    public static resetColliders(){
+        for (const key in this.colliders) {
+            delete this.colliders[key];
+        }
+    }
+
 
 
     public static aleatMapGenerator(map: number[][]) {
@@ -217,8 +202,6 @@ export class GameMap {
             if (overlap && !this.colliders[collider].type.includes("floor")) { //Poner aqui el que la bala se destruya si choca con otra bala o con un tanke
                 if ((this.colliders[collider].type == "player" || this.colliders[collider].type.includes("cpu")) || (this.colliders[collider].type != bulletName && this.colliders[collider].type.includes("Bullet"))) {
                     if (!this.colliders[collider].type.includes(owner) && !this.colliders[collider].type.includes("Bullet")) {
-                        debugger;
-
                         if (this.colliders[collider].type.includes("cpu")) {
                             StageController.killEnemy();
                         } else {

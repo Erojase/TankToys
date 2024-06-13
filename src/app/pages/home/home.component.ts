@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import UserController from '../../controllers/user/UserController';
 
 
 @Component({
@@ -14,6 +15,7 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    UserController.isGameRunning = true;
   }
 
 }

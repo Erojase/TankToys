@@ -139,7 +139,7 @@ export class Tank {
     public _parentName: string;
 
     //AQUI SE SELECCIONA EL TIPO DE BALA. AQUIIIIIIIIII 
-    public bulletType: BulletType = BulletType.SuperRafagas;
+    public bulletType: BulletType = BulletType.Normal;
 
     constructor(defaultPos: Position, parentName: string) {
         this.position = defaultPos!;
