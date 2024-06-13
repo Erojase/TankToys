@@ -276,6 +276,7 @@ export class CPUController {
         if (this.muerto || this.callOnce) {
             return;
         }
+        this.winRoute.pop();
         for (this.cont = 0; this.cont < this.winRoute.length; this.cont++) {
             
             let step = this.winRoute[this.cont];
