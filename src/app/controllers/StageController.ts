@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { MainCanvasComponent } from "../components/mainCanvas/mainCanvas.component";
 import { Position } from "../models/Map";
 import { Maplist } from "../models/MapList";
@@ -48,10 +49,10 @@ const StagesDefinition: Stage[] = [
         map: Maplist.TactiCool,
         availablePositions: {
             pos1: { position: { x: 4, y: 4.5 }, available: true },
-            pos2: { position: { x: 1.5, y: 1.2 }, available: true },
+            pos2: { position: { x: 2, y: 1.4 }, available: true },
             pos3: { position: { x: 2.6, y: 2 }, available: true },
-            pos4: { position: { x: 4.5, y: 7 }, available: true },
-            pos5: { position: { x: 2, y: 2 }, available: true }
+            pos4: { position: { x: 3, y: 2 }, available: true },
+            pos5: { position: { x: 2, y: 3 }, available: true }
         }
     }
 ]
@@ -68,14 +69,14 @@ export class StageController {
         }
     }
 
-    static killEnemy() {
+    static async killEnemy() {
         StageController.currentStage.enemies--;
         StageController.CheckWin();
     }
 
     static lose() {
-        StageController.currentStage = { ...StagesDefinition[0] };
-        StageController.reloadCallback.initializeSingleplayer();
+        // StageController.currentStage = { ...StagesDefinition[0] };
+        StageController.reloadCallback.loose();
     }
 
     static nextStage() {
@@ -84,12 +85,20 @@ export class StageController {
         }
     }
 
-    static CheckWin(): boolean {
+    static async CheckWin(): Promise<boolean> {
         if (StageController.currentStage.enemies <= 0) {
-            alert(`${StageController.currentStage.name} superada`)
-            StageController.nextStage();
-            StageController.reloadCallback.initializeSingleplayer();
-            return true;
+            // alert(`${StageController.currentStage.name} superada`)
+            let res = await Swal.fire({
+                title: `${StageController.currentStage.name} superada`,
+                icon: "success"
+            });
+            if (res.isConfirmed) {
+                StageController.nextStage();
+                StageController.reloadCallback.initializeSingleplayer();
+                return true;
+            } else {
+                return false;
+            }
         }
         return false;
     }

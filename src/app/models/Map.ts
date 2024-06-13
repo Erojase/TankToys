@@ -55,10 +55,10 @@ export class GameMap {
     public static reallocateTanks(){
         for (const tank in ReferenceRepository.Component) {
             if (tank.includes("cpu")) {
-                let collider = GameMap.getCurrentFloor(<DOMRect>ReferenceRepository.Component[tank].instance.self.nativeElement.getBoundingClientRect());
+                let collider = this.getCurrentFloor(<DOMRect>ReferenceRepository.Component[tank].instance.self.nativeElement.getBoundingClientRect());
                 (<CPUController>ReferenceRepository.Component[tank].instance._cpuController).cpu.position = {x: collider.left, y: collider.top}
             } else {
-                let collider = GameMap.getCurrentFloor(<DOMRect>ReferenceRepository.Component[tank].instance.self.nativeElement.getBoundingClientRect())
+                let collider = this.getCurrentFloor(<DOMRect>ReferenceRepository.Component[tank].instance.self.nativeElement.getBoundingClientRect())
                 TankController.tank.position = {x: collider.left, y: collider.top}
             }
             console.log(ReferenceRepository.Component[tank].instance);
@@ -76,19 +76,19 @@ export class GameMap {
 
     public static createMap(random: boolean) {
 
-        let map = GameMap._map;
+        let map = this._map;
         if (!random) {
             map = StageController.currentStage.map
         } else {
-            GameMap.aleatMapGenerator(map);
+            this.aleatMapGenerator(map);
         }
 
-        GameMap._map = map;
+        this._map = map;
 
         let posx: number = -50;
         let posy: number = 100;
 
-        GameMap.blocksPos = [];
+        this.blocksPos = [];
 
         for (let i = 0; i < map.length; i++) {
             posy = 100;
@@ -101,7 +101,7 @@ export class GameMap {
                 }
 
             }
-            GameMap.blocksPos.push(row);
+            this.blocksPos.push(row);
         }
 
 
@@ -156,12 +156,12 @@ export class GameMap {
     public static registerCollider(element: DOMRect, type: string) {
         let collider: Collider = element.toJSON();
         collider.type = type;
-        GameMap.colliders[type] = collider;
+        this.colliders[type] = collider;
     }
 
     public static resetColliders(){
-        for (const key in GameMap.colliders) {
-            delete GameMap.colliders[key];
+        for (const key in this.colliders) {
+            delete this.colliders[key];
         }
     }
 
@@ -190,31 +190,31 @@ export class GameMap {
 
     public static checkIfBlockNullet(position: Position, x: number, y: number, owner: string, bulletName: string) {
 
-        for (const collider in GameMap.colliders) {
-            let collWidth: number = GameMap.colliders[collider].right - GameMap.colliders[collider].left;
-            let collHeight: number = GameMap.colliders[collider].bottom - GameMap.colliders[collider].top;
+        for (const collider in this.colliders) {
+            let collWidth: number = this.colliders[collider].right - this.colliders[collider].left;
+            let collHeight: number = this.colliders[collider].bottom - this.colliders[collider].top;
 
-            var overlap = !(position.x + x + (collWidth / 2) < GameMap.colliders[collider].left ||
-                position.x + x > GameMap.colliders[collider].right ||
-                position.y + y + (collHeight / 2) < GameMap.colliders[collider].top ||
-                position.y + y > GameMap.colliders[collider].bottom)
+            var overlap = !(position.x + x + (collWidth / 2) < this.colliders[collider].left ||
+                position.x + x > this.colliders[collider].right ||
+                position.y + y + (collHeight / 2) < this.colliders[collider].top ||
+                position.y + y > this.colliders[collider].bottom)
 
-            if (overlap && !GameMap.colliders[collider].type.includes("floor")) { //Poner aqui el que la bala se destruya si choca con otra bala o con un tanke
-                if ((GameMap.colliders[collider].type == "player" || GameMap.colliders[collider].type.includes("cpu")) || (GameMap.colliders[collider].type != bulletName && GameMap.colliders[collider].type.includes("Bullet"))) {
-                    if (!GameMap.colliders[collider].type.includes(owner) && !GameMap.colliders[collider].type.includes("Bullet")) {
-                        if (GameMap.colliders[collider].type.includes("cpu")) {
+            if (overlap && !this.colliders[collider].type.includes("floor")) { //Poner aqui el que la bala se destruya si choca con otra bala o con un tanke
+                if ((this.colliders[collider].type == "player" || this.colliders[collider].type.includes("cpu")) || (this.colliders[collider].type != bulletName && this.colliders[collider].type.includes("Bullet"))) {
+                    if (!this.colliders[collider].type.includes(owner) && !this.colliders[collider].type.includes("Bullet")) {
+                        if (this.colliders[collider].type.includes("cpu")) {
                             StageController.killEnemy();
                         } else {
                             StageController.lose();
                         }
 
-                        let component = ReferenceRepository.Component[GameMap.colliders[collider].type];
-                        const { [collider]: g, ...otro } = GameMap.colliders;
-                        GameMap.colliders = otro;
+                        let component = ReferenceRepository.Component[this.colliders[collider].type];
+                        const { [collider]: g, ...otro } = this.colliders;
+                        this.colliders = otro;
                         clearInterval((<ComponentRef<CpuComponent>>component).instance.cpuShoot);
                         GameController.removeFromUpdate("pathFind_"+collider);
                         component.destroy();
-                    } else if (GameMap.colliders[collider].type.includes("Bullet")) {
+                    } else if (this.colliders[collider].type.includes("Bullet")) {
                         //console.log("Choque con bala");
                         position = {
                             x: -0,
@@ -226,8 +226,8 @@ export class GameMap {
                 } else {
 
                     let colliCenter: Position = {
-                        x: GameMap.colliders[collider].right - (collWidth / 2),
-                        y: GameMap.colliders[collider].top + (collHeight / 2)
+                        x: this.colliders[collider].right - (collWidth / 2),
+                        y: this.colliders[collider].top + (collHeight / 2)
                     };
 
                     let diff: Position = {
@@ -292,13 +292,13 @@ export class GameMap {
 
 
     public static checkIfBlockV2(tank: DOMRect, up: number, down: number, left: number, right: number, owner: string) {
-        for (const collider in GameMap.colliders) {
-            var overlap = !(tank.right + right < GameMap.colliders[collider].left ||
-                tank.left + left > GameMap.colliders[collider].right ||
-                tank.bottom + down < GameMap.colliders[collider].top ||
-                tank.top + up > GameMap.colliders[collider].bottom)
+        for (const collider in this.colliders) {
+            var overlap = !(tank.right + right < this.colliders[collider].left ||
+                tank.left + left > this.colliders[collider].right ||
+                tank.bottom + down < this.colliders[collider].top ||
+                tank.top + up > this.colliders[collider].bottom)
 
-            if (overlap && GameMap.colliders[collider].type != owner && !GameMap.colliders[collider].type.includes("floor") && !GameMap.colliders[collider].type.includes(owner)) {
+            if (overlap && this.colliders[collider].type != owner && !this.colliders[collider].type.includes("floor") && !this.colliders[collider].type.includes(owner)) {
                 return true;
             }
         }
@@ -306,17 +306,17 @@ export class GameMap {
     }
 
     public static getCurrentFloor(tank: DOMRect){
-        for (const collider in GameMap.colliders) {
-            var overlap = !(tank.right < GameMap.colliders[collider].left ||
-                tank.left > GameMap.colliders[collider].right ||
-                tank.bottom < GameMap.colliders[collider].top ||
-                tank.top > GameMap.colliders[collider].bottom)
+        for (const collider in this.colliders) {
+            var overlap = !(tank.right < this.colliders[collider].left ||
+                tank.left > this.colliders[collider].right ||
+                tank.bottom < this.colliders[collider].top ||
+                tank.top > this.colliders[collider].bottom)
 
-            if (overlap && GameMap.colliders[collider].type.includes("floor")) {
-                return GameMap.colliders[collider];
+            if (overlap && this.colliders[collider].type.includes("floor")) {
+                return this.colliders[collider];
             }
         }
-        return GameMap.colliders[7];
+        return this.colliders[7];
     }
 
 

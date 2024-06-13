@@ -72,6 +72,10 @@ export class MainCanvasComponent implements OnInit, AfterViewInit {
         this.viewRef.clear();
     }
 
+    loose(){
+        window.location.href = "/play";
+    }
+
     initializeSingleplayer() {
         GameController.clear();
         GameMap.resetColliders();
