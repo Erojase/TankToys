@@ -114,7 +114,7 @@ export class GameMap {
         let map = GameMap._map;
 
         if (!random) {
-            map = Maplist.TactiCool
+            map = Maplist.BasicMap
         } else {
             GameMap.aleatMapGenerator(map);
         }
