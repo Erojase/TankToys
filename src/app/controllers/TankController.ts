@@ -1,4 +1,4 @@
-import { Position, Tank } from "../models/Tank";
+import { BulletType, Position, Tank } from "../models/Tank";
 import { Bullet } from '../models/Bullet';
 import { GameMap } from "../models/Map";
 import { CPUManager } from "./CPUController";
@@ -130,15 +130,45 @@ export class TankController {
         let dy = e.pageY - centerX;
         let theta = Math.atan2(dy, dx);
         this.cannonRotation = theta;
+        // console.log(this.cannonRotation);
+        
     }
     private static cont = 0;
 
     public static shootBullet() {
         //debugger;
-        BulletController.shoot(this.bullets[this.cont], this.tank.position, this.scopePos, this.cannonRotation, "player", "playerBullet"+this.cont);
-        TankController.cont++;
-        if (TankController.cont > this.bullets.length -1) {
-            TankController.cont = 0;
+        if (this.tank.bulletType == BulletType.Shotgun || this.tank.bulletType == BulletType.SuperShotgun) {
+            if (this.tank.bulletType == BulletType.Shotgun) {
+                BulletController.shootShotgun(this.bullets, this.tank.position, this.scopePos, this.cannonRotation, "player", "playerBullet"+this.cont, 3)
+            } else {
+                BulletController.shootShotgun(this.bullets, this.tank.position, this.scopePos, this.cannonRotation, "player", "playerBullet"+this.cont, 5)
+            }
+        } else if (this.tank.bulletType == BulletType.Rafagas || this.tank.bulletType == BulletType.SuperRafagas) {
+            BulletController.shootRafagas(this.bullets, this.tank.position, this.scopePos, this.cannonRotation, "player", "playerBullet"+this.cont)
+        } else if (this.tank.bulletType == BulletType.SuperSubfusil) {
+            BulletController.shootSuperSubfusil(this.bullets, this.tank.position, this.scopePos, this.cannonRotation, "player", "playerBullet"+this.cont)
+        } else if (this.tank.bulletType == BulletType.Tortuga || this.tank.bulletType == BulletType.SuperTortuga) {
+            if (this.tank.bulletType == BulletType.Tortuga) {
+                BulletController.shootTurtle(this.bullets, this.tank.position, this.scopePos, "player", "playerBullet"+this.cont, -0.75)
+            } else {
+                BulletController.shootTurtle(this.bullets, this.tank.position, this.scopePos, "player", "playerBullet"+this.cont, -0.375)
+            }
+        } else if (this.tank.bulletType == BulletType.SuperNormal) {
+            let tiro:Bullet[] = [];
+            for (let i = 0; i < 3; i++) {
+                tiro.push(this.bullets[this.cont]);
+                TankController.cont++;
+            }
+            BulletController.shootSuperNormal(tiro, this.tank.position, this.scopePos, this.cannonRotation, "player", "playerBullet"+this.cont)
+            if (TankController.cont > this.bullets.length -1) {
+                TankController.cont = 0;
+            }
+        } else {
+            BulletController.shoot(this.bullets[this.cont], this.tank.position, this.scopePos, this.cannonRotation, "player", "playerBullet"+this.cont);
+            TankController.cont++;
+            if (TankController.cont > this.bullets.length -1) {
+                TankController.cont = 0;
+            }
         }
     }
 
