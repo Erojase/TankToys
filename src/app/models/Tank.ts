@@ -17,7 +17,14 @@ export interface BulletType{
 
 export const BulletType = {
     Normal: {
-        numBullets: 5   ,
+        numBullets: 5,
+        wBullet: 30,
+        hBullet: 20,
+        bounces: 1,
+        cooldown: 200
+    },
+    SuperNormal: {
+        numBullets: 15,
         wBullet: 30,
         hBullet: 20,
         bounces: 1,
@@ -30,8 +37,22 @@ export const BulletType = {
         bounces: 4,
         cooldown: 2000
     },
-    Sufusil: {
+    SuperSniper: {
         numBullets: 5,
+        wBullet: 120,
+        hBullet: 30,
+        bounces: 8,
+        cooldown: 2000
+    },
+    Subfusil: {
+        numBullets: 5,
+        wBullet: 20,
+        hBullet: 10,
+        bounces: -0,
+        cooldown: 24
+    },
+    SuperSubfusil: {
+        numBullets: 20,
         wBullet: 20,
         hBullet: 10,
         bounces: -0,
@@ -44,6 +65,13 @@ export const BulletType = {
         bounces: -0,
         cooldown: 1000
     },
+    SuperShotgun: {
+        numBullets: 10,
+        wBullet: 30,
+        hBullet: 30,
+        bounces: 2,
+        cooldown: 2000
+    },
     Rafagas: {
         numBullets: 3,
         wBullet: 30,
@@ -51,10 +79,24 @@ export const BulletType = {
         bounces: -0,
         cooldown: 400
     },
+    SuperRafagas: {
+        numBullets: 6,
+        wBullet: 60,
+        hBullet: 40,
+        bounces: -0,
+        cooldown: 100
+    },
     Tortuga: {
         numBullets: 8,
         wBullet: 20,
         hBullet: 20,
+        bounces: -0,
+        cooldown: 2000
+    },
+    SuperTortuga: {
+        numBullets: 16,
+        wBullet: 50,
+        hBullet: 50,
         bounces: -0,
         cooldown: 2000
     }
@@ -96,8 +138,8 @@ export class Tank {
 
     public _parentName: string;
 
-    //0 - Nomral; 1 - Sniper; 2 - Subfusil; 3 - Shotgun; 4 - Rafagas
-    public bulletType: BulletType = BulletType.Tortuga;
+    //AQUI SE SELECCIONA EL TIPO DE BALA. AQUIIIIIIIIII 
+    public bulletType: BulletType = BulletType.SuperRafagas;
 
     constructor(defaultPos: Position, parentName: string) {
         this.position = defaultPos!;
