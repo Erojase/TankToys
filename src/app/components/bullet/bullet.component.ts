@@ -43,6 +43,8 @@ export class BulletComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
+        
+        
     }
 
     setStyles() {
