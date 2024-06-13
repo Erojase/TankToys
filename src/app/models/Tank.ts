@@ -50,6 +50,13 @@ export const BulletType = {
         hBullet: 20,
         bounces: -0,
         cooldown: 400
+    },
+    Tortuga: {
+        numBullets: 8,
+        wBullet: 20,
+        hBullet: 20,
+        bounces: -0,
+        cooldown: 2000
     }
 }
 
@@ -90,7 +97,7 @@ export class Tank {
     public _parentName: string;
 
     //0 - Nomral; 1 - Sniper; 2 - Subfusil; 3 - Shotgun; 4 - Rafagas
-    public bulletType: BulletType = BulletType.Rafagas;
+    public bulletType: BulletType = BulletType.Tortuga;
 
     constructor(defaultPos: Position, parentName: string) {
         this.position = defaultPos!;
@@ -174,5 +181,6 @@ export class Tank {
             degrees -= 360
         }
         this.rotation = degrees + this.rotation;
+        
     }
 }

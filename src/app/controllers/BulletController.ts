@@ -166,6 +166,59 @@ export class BulletController {
         }
     }
 
+    public static shootTurtle(bullets: Bullet[], tankPos: Position, target: Position, cannonRotation: number, owner: string, bulletName: string) {
+        if (BulletController.enabled) {
+            let startRotation = 0;
+            let diff = -0.75;
+            bullets.forEach(bullet => {
+
+                bullet.stopMoves();
+                BulletController.disableShooting(bullet);
+                bullet.currentBounce = 0;
+                //console.log("disparo");   
+                bullet.rotation = startRotation;
+                console.log(startRotation);
+                
+                startRotation += diff;
+                if (startRotation == -3) {
+                    startRotation = 3;
+                }
+
+                bullet.position.x = tankPos.y + ((GameMap.colliders["player"].bottom - GameMap.colliders["player"].top) / 2) - (bullet.wBullet / 2); 
+                bullet.position.y = tankPos.x + ((GameMap.colliders["player"].right - GameMap.colliders["player"].left) / 2) - (bullet.hBullet / 2);
+
+                switch (bullet.rotation) {
+                    case 0:
+                        bullet.moveBullet(20, 0, owner, bulletName);
+                        break;
+                    case -0.75:
+                        bullet.moveBullet(20, -20, owner, bulletName);
+                        break;
+                    case -1.5:
+                        bullet.moveBullet(0, -20, owner, bulletName);
+                        break;
+                    case -2.25:
+                        bullet.moveBullet(-20, -20, owner, bulletName);
+                        break;
+                    case 3:
+                        bullet.moveBullet(-20, 0, owner, bulletName);
+                        break;
+                    case 2.25:
+                        bullet.moveBullet(-20, 20, owner, bulletName);
+                        break;
+                    case 1.5:
+                        bullet.moveBullet(0, 20, owner, bulletName);
+                        break;
+                    case 0.75:
+                        bullet.moveBullet(20, 20, owner, bulletName);
+                        break;
+                    default:
+                        break;
+                }
+                
+            });
+        }
+    }
 
 
 

@@ -130,6 +130,8 @@ export class TankController {
         let dy = e.pageY - centerX;
         let theta = Math.atan2(dy, dx);
         this.cannonRotation = theta;
+        // console.log(this.cannonRotation);
+        
     }
     private static cont = 0;
 
@@ -139,7 +141,9 @@ export class TankController {
             BulletController.shootShotgun(this.bullets, this.tank.position, this.scopePos, this.cannonRotation, "player", "playerBullet"+this.cont)
         } else if (this.tank.bulletType == BulletType.Rafagas) {
             BulletController.shootRafagas(this.bullets, this.tank.position, this.scopePos, this.cannonRotation, "player", "playerBullet"+this.cont)
-        } else {
+        } else if (this.tank.bulletType == BulletType.Tortuga) {
+            BulletController.shootTurtle(this.bullets, this.tank.position, this.scopePos, this.cannonRotation, "player", "playerBullet"+this.cont)
+        }else {
             BulletController.shoot(this.bullets[this.cont], this.tank.position, this.scopePos, this.cannonRotation, "player", "playerBullet"+this.cont);
             TankController.cont++;
             if (TankController.cont > this.bullets.length -1) {

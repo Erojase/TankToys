@@ -232,7 +232,7 @@ export class GameMap {
             if (overlap && !this.colliders[collider].type.includes("floor")) { //Poner aqui el que la bala se destruya si choca con otra bala o con un tanke
                 if ((this.colliders[collider].type == "player" || this.colliders[collider].type.includes("cpu")) || (this.colliders[collider].type != bulletName && this.colliders[collider].type.includes("Bullet"))) {
                     if (!this.colliders[collider].type.includes(owner) && !this.colliders[collider].type.includes("Bullet")) {
-                        debugger;
+                        // debugger;
                         let component = ReferenceRepository.Component[this.colliders[collider].type];
                         const { [collider]: g, ...otro } = this.colliders;
                         this.colliders = otro;
