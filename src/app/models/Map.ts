@@ -298,12 +298,29 @@ export class GameMap {
                 tank.bottom + down < this.colliders[collider].top ||
                 tank.top + up > this.colliders[collider].bottom)
 
-            if (overlap && this.colliders[collider].type != owner && !this.colliders[collider].type.includes("floor") && !this.colliders[collider].type.includes(owner)) {
+            if (overlap && this.colliders[collider].type != owner && !this.colliders[collider].type.includes("floor") && !this.colliders[collider].type.includes(owner) ) {
+                console.log(this.colliders[collider].type);
+                
                 return true;
             }
         }
         return false;
     }
+
+    public static checkIfBotBlockV2(tank: DOMRect, up: number, down: number, left: number, right: number, owner: string) {
+        for (const collider in this.colliders) {
+            var overlap = !(tank.right + right < this.colliders[collider].left ||
+                tank.left + left > this.colliders[collider].right ||
+                tank.bottom + down < this.colliders[collider].top ||
+                tank.top + up > this.colliders[collider].bottom)
+
+            if (overlap && this.colliders[collider].type != "player" && this.colliders[collider].type.includes("player") && !this.colliders[collider].type.includes(owner) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public static getCurrentFloor(tank: DOMRect){
         for (const collider in this.colliders) {

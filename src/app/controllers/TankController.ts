@@ -60,7 +60,7 @@ export class TankController {
     public static Move(tank:DOMRect) {
         
         if (MovementKeys.Up.filter(x => TankController.directions.includes(x)).length > 0) {
-            if (GameMap.checkIfBlockV2(tank,TankController.tank.speed * -1,0,0,0, "player")) {
+            if (GameMap.checkIfBlockV2(tank,TankController.tank.speed * -2,0,0,0, "player")) {
                 this.removeKeys(MovementKeys.Up)
                 // TankController.tank.moveX(TankController.tank.speed)
                 return;
@@ -69,7 +69,7 @@ export class TankController {
             }
         }
         if (MovementKeys.Down.filter(x => TankController.directions.includes(x)).length > 0) {
-            if (GameMap.checkIfBlockV2(tank,0,TankController.tank.speed,0,0, "player")) {
+            if (GameMap.checkIfBlockV2(tank,0,TankController.tank.speed*2,0,0, "player")) {
                 this.removeKeys(MovementKeys.Down)
                 // TankController.tank.moveX(TankController.tank.speed * -1)
                 return;
@@ -78,7 +78,7 @@ export class TankController {
             }
         }
         if (MovementKeys.Left.filter(x => TankController.directions.includes(x)).length > 0) {
-            if (GameMap.checkIfBlockV2(tank,0,0,TankController.tank.speed * -1,0, "player")) {
+            if (GameMap.checkIfBlockV2(tank,0,0,TankController.tank.speed * -2,0, "player")) {
                 this.removeKeys(MovementKeys.Left)
                 // TankController.tank.moveY(TankController.tank.speed)
                 return;
@@ -87,7 +87,7 @@ export class TankController {
             }
         }
         if (MovementKeys.Right.filter(x => TankController.directions.includes(x)).length > 0) {
-            if (GameMap.checkIfBlockV2(tank,0,0,0,TankController.tank.speed, "player")) {
+            if (GameMap.checkIfBlockV2(tank,0,0,0,TankController.tank.speed*2, "player")) {
                 this.removeKeys(MovementKeys.Right)
                 // TankController.tank.moveY(TankController.tank.speed * -1)
                 return;
@@ -118,7 +118,8 @@ export class TankController {
                 TankController.tank.moveY(TankController.tank.speed)
             }
         }
-
+        console.log("MoveMTF");
+        
         CPUManager.trackTank();
     }
 
