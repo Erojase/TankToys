@@ -5,14 +5,22 @@
     width: 100%;
     z-index: 101;
     display: flex;
-    justify-content: space-between;
-    background: rgb(0, 0, 0);
-    background: linear-gradient(180deg, rgba(0,0,0,0.9290091036414566) 6%, rgba(0,0,0,0.5508578431372548) 65%, rgba(135,196,177,0) 100%);
+    padding: 0;
 }
+
+.nav > *{
+    font-family: 'Jockey One';
+    font-size: 32px;
+}
+
 .burger{
     display: none;
 }
 .nav>*>img {
+    width: 70px;
+}
+
+img {
     width: 70px;
 }
 
@@ -26,11 +34,17 @@
 }
 
 .links {
-    transform: translateY(5%);
-    width: 40%;
+    width: 60%;
     display: flex;
+    justify-content: center;
     align-items: center;
+    flex-grow: 1;
     flex-direction: row;
+}
+
+.links > * {
+    text-shadow: 2px 0 #000000, -2px 0 #000000, 0 2px #000000, 0 -2px #000000,
+               1px 1px #000000, -1px -1px #000000, 1px -1px #000000, -1px 1px #000000;
 }
 
 .links>div {
@@ -57,13 +71,13 @@
 }
 
 .links > div > a:hover {
-    border-top: 5px aliceblue solid;
-    transition: border-top 200ms linear;
+    border-bottom: 5px aliceblue solid;
+    transition: border-bottom 200ms linear;
     border-radius: 2px;
 }
 
 .nav-active{
-    border-top: 5px aliceblue solid;
+    border-bottom: 5px aliceblue solid;
     border-radius: 2px;
 }
 
@@ -99,7 +113,7 @@
         margin: 0;
     }
     .links > div > a:hover {
-        border-top: 0px;
+        border-bottom: 0px;
         border-bottom: 0px;
         background-color: global.$active-trans-background;
         transition: background-color 200ms linear;
@@ -107,7 +121,7 @@
     }
     
     .nav-active{
-        border-top: 0px;
+        border-bottom: 0px;
         border-bottom: 0px;
         background-color: global.$active-trans-background;
         border-radius: 2px;

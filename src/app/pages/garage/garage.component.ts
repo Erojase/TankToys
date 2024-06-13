@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import UserController from '../../controllers/user/UserController';
 
 @Component({
   selector: 'app-garage',
@@ -15,6 +16,7 @@ export class GarageComponent implements OnInit {
   }
 
   ngOnInit() {
+    UserController.isGameRunning = true;
     this.imgs = <HTMLCollectionOf<HTMLImageElement>>document.getElementsByClassName("tankImg");
     this.check = document.getElementById("check");
   }

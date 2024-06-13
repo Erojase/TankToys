@@ -31,7 +31,6 @@ export class TankComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        window.innerHeight
         TankController.tank = new Tank(GameMap.PositionAssign(window.innerWidth, window.innerHeight), "player")
         GameController.addToGameLoop("move_player", ()=>TankController.MoveV2(this.self.nativeElement.getBoundingClientRect()));
        

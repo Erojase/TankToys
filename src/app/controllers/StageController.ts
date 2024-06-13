@@ -1,3 +1,4 @@
+import { MainCanvasComponent } from "../components/mainCanvas/mainCanvas.component";
 import { Position } from "../models/Map";
 import { Maplist } from "../models/MapList";
 
@@ -23,8 +24,8 @@ const StagesDefinition: Stage[] = [
             pos1: { position: { x: 7, y: 4.5 }, available: true },
             pos2: { position: { x: 2, y: 1.2 }, available: true },
             pos3: { position: { x: 2.6, y: 2 }, available: true },
-            pos4: { position: { x: 2.6, y: 2 }, available: true },
-            pos5: { position: { x: 2.6, y: 2 }, available: true }
+            pos4: { position: { x: 4.5, y: 7 }, available: true },
+            pos5: { position: { x: 2, y: 2 }, available: true }
         }
     },
     {
@@ -49,40 +50,45 @@ const StagesDefinition: Stage[] = [
             pos1: { position: { x: 4, y: 4.5 }, available: true },
             pos2: { position: { x: 1.5, y: 1.2 }, available: true },
             pos3: { position: { x: 2.6, y: 2 }, available: true },
-            pos4: { position: { x: 2.6, y: 2 }, available: true },
-            pos5: { position: { x: 2.6, y: 2 }, available: true }
+            pos4: { position: { x: 4.5, y: 7 }, available: true },
+            pos5: { position: { x: 2, y: 2 }, available: true }
         }
     }
 ]
 
 export class StageController {
 
-    static currentStage: Stage = { ...StagesDefinition[1] };
+    static currentStage: Stage = { ...StagesDefinition[0] };
+    static reloadCallback: MainCanvasComponent;
 
-
-    static Init() {
-        this.currentStage = { ...StagesDefinition[1] };
+    static Init(reloadCallback: MainCanvasComponent) {
+        if (StageController.reloadCallback == undefined || StageController.reloadCallback == null) {
+            StageController.reloadCallback = reloadCallback;
+            // StageController.currentStage = { ...StagesDefinition[0] };
+        }
     }
 
     static killEnemy() {
-        this.currentStage.enemies--;
-        this.CheckWin();
+        StageController.currentStage.enemies--;
+        StageController.CheckWin();
     }
 
     static lose() {
-        this.currentStage = { ...StagesDefinition[0] };
+        StageController.currentStage = { ...StagesDefinition[0] };
+        StageController.reloadCallback.initializeSingleplayer();
     }
 
     static nextStage() {
-        if (StagesDefinition[this.currentStage.id + 1] != undefined) {
-            this.currentStage = { ...StagesDefinition[this.currentStage.id + 1] }
+        if (StagesDefinition[StageController.currentStage.id + 1] != undefined) {
+            StageController.currentStage = { ...StagesDefinition[StageController.currentStage.id + 1] }
         }
     }
 
     static CheckWin(): boolean {
-        if (this.currentStage.enemies <= 0) {
-            alert("ganaste wey")
-            this.nextStage();
+        if (StageController.currentStage.enemies <= 0) {
+            alert(`${StageController.currentStage.name} superada`)
+            StageController.nextStage();
+            StageController.reloadCallback.initializeSingleplayer();
             return true;
         }
         return false;

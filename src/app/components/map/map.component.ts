@@ -31,6 +31,12 @@ export class MapComponent implements OnInit, AfterViewInit {
     constructor() {
         this.position = GameMap.position;
     }
+
+    reload(){
+        this.ngOnInit();
+        this.ngAfterViewInit();
+    }
+
     ngAfterViewInit(): void {
         for (const element of this.mapContainer.nativeElement.children) {
             for (const image of element.children) {
@@ -71,7 +77,7 @@ export class MapComponent implements OnInit, AfterViewInit {
             )
         });
 
-        this.map = projectItems.toString().replaceAll('>,<', '><');
+        this.mapContainer.nativeElement.innerHTML = projectItems.toString().replaceAll('>,<', '><');
     }
 
 }

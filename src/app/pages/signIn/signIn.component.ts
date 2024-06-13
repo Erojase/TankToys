@@ -33,6 +33,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private socialAuthService: SocialAuthService) { }
   
   ngOnInit() {
+    UserController.isGameRunning = true;
     this.socialAuthService.authState.subscribe((user) => this.signUp(user.id, user.name));
     this.login = document.getElementById("log");
     this.signin = document.getElementById("sign");

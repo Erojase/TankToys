@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import {ActivatedRoute, NavigationStart, Router} from "@angular/router";
+import UserController from '../../controllers/user/UserController';
 
 @Component({
   selector: 'app-play',
@@ -20,6 +21,7 @@ export class PlayComponent implements OnInit {
  }
 
   ngOnInit() {
+    UserController.isGameRunning = true;
   }
 
   @HostListener('click', ['$event'])
